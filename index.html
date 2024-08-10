@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <title>vivid/stasis chart list</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="index.css" />
+    </head>
+    <body>
+        <div>
+            Level range:
+            <input type="text" id="level-range-start" size="3" />
+            to
+            <input type="text" id="level-range-end" size="3" />
+        </div>
+        <div>
+            OP:
+            <input type="checkbox" id="difficulty-opening" checked />
+            MD:
+            <input type="checkbox" id="difficulty-middle" checked />
+            FN:
+            <input type="checkbox" id="difficulty-finale" checked />
+            EN:
+            <input type="checkbox" id="difficulty-encore" checked />
+        </div>
+        <div>
+            <button id="copy-result">Copy result image</button>
+            <span class="hidden" id="done">&check;</span>
+            <span class="hidden" id="failed">&cross;</span>
+        </div>
+        <div class="scrollable">
+            <canvas id="rendered-result" width="0" height="0"></canvas>
+        </div>
+
+        <noscript>
+            Please enable javascript, nothing here is possible without it.
+            <style>
+                div {
+                    display: none;
+                }
+            </style>
+        </noscript>
+        <script src="index.js"></script>
+    </body>
+</html>
