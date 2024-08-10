@@ -1,0 +1,948 @@
+[
+    {
+        "name": "Acolyte",
+        "file_name": "acolyte",
+        "difficulties": [
+            1.0,
+            7.0,
+            11.7
+        ]
+    },
+    {
+        "name": "Wavetapper",
+        "file_name": "wavetapper",
+        "difficulties": [
+            3.0,
+            9.0,
+            11.7
+        ]
+    },
+    {
+        "name": "There",
+        "file_name": "there",
+        "difficulties": [
+            3.0,
+            8.0,
+            10.6
+        ]
+    },
+    {
+        "name": "+ERABY+E CONNEC+10N",
+        "file_name": "terabyte",
+        "difficulties": [
+            8.0,
+            11.6,
+            14.7,
+            15.1
+        ]
+    },
+    {
+        "name": "FULi AUTO SHOOTER",
+        "file_name": "fuli",
+        "difficulties": [
+            1.0,
+            8.0,
+            10.6
+        ]
+    },
+    {
+        "name": "Spell Diver",
+        "file_name": "spelldiver",
+        "difficulties": [
+            5.0,
+            8.0,
+            12.4
+        ]
+    },
+    {
+        "name": "ENERGY SYNERGY MATRIX",
+        "file_name": "esm",
+        "difficulties": [
+            5.0,
+            10.0,
+            11.3,
+            14.0
+        ]
+    },
+    {
+        "name": "G e n g a o z o",
+        "file_name": "gengaozo",
+        "difficulties": [
+            6.0,
+            10.0,
+            13.0
+        ]
+    },
+    {
+        "name": "The 89's Momentum",
+        "file_name": "89momentum",
+        "difficulties": [
+            6.0,
+            7.0,
+            10.6
+        ]
+    },
+    {
+        "name": "GOODRAGE",
+        "file_name": "goodrage",
+        "difficulties": [
+            4.0,
+            9.6,
+            13.3
+        ]
+    },
+    {
+        "name": "Crosshatch",
+        "file_name": "crosshatch",
+        "difficulties": [
+            5.0,
+            10.6,
+            12.1
+        ]
+    },
+    {
+        "name": "Chronomia",
+        "file_name": "chronomia",
+        "difficulties": [
+            2.0,
+            6.0,
+            10.6,
+            13.0
+        ]
+    },
+    {
+        "name": "Pictured as Perfect",
+        "file_name": "pictured",
+        "difficulties": [
+            4.0,
+            10.0,
+            13.4
+        ]
+    },
+    {
+        "name": "BADSECRET",
+        "file_name": "badsecret",
+        "difficulties": [
+            7.0,
+            11.2,
+            13.2,
+            13.2
+        ]
+    },
+    {
+        "name": "Credits",
+        "file_name": "credits",
+        "difficulties": [
+            2.0,
+            9.6,
+            13.3,
+            13.4
+        ]
+    },
+    {
+        "name": "\u2200",
+        "file_name": "avalon",
+        "difficulties": [
+            4.0,
+            10.0,
+            12.8,
+            15.3
+        ]
+    },
+    {
+        "name": "Tavgha",
+        "file_name": "tavgha",
+        "difficulties": [
+            3.0,
+            7.0,
+            10.6
+        ]
+    },
+    {
+        "name": "Perfect ConfeCute!!",
+        "file_name": "confecute",
+        "difficulties": [
+            6.0,
+            10.6,
+            11.0
+        ]
+    },
+    {
+        "name": "What You Love",
+        "file_name": "whatyoulove",
+        "difficulties": [
+            6.0,
+            9.0,
+            12.3
+        ]
+    },
+    {
+        "name": "PYROMANIA",
+        "file_name": "pyromania",
+        "difficulties": [
+            8.0,
+            11.4,
+            14.0,
+            15.2
+        ]
+    },
+    {
+        "name": "septima",
+        "file_name": "septima",
+        "difficulties": [
+            4.0,
+            9.0,
+            12.4
+        ]
+    },
+    {
+        "name": "obair-ghreis",
+        "file_name": "obair",
+        "difficulties": [
+            5.0,
+            8.0,
+            12.8,
+            13.5
+        ]
+    },
+    {
+        "name": "HTTPS",
+        "file_name": "https",
+        "difficulties": [
+            3.0,
+            11.3,
+            13.3
+        ]
+    },
+    {
+        "name": "Lost City",
+        "file_name": "lostcity",
+        "difficulties": [
+            1.0,
+            6.0,
+            10.6
+        ]
+    },
+    {
+        "name": "Asymmetry (takehirotei remix)",
+        "file_name": "asymmetry",
+        "difficulties": [
+            3.0,
+            9.0,
+            12.9
+        ]
+    },
+    {
+        "name": "FULi AUTO BUSTER",
+        "file_name": "fulibuster",
+        "difficulties": [
+            6.0,
+            9.0,
+            11.4
+        ]
+    },
+    {
+        "name": "Proper Rhythm",
+        "file_name": "properrhythm",
+        "difficulties": [
+            1.0,
+            6.0,
+            11.3,
+            12.2
+        ]
+    },
+    {
+        "name": "INFiNiTE ENERZY -Overdoze-",
+        "file_name": "infiniteenergy",
+        "difficulties": [
+            2.0,
+            6.0,
+            13.0
+        ]
+    },
+    {
+        "name": "Nhelv",
+        "file_name": "nhelv",
+        "difficulties": [
+            5.0,
+            11.2,
+            13.8
+        ]
+    },
+    {
+        "name": "Random",
+        "file_name": "random",
+        "difficulties": [
+            5.0,
+            9.6,
+            12.5
+        ]
+    },
+    {
+        "name": "F1055",
+        "file_name": "f1055",
+        "difficulties": [
+            3.0,
+            9.6,
+            13.5,
+            13.9
+        ]
+    },
+    {
+        "name": "Doppelganger",
+        "file_name": "doppelganger",
+        "difficulties": [
+            8.0,
+            12.4,
+            14.3
+        ]
+    },
+    {
+        "name": "Luminaria",
+        "file_name": "luminaria",
+        "difficulties": [
+            1.0,
+            6.0,
+            12.2,
+            13.2
+        ]
+    },
+    {
+        "name": "Options",
+        "file_name": "options",
+        "difficulties": [
+            2.0,
+            6.0,
+            10.0
+        ]
+    },
+    {
+        "name": "Orphen",
+        "file_name": "orphen",
+        "difficulties": [
+            6.0,
+            11.9,
+            14.7
+        ]
+    },
+    {
+        "name": "UTF-8000000000",
+        "file_name": "utf",
+        "difficulties": [
+            4.0,
+            11.2,
+            13.1
+        ]
+    },
+    {
+        "name": "BPM",
+        "file_name": "bpm",
+        "difficulties": [
+            4.0,
+            9.6,
+            13.0
+        ]
+    },
+    {
+        "name": "Fixations Toward the Stars",
+        "file_name": "fixations",
+        "difficulties": [
+            4.0,
+            10.6,
+            14.1
+        ]
+    },
+    {
+        "name": "Tormented World",
+        "file_name": "tormented",
+        "difficulties": [
+            2.0,
+            10.6,
+            13.6
+        ]
+    },
+    {
+        "name": "LET THE CREATION BEGIN",
+        "file_name": "creation",
+        "difficulties": [
+            3.0,
+            11.4,
+            15.2
+        ]
+    },
+    {
+        "name": "grode",
+        "file_name": "grode",
+        "difficulties": [
+            1.0,
+            6.0,
+            9.0,
+            11.0
+        ]
+    },
+    {
+        "name": "Signals Afar",
+        "file_name": "signals",
+        "difficulties": [
+            2.0,
+            8.0,
+            12.7
+        ]
+    },
+    {
+        "name": "QUASAR",
+        "file_name": "quasar",
+        "difficulties": [
+            6.0,
+            11.7,
+            14.6
+        ]
+    },
+    {
+        "name": "APO11O",
+        "file_name": "apollo",
+        "difficulties": [
+            4.0,
+            9.0,
+            12.6
+        ]
+    },
+    {
+        "name": "3, 2, 1, Let's Go",
+        "file_name": "321",
+        "difficulties": [
+            5.0,
+            10.6,
+            14.2
+        ]
+    },
+    {
+        "name": "The Last Page",
+        "file_name": "lastpage",
+        "difficulties": [
+            3.0,
+            8.0,
+            12.3
+        ]
+    },
+    {
+        "name": "Farewell to Syzygia",
+        "file_name": "farewell",
+        "difficulties": [
+            7.0,
+            12.2,
+            14.5
+        ]
+    },
+    {
+        "name": "Dear My Endsummer",
+        "file_name": "endsummer",
+        "difficulties": [
+            7.0,
+            11.5,
+            13.3
+        ]
+    },
+    {
+        "name": "Macropolis",
+        "file_name": "macro",
+        "difficulties": [
+            3.0,
+            6.0,
+            10.6
+        ]
+    },
+    {
+        "name": "-1",
+        "file_name": "minus1",
+        "difficulties": [
+            6.0,
+            10.6,
+            13.9
+        ]
+    },
+    {
+        "name": "POISON GARDEN",
+        "file_name": "poisongarden",
+        "difficulties": [
+            4.0,
+            10.0,
+            12.2
+        ]
+    },
+    {
+        "name": "Singularity",
+        "file_name": "singularity",
+        "difficulties": [
+            4.0,
+            10.6,
+            13.3
+        ]
+    },
+    {
+        "name": "energy trixxx",
+        "file_name": "energy",
+        "difficulties": [
+            7.0,
+            10.6,
+            12.0,
+            13.0
+        ]
+    },
+    {
+        "name": "Chronoexplorers",
+        "file_name": "chrono",
+        "difficulties": [
+            7.0,
+            10.6,
+            13.5,
+            14.7
+        ]
+    },
+    {
+        "name": "Courage",
+        "file_name": "courage",
+        "difficulties": [
+            3.0,
+            9.0,
+            11.5
+        ]
+    },
+    {
+        "name": "Cosmogyral",
+        "file_name": "cosmo",
+        "difficulties": [
+            5.0,
+            7.0,
+            12.0
+        ]
+    },
+    {
+        "name": "Unraveling Stasis",
+        "file_name": "unraveling",
+        "difficulties": [
+            8.0,
+            12.5,
+            14.9,
+            15.9
+        ]
+    },
+    {
+        "name": "Prime",
+        "file_name": "prime",
+        "difficulties": [
+            5.0,
+            10.0,
+            13.4
+        ]
+    },
+    {
+        "name": "Happy Go Lucky!!!",
+        "file_name": "happygo",
+        "difficulties": [
+            5.0,
+            9.6,
+            14.3,
+            14.8
+        ]
+    },
+    {
+        "name": "Cyclical Rebellion",
+        "file_name": "cyclical",
+        "difficulties": [
+            7.0,
+            10.6,
+            14.1
+        ]
+    },
+    {
+        "name": "exterminate()",
+        "file_name": "exterminate",
+        "difficulties": [
+            6.0,
+            10.0,
+            14.6
+        ]
+    },
+    {
+        "name": "valor/starcross",
+        "file_name": "valor",
+        "difficulties": [
+            8.0,
+            12.1,
+            14.5,
+            15.5
+        ]
+    },
+    {
+        "name": "Ops:Limone",
+        "file_name": "opslimone",
+        "difficulties": [
+            3.0,
+            8.0,
+            13.1
+        ]
+    },
+    {
+        "name": "Yamai",
+        "file_name": "yamai",
+        "difficulties": [
+            7.0,
+            11.1,
+            12.5
+        ]
+    },
+    {
+        "name": "Revelation",
+        "file_name": "revelation",
+        "difficulties": [
+            6.0,
+            12.3,
+            14.0
+        ]
+    },
+    {
+        "name": "Angel's Window",
+        "file_name": "angelswindow",
+        "difficulties": [
+            2.0,
+            6.0,
+            12.6
+        ]
+    },
+    {
+        "name": "Octava",
+        "file_name": "octava",
+        "difficulties": [
+            3.0,
+            9.0,
+            12.6
+        ]
+    },
+    {
+        "name": "\u2200NARCHIC LIGHT",
+        "file_name": "anarchic",
+        "difficulties": [
+            5.0,
+            11.0,
+            13.5,
+            14.4
+        ]
+    },
+    {
+        "name": "Candy@-Cracker",
+        "file_name": "candy",
+        "difficulties": [
+            5.0,
+            11.4,
+            13.5
+        ]
+    },
+    {
+        "name": "3.1V.C1",
+        "file_name": "31vc1",
+        "difficulties": [
+            7.0,
+            12.5,
+            15.0
+        ]
+    },
+    {
+        "name": "Ione",
+        "file_name": "ione",
+        "difficulties": [
+            4.0,
+            8.0,
+            11.9
+        ]
+    },
+    {
+        "name": "Seraphiel",
+        "file_name": "seraphiel",
+        "difficulties": [
+            5.0,
+            10.0,
+            14.2
+        ]
+    },
+    {
+        "name": "The Next Arcady",
+        "file_name": "arcady",
+        "difficulties": [
+            6.0,
+            10.6,
+            12.4
+        ]
+    },
+    {
+        "name": "All The Times",
+        "file_name": "times",
+        "difficulties": [
+            2.0,
+            6.0,
+            10.0,
+            11.6
+        ]
+    },
+    {
+        "name": "It Go (Cheryl Stelli remix)",
+        "file_name": "itgo",
+        "difficulties": [
+            5.0,
+            10.6,
+            12.4
+        ]
+    },
+    {
+        "name": "execution_program",
+        "file_name": "execution",
+        "difficulties": [
+            6.0,
+            11.3,
+            15.6
+        ]
+    },
+    {
+        "name": "grode (Wyvren's Remix)",
+        "file_name": "grodermx",
+        "difficulties": [
+            5.0,
+            8.0,
+            13.6
+        ]
+    },
+    {
+        "name": "ASTELLION",
+        "file_name": "astellion",
+        "difficulties": [
+            1.0,
+            8.0,
+            12.0,
+            15.6
+        ]
+    },
+    {
+        "name": "MARENOL",
+        "file_name": "marenol",
+        "difficulties": [
+            0.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "name": "Simulated Reality",
+        "file_name": "simulated",
+        "difficulties": [
+            6.0,
+            12.2,
+            13.8
+        ]
+    },
+    {
+        "name": "safe_state (MANIAQ Sound Team Remix)",
+        "file_name": "safestate",
+        "difficulties": [
+            4.0,
+            9.0,
+            13.1
+        ]
+    },
+    {
+        "name": "SUPERNOVA",
+        "file_name": "supernova",
+        "difficulties": [
+            8.0,
+            12.6,
+            14.9,
+            15.7
+        ]
+    },
+    {
+        "name": "The Night of Fright",
+        "file_name": "nightfright",
+        "difficulties": [
+            6.0,
+            10.6,
+            14.1
+        ]
+    },
+    {
+        "name": "nullbreak",
+        "file_name": "nullbreak",
+        "difficulties": [
+            4.0,
+            9.0,
+            13.8
+        ]
+    },
+    {
+        "name": "WATAGASHI RUSH",
+        "file_name": "rush",
+        "difficulties": [
+            4.0,
+            8.0,
+            12.1,
+            13.7
+        ]
+    },
+    {
+        "name": "Sternstunde",
+        "file_name": "sternstunde",
+        "difficulties": [
+            5.0,
+            9.6,
+            13.8
+        ]
+    },
+    {
+        "name": "CLAUDIA -estella-",
+        "file_name": "claudia",
+        "difficulties": [
+            6.0,
+            11.7,
+            14.5
+        ]
+    },
+    {
+        "name": "STARGAZERS",
+        "file_name": "stargazers",
+        "difficulties": [
+            7.0,
+            12.6,
+            15.8
+        ]
+    },
+    {
+        "name": "stop-motion",
+        "file_name": "stopmotion",
+        "difficulties": [
+            7.0,
+            12.0,
+            14.9,
+            15.7
+        ]
+    },
+    {
+        "name": "Trip Coffee",
+        "file_name": "tripcoffee",
+        "difficulties": [
+            4.0,
+            9.6,
+            13.7
+        ]
+    },
+    {
+        "name": "ULTIMATE",
+        "file_name": "ultimate",
+        "difficulties": [
+            6.0,
+            10.0,
+            12.1,
+            13.8
+        ]
+    },
+    {
+        "name": "Rafflesia",
+        "file_name": "rafflesia",
+        "difficulties": [
+            8.0,
+            12.8,
+            15.1
+        ]
+    },
+    {
+        "name": "CITY RIDE IN THE JUNGLE",
+        "file_name": "cityride",
+        "difficulties": [
+            7.0,
+            10.6,
+            12.9
+        ]
+    },
+    {
+        "name": "Faux Real (VIVID REDUX)",
+        "file_name": "fauxreal",
+        "difficulties": [
+            3.0,
+            8.0,
+            11.8
+        ]
+    },
+    {
+        "name": "Shattered Sky After Rain",
+        "file_name": "shatteredsky",
+        "difficulties": [
+            4.0,
+            8.0,
+            12.0
+        ]
+    },
+    {
+        "name": "Last Wish (vivid/stasis ver.)",
+        "file_name": "lastwish",
+        "difficulties": [
+            8.0,
+            12.9,
+            14.6,
+            15.6
+        ]
+    },
+    {
+        "name": "Aleph-0",
+        "file_name": "aleph",
+        "difficulties": [
+            5.0,
+            9.6,
+            13.4
+        ]
+    },
+    {
+        "name": "CLAUDIA -libertia-",
+        "file_name": "libertia",
+        "difficulties": [
+            8.0,
+            12.7,
+            15.0,
+            15.9
+        ]
+    },
+    {
+        "name": "NULCTRL",
+        "file_name": "nulctrl",
+        "difficulties": [
+            3.0,
+            9.0,
+            10.6,
+            11.8
+        ]
+    },
+    {
+        "name": "Battle in Enemy Territory",
+        "file_name": "biet",
+        "difficulties": [
+            5.0,
+            10.6,
+            13.1
+        ]
+    },
+    {
+        "name": "Star Dream -Millenium Vision-",
+        "file_name": "stardream",
+        "difficulties": [
+            1.0,
+            6.0,
+            9.6
+        ]
+    },
+    {
+        "name": "grode(decoherence)",
+        "file_name": "grodefrums",
+        "difficulties": [
+            5.0,
+            11.1,
+            14.2,
+            14.8
+        ]
+    }
+]
