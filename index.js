@@ -65,7 +65,7 @@ function renderResult() {
   for (let i in song_data) {
     let song = song_data[i];
     i = parseInt(i);
-    let song_difficulties = song["difficulties"];
+    let song_difficulties = song.difficulties;
     for (let j in song_difficulties) {
       if (!difficulties[j].checked) continue;
       let level = song_difficulties[j];
@@ -73,7 +73,7 @@ function renderResult() {
 
       let level_string = level.toFixed(1);
       if (!levels[level_string]) levels[level_string] = [];
-      levels[level_string].push([song["file_name"], parseInt(j), i]);
+      levels[level_string].push([song.file_name, parseInt(j), i]);
     }
   }
 
@@ -252,10 +252,10 @@ fetch("song_data.json").then((data) => {
     song_data = data;
     renderResult();
     for (let song of data) {
-      fetch(`jackets/${song["file_name"]}.png`).then((data) => {
+      fetch(`jackets/${song.file_name}.png`).then((data) => {
         data.blob().then((blob) => {
           createImageBitmap(blob).then((image) => {
-            song_jackets[song["file_name"]] = image;
+            song_jackets[song.file_name] = image;
             renderResult();
           });
         });
