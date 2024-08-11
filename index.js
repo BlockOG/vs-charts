@@ -227,19 +227,19 @@ copy_result.addEventListener("click", () =>
       ])
       .then(() => {
         if (old_timeout) clearTimeout(old_timeout);
-        copy_done.style = "display: initial";
-        copy_failed.style = "";
+        copy_done.style = "";
+        copy_failed.style = "display: none";
         old_timeout = setTimeout(() => {
-          copy_done.style = "";
+          copy_done.style = "display: none";
         }, 2000);
       })
       .catch((r) => {
         console.log(r);
         if (old_timeout) clearTimeout(old_timeout);
-        copy_done.style = "";
-        copy_failed.style = "display: initial";
+        copy_done.style = "display: none";
+        copy_failed.style = "";
         old_timeout = setTimeout(() => {
-          copy_failed.style = "";
+          copy_failed.style = "display: none";
         }, 2000);
       }),
   ),

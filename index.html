@@ -1,9 +1,16 @@
 <!doctype html>
-<html>
+<html style="color-scheme: dark">
     <head>
         <title>vivid/stasis chart list</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="stylesheet" href="index.css" />
+        <style>
+            body {
+                margin: 8px;
+                display: flex;
+                flex-direction: column;
+                max-height: calc(100vh - 8px * 2);
+            }
+        </style>
     </head>
     <body>
         <div>
@@ -24,10 +31,10 @@
         </div>
         <div>
             <button id="copy-result">Copy result image</button>
-            <span class="hidden" id="done">&check;</span>
-            <span class="hidden" id="failed">&cross;</span>
+            <span style="display: none" id="done">&check;</span>
+            <span style="display: none" id="failed">&cross;</span>
         </div>
-        <div class="scrollable">
+        <div style="overflow: auto">
             <canvas id="rendered-result" width="0" height="0"></canvas>
         </div>
 
