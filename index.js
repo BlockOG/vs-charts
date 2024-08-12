@@ -18,6 +18,7 @@ const copy_done = document.getElementById("done");
 const copy_failed = document.getElementById("failed");
 
 const song_jackets = {};
+let song_positions = {};
 let song_data;
 
 const num_font_data = {
@@ -51,6 +52,8 @@ function verifyLevel(level) {
 
 function renderResult() {
   if (!song_data) return;
+
+  song_positions = {};
 
   let level_range = [
     level_range_start.value == ""
@@ -150,6 +153,12 @@ function renderResult() {
       if (song_jackets[chart[0]]) {
         rendered_result_ctx.drawImage(song_jackets[chart[0]], x, 5 + i * 105);
       }
+      song_positions[chart[1] + chart[0]] = [
+        x,
+        5 + i * 105,
+        x + 100,
+        105 + i * 105,
+      ];
 
       x += 105;
     }
@@ -245,14 +254,33 @@ copy_result.addEventListener("click", () =>
   ),
 );
 
+rendered_result.addEventListener("click", (event) => {
+  let rect = rendered_result.getBoundingClientRect();
+  let x = event.clientX - rect.left;
+  let y = event.clientY - rect.top;
+
+  for (let chart in song_positions) {
+    let position = song_positions[chart];
+    if (
+      position[0] <= x &&
+      x < position[2] &&
+      position[1] <= y &&
+      y < position[3]
+    ) {
+      window.location.href = `/vs-charts/chart?chart=${chart.substr(1)}&diff=${chart[0]}`;
+    }
+  }
+});
+
 updateState();
 
-fetch("song_data.json").then((data) => {
+// TODO: implement caching
+fetch("/vs-charts/song_data.json").then((data) => {
   data.json().then((data) => {
     song_data = data;
     renderResult();
     for (let song of data) {
-      fetch(`jackets/${song.file_name}.png`).then((data) => {
+      fetch(`/vs-charts/jackets/${song.file_name}.png`).then((data) => {
         data.blob().then((blob) => {
           createImageBitmap(blob).then((image) => {
             song_jackets[song.file_name] = image;
@@ -264,7 +292,7 @@ fetch("song_data.json").then((data) => {
   });
 });
 
-fetch("num_font.png").then((data) => {
+fetch("/vs-charts/num_font.png").then((data) => {
   data.blob().then((blob) => {
     createImageBitmap(blob).then((image) => {
       num_font = image;
