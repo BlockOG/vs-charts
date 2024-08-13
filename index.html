@@ -3,6 +3,7 @@
     <head>
         <title>vivid/stasis chart list</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
             body {
                 margin: 8px;
@@ -10,17 +11,19 @@
                 flex-direction: column;
                 max-height: calc(100vh - 8px * 2);
             }
+
+            .right-aligned {
+                text-align: right;
+            }
         </style>
     </head>
     <body>
         <div>
             Level range:
-            <input type="text" id="level-range-start" size="3" />
+            <input type="text" class="right-aligned" id="level-range-start" size="3" />
             to
-            <input type="text" id="level-range-end" size="3" />
-            <a
-                style="float: right"
-                href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214"
+            <input type="text" class="right-aligned" id="level-range-end" size="3" />
+            <a style="float: right" href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214"
                 >This tool was permitted by Cheryl.</a
             >
         </div>
@@ -40,7 +43,7 @@
             <span style="display: none" id="failed">&cross;</span>
         </div>
         <div style="overflow: auto">
-            <canvas id="rendered-result" width="0" height="0"></canvas>
+            <canvas id="rendered-result" style="display: block" width="0" height="0"></canvas>
         </div>
 
         <noscript>

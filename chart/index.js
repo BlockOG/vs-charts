@@ -26,12 +26,12 @@ function updateTimes() {
   total_time.innerHTML = (chart_image.height / pixels_per_second).toFixed(2);
   chart_scroller.scrollTop =
     chart_image.height -
-    chart_scroller.offsetHeight -
+    chart_scroller.clientHeight -
     parsed_current_time * pixels_per_second;
   parsed_current_time =
     (chart_image.height -
       chart_scroller.scrollTop -
-      chart_scroller.offsetHeight) /
+      chart_scroller.clientHeight) /
     pixels_per_second;
 
   if (document.activeElement != current_time || !document.hasFocus())
@@ -84,7 +84,8 @@ if (url.searchParams.has("chart")) {
 
           title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]}`;
           chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
-          chart_image.style = "";
+          chart_image.style =
+            "display: block; margin-left: auto; margin-right: auto";
 
           if (url.searchParams.has("time")) {
             parsed_current_time = parseFloat(url.searchParams.get("time")) || 0;
@@ -95,11 +96,11 @@ if (url.searchParams.has("chart")) {
           window.addEventListener("resize", updateTimes);
 
           let update_search_time_timeout;
-          chart_scroller.addEventListener("scroll", () => {
+          addEventListener("scroll", () => {
             parsed_current_time =
               (chart_image.height -
                 chart_scroller.scrollTop -
-                chart_scroller.offsetHeight) /
+                chart_scroller.clientHeight) /
               pixels_per_second;
 
             if (document.activeElement != current_time || !document.hasFocus())
