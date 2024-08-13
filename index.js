@@ -267,7 +267,7 @@ rendered_result.addEventListener("click", (event) => {
       position[1] <= y &&
       y < position[3]
     ) {
-      window.location.href = `/vs-charts/chart?chart=${chart.substr(1)}&diff=${chart[0]}`;
+      window.location.href = `/vs-charts/chart?chart=${chart.slice(1)}&diff=${chart[0]}`;
     }
   }
 });
