@@ -56,12 +56,8 @@ function renderResult() {
   song_positions = {};
 
   let level_range = [
-    level_range_start.value == ""
-      ? -Infinity
-      : parseFloat(level_range_start.value) || 0,
-    level_range_end.value == ""
-      ? Infinity
-      : parseFloat(level_range_end.value) || 0,
+    level_range_start.value == "" ? -Infinity : parseFloat(level_range_start.value) || 0,
+    level_range_end.value == "" ? Infinity : parseFloat(level_range_end.value) || 0,
   ];
 
   let levels = {};
@@ -90,8 +86,7 @@ function renderResult() {
   for (let level in levels) {
     let level_charts = levels[level];
     level_charts.sort((a, b) => (a[1] == b[1] ? a[2] - b[2] : a[1] - b[1]));
-    if (level_charts.length > max_level_charts)
-      max_level_charts = level_charts.length;
+    if (level_charts.length > max_level_charts) max_level_charts = level_charts.length;
 
     let curr_before_dot = 0;
     let curr_after_dot = 0;
@@ -113,8 +108,7 @@ function renderResult() {
     sorted_levels.push([level, parseFloat(level)]);
   }
 
-  rendered_result.width =
-    25 + (before_dot + after_dot) * 5 + max_level_charts * 105;
+  rendered_result.width = 25 + (before_dot + after_dot) * 5 + max_level_charts * 105;
   rendered_result.height = 5 + sorted_levels.length * 105;
   sorted_levels.sort((a, b) => a[1] - b[1]);
 
@@ -146,19 +140,13 @@ function renderResult() {
     i = parseInt(i);
     let x = 25 + (before_dot + after_dot) * 5;
     for (let chart of levels[level]) {
-      rendered_result_ctx.fillStyle =
-        "#" + difficulty_colors[chart[1]].toString(16).padStart(6, "0");
+      rendered_result_ctx.fillStyle = "#" + difficulty_colors[chart[1]].toString(16).padStart(6, "0");
       rendered_result_ctx.fillRect(x - 2, 3 + i * 105, 104, 104);
 
       if (song_jackets[chart[0]]) {
         rendered_result_ctx.drawImage(song_jackets[chart[0]], x, 5 + i * 105);
       }
-      song_positions[chart[1] + chart[0]] = [
-        x,
-        5 + i * 105,
-        x + 100,
-        105 + i * 105,
-      ];
+      song_positions[chart[1] + chart[0]] = [x, 5 + i * 105, x + 100, 105 + i * 105];
 
       x += 105;
     }
@@ -261,12 +249,7 @@ rendered_result.addEventListener("click", (event) => {
 
   for (let chart in song_positions) {
     let position = song_positions[chart];
-    if (
-      position[0] <= x &&
-      x < position[2] &&
-      position[1] <= y &&
-      y < position[3]
-    ) {
+    if (position[0] <= x && x < position[2] && position[1] <= y && y < position[3]) {
       window.location.href = `/vs-charts/chart?chart=${chart.slice(1)}&diff=${chart[0]}`;
     }
   }
@@ -274,29 +257,18 @@ rendered_result.addEventListener("click", (event) => {
 
 updateState();
 
-// TODO: implement caching
-fetch("/vs-charts/song_data.json").then((data) => {
-  data.json().then((data) => {
-    song_data = data;
-    renderResult();
-    for (let song of data) {
-      fetch(`/vs-charts/jackets/${song.file_name}.png`).then((data) => {
-        data.blob().then((blob) => {
-          createImageBitmap(blob).then((image) => {
-            song_jackets[song.file_name] = image;
-            renderResult();
-          });
-        });
-      });
-    }
-  });
-});
-
-fetch("/vs-charts/num_font.png").then((data) => {
-  data.blob().then((blob) => {
-    createImageBitmap(blob).then((image) => {
-      num_font = image;
+cachedJsonFetch("/vs-charts/song_data.json").then((data) => {
+  song_data = data;
+  renderResult();
+  for (let song of data) {
+    cachedImageFetch(`/vs-charts/jackets/${song.file_name}.png`).then((image) => {
+      song_jackets[song.file_name] = image;
       renderResult();
     });
-  });
+  }
+});
+
+cachedImageFetch("/vs-charts/num_font.png").then((image) => {
+  num_font = image;
+  renderResult();
 });
