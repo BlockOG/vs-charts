@@ -25,7 +25,8 @@ let song_data;
 let difficulty;
 
 function updateTimes() {
-  total_time.innerHTML = (chart_image.height / pixels_per_second).toFixed(2);
+  if (difficulty == 3) total_time.innerHTML = (song_data.encore_duration || song_data.duration).toFixed(2);
+  else total_time.innerHTML = song_data.duration.toFixed(2);
   chart_scroller.scrollTop = chart_image.height - chart_scroller.clientHeight - parsed_current_time * pixels_per_second;
   parsed_current_time = (chart_image.height - chart_scroller.scrollTop - chart_scroller.clientHeight) / pixels_per_second;
 

@@ -1,4 +1,5 @@
-const version = "3.4.0.1";
+const game_version = "3.4.0.1";
+const version = "1.0.1";
 
 function convertBlobToBase64(blob) {
   return new Promise((resolve, _) => {
@@ -36,8 +37,9 @@ async function cachedJsonFetch(url) {
   }
 }
 
-if (localStorage.getItem("version") != version) {
+if (localStorage.getItem("version") != version || localStorage.getItem("game_version") != game_version) {
   console.log("clearing outdated cache");
   localStorage.clear();
   localStorage.setItem("version", version);
+  localStorage.setItem("game_version", game_version);
 }
