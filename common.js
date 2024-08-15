@@ -1,26 +1,37 @@
 const game_version = "3.4.0.1";
-const version = "1.0.1";
-
-function convertBlobToBase64(blob) {
-  return new Promise((resolve, _) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.readAsDataURL(blob);
-  });
-}
+const version = "1.0.2";
 
 async function cachedImageFetch(url) {
-  const base64CachedImg = localStorage.getItem(url);
-  if (base64CachedImg) {
-    const response = await fetch(base64CachedImg);
-    const blob = await response.blob();
-    return await createImageBitmap(blob);
+  const imgWidthData = localStorage.getItem(url);
+  if (imgWidthData) {
+    const firstComma = imgWidthData.indexOf(",");
+    const width = parseInt(imgWidthData.slice(0, firstComma));
+
+    const imgDataString = imgWidthData.slice(firstComma + 1);
+    const data = new Uint8ClampedArray(imgDataString.length);
+    for (let i in imgDataString) data[i] = imgDataString.charCodeAt(i);
+
+    const imgData = new ImageData(data, width);
+    return await createImageBitmap(imgData);
   } else {
     const response = await fetch(url);
     const blob = await response.blob();
     const image = await createImageBitmap(blob);
-    const base64String = await convertBlobToBase64(blob);
-    localStorage.setItem(url, base64String);
+
+    const canv = new OffscreenCanvas(image.width, image.height);
+    const ctx = canv.getContext("2d");
+    ctx.drawImage(image, 0, 0);
+    const imgData = ctx.getImageData(0, 0, image.width, image.height);
+    localStorage.setItem(
+      url,
+      `${image.width},${Array.from(imgData.data)
+        .map((i) => String.fromCharCode(i))
+        .join("")}`,
+    );
+    delete imgData;
+    delete ctx;
+    delete canv;
+
     return image;
   }
 }
