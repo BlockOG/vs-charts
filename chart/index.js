@@ -20,6 +20,7 @@ const difficulty_buttons = [
   document.getElementById("finale"),
   document.getElementById("encore"),
 ];
+const difficulty_level = document.getElementById("difficulty-level");
 
 let song_data;
 let difficulty;
@@ -62,7 +63,8 @@ if (url.searchParams.has("chart")) {
             difficulty = diff;
             difficulty_buttons[difficulty].disabled = true;
 
-            title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]}`;
+            difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
+            title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
             chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
 
             let url = new URL(window.location);
@@ -71,7 +73,8 @@ if (url.searchParams.has("chart")) {
           });
         }
 
-        title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]}`;
+        difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
+        title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
         chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
         chart_image.style = "display: block; margin-left: auto; margin-right: auto";
 
