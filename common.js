@@ -22,12 +22,16 @@ async function cachedImageFetch(url) {
     const ctx = canv.getContext("2d");
     ctx.drawImage(image, 0, 0);
     const imgData = ctx.getImageData(0, 0, image.width, image.height);
-    localStorage.setItem(
-      url,
-      `${image.width},${Array.from(imgData.data)
-        .map((i) => String.fromCharCode(i))
-        .join("")}`,
-    );
+    try {
+      localStorage.setItem(
+        url,
+        `${image.width},${Array.from(imgData.data)
+          .map((i) => String.fromCharCode(i))
+          .join("")}`,
+      );
+    } catch (e) {
+      window.location.reload();
+    }
     delete imgData;
     delete ctx;
     delete canv;
