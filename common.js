@@ -22,16 +22,12 @@ async function cachedImageFetch(url) {
     const ctx = canv.getContext("2d");
     ctx.drawImage(image, 0, 0);
     const imgData = ctx.getImageData(0, 0, image.width, image.height);
-    try {
-      localStorage.setItem(
-        url,
-        `${image.width},${Array.from(imgData.data)
-          .map((i) => String.fromCharCode(i))
-          .join("")}`,
-      );
-    } catch (e) {
-      window.location.reload();
-    }
+    localStorage.setItem(
+      url,
+      `${image.width},${Array.from(imgData.data)
+        .map((i) => String.fromCharCode(i))
+        .join("")}`,
+    );
     delete imgData;
     delete ctx;
     delete canv;
@@ -57,4 +53,5 @@ if (localStorage.getItem("version") != version || localStorage.getItem("game_ver
   localStorage.clear();
   localStorage.setItem("version", version);
   localStorage.setItem("game_version", game_version);
+  window.location.reload();
 }
