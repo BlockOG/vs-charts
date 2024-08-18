@@ -124,7 +124,7 @@ function renderResult() {
       img.title = `${chart[3]} ${difficulty_names[chart[1]]} ${level}`;
 
       link.className = `${difficulty_names[chart[1]]}-link`;
-      link.href = `/vs-charts/chart?chart=${chart[0]}&amp;diff=${chart[1]}`;
+      link.href = `/vs-charts/chart?chart=${chart[0]}&diff=${chart[1]}`;
       link.appendChild(img);
 
       jacket_row.appendChild(link);
