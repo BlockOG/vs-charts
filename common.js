@@ -1,4 +1,4 @@
-const game_version = "3.4.0.1";
+const game_version = "3.4.1.1";
 const version = "1.0.2";
 
 async function cachedImageFetch(url) {
