@@ -1,7 +1,4 @@
-const difficulty_colors = [0x1aff55, 0x1ab9ff, 0xff1a4a, 0xc342ff];
-
-const rendered_result = document.getElementById("rendered-result");
-const rendered_result_ctx = rendered_result.getContext("2d");
+let jackets_display = document.getElementById("jackets-display");
 
 const level_range_start = document.getElementById("level-range-start");
 const level_range_end = document.getElementById("level-range-end");
@@ -13,14 +10,9 @@ const difficulties = [
   document.getElementById("difficulty-encore"),
 ];
 
-const copy_result = document.getElementById("copy-result");
-const copy_done = document.getElementById("done");
-const copy_failed = document.getElementById("failed");
+const copy_link = document.getElementById("copy-link");
 
-const song_jackets = {};
-let song_positions = {};
 let song_data;
-
 const num_font_data = {
   ".": [0, 1],
   0: [1, 5],
@@ -34,7 +26,6 @@ const num_font_data = {
   8: [38, 5],
   9: [43, 5],
 };
-let num_font;
 
 function verifyLevel(level) {
   let dot = false;
@@ -53,8 +44,6 @@ function verifyLevel(level) {
 function renderResult() {
   if (!song_data) return;
 
-  song_positions = {};
-
   let level_range = [
     level_range_start.value == "" ? -Infinity : parseFloat(level_range_start.value) || 0,
     level_range_end.value == "" ? Infinity : parseFloat(level_range_end.value) || 0,
@@ -72,85 +61,86 @@ function renderResult() {
 
       let level_string = level.toFixed(1);
       if (!levels[level_string]) levels[level_string] = [];
-      levels[level_string].push([song.file_name, parseInt(j), i]);
+      levels[level_string].push([song.file_name, parseInt(j), i, song.name]);
     }
   }
 
-  let before_dot = 0;
-  let after_dot = 0;
-  let max_level_charts = 0;
-
-  let level_widths = {};
   let sorted_levels = [];
-
   for (let level in levels) {
     let level_charts = levels[level];
     level_charts.sort((a, b) => (a[1] == b[1] ? a[2] - b[2] : a[1] - b[1]));
-    if (level_charts.length > max_level_charts) max_level_charts = level_charts.length;
-
-    let curr_before_dot = 0;
-    let curr_after_dot = 0;
-    let dot = false;
-    for (let i in level) {
-      if (level[i] == ".") {
-        dot = true;
-      } else if (dot) {
-        curr_after_dot += 1 + num_font_data[level[i]][1];
-      } else {
-        curr_before_dot += num_font_data[level[i]][1] + 1;
-      }
-    }
-
-    if (curr_before_dot > before_dot) before_dot = curr_before_dot;
-    if (curr_after_dot > after_dot) after_dot = curr_after_dot;
-
-    level_widths[level] = [curr_before_dot, curr_after_dot];
     sorted_levels.push([level, parseFloat(level)]);
   }
 
-  rendered_result.width = 25 + (before_dot + after_dot) * 5 + max_level_charts * 105;
-  rendered_result.height = 5 + sorted_levels.length * 105;
   sorted_levels.sort((a, b) => a[1] - b[1]);
 
-  if (num_font) {
-    for (let i in sorted_levels) {
-      let level = sorted_levels[i][0];
-      i = parseInt(i);
-      let col = levels[level][0][1];
-      let x = 1 + before_dot - level_widths[level][0];
-      for (let c of level) {
-        rendered_result_ctx.drawImage(
-          num_font,
-          num_font_data[c][0] * 5,
-          35 * col,
-          num_font_data[c][1] * 5,
-          35,
-          x * 5,
-          40 + i * 105,
-          num_font_data[c][1] * 5,
-          35,
-        );
-        x += num_font_data[c][1] + 1;
-      }
-    }
-  }
+  let new_jackets_display = document.createElement("div");
+  new_jackets_display.id = "jackets-display";
+
+  let column_elements = [document.createElement("div"), document.createElement("div"), document.createElement("div")];
+  column_elements[0].className = "column";
+  column_elements[1].className = "column";
+  column_elements[2].className = "column";
+
+  let jacket_column = document.createElement("div");
+  jacket_column.className = "column";
 
   for (let i in sorted_levels) {
     let level = sorted_levels[i][0];
-    i = parseInt(i);
-    let x = 25 + (before_dot + after_dot) * 5;
-    for (let chart of levels[level]) {
-      rendered_result_ctx.fillStyle = "#" + difficulty_colors[chart[1]].toString(16).padStart(6, "0");
-      rendered_result_ctx.fillRect(x - 2, 3 + i * 105, 104, 104);
 
-      if (song_jackets[chart[0]]) {
-        rendered_result_ctx.drawImage(song_jackets[chart[0]], x, 5 + i * 105);
-      }
-      song_positions[chart[1] + chart[0]] = [x, 5 + i * 105, x + 100, 105 + i * 105];
+    let elements = [document.createElement("div"), document.createElement("div"), document.createElement("div")];
+    elements[0].className = "row before-dot-cc";
+    elements[1].className = "row dot-cc";
+    elements[2].className = "row after-dot-cc";
 
-      x += 105;
+    let c = 0;
+    let col = levels[level][0][1];
+    for (let j of level) {
+      if (j == ".") c = 1;
+      else if (c == 1) c = 2;
+
+      let cropped_num = document.createElement("div");
+      let num_img = document.createElement("img");
+      num_img.src = "/vs-charts/num_font.png";
+      num_img.style = `margin-left: ${-5 * num_font_data[j][0]}px; margin-top: ${-5 * 7 * col}px`;
+
+      cropped_num.style = `width: ${5 * num_font_data[j][1]}px; height: ${5 * 7}px; overflow: hidden`;
+      cropped_num.appendChild(num_img);
+
+      elements[c].appendChild(cropped_num);
     }
+
+    column_elements[0].appendChild(elements[0]);
+    column_elements[1].appendChild(elements[1]);
+    column_elements[2].appendChild(elements[2]);
+
+    let jacket_row = document.createElement("div");
+    jacket_row.className = "jacket-row";
+
+    for (let chart of levels[level]) {
+      let link = document.createElement("a");
+      let img = document.createElement("img");
+      img.src = `/vs-charts/jackets/${chart[0]}.png`;
+      img.title = `${chart[3]} ${difficulty_names[chart[1]]} ${level}`;
+
+      link.className = `${difficulty_names[chart[1]]}-link`;
+      link.href = `/vs-charts/chart?chart=${chart[0]}&amp;diff=${chart[1]}`;
+      link.appendChild(img);
+
+      jacket_row.appendChild(link);
+    }
+
+    jacket_column.appendChild(jacket_row);
   }
+
+  let cc_element = document.createElement("div");
+  cc_element.className = "row";
+  cc_element.append(...column_elements);
+
+  new_jackets_display.appendChild(cc_element);
+  new_jackets_display.appendChild(jacket_column);
+  jackets_display.replaceWith(new_jackets_display);
+  jackets_display = new_jackets_display;
 }
 
 function setSearchParams() {
@@ -213,62 +203,11 @@ level_range_end.addEventListener("input", () => {
 });
 difficulties.forEach((diff) => diff.addEventListener("input", updateState));
 
-let old_timeout;
-copy_result.addEventListener("click", () =>
-  rendered_result.toBlob((blob) =>
-    navigator.clipboard
-      .write([
-        new ClipboardItem({
-          "image/png": blob,
-        }),
-      ])
-      .then(() => {
-        if (old_timeout) clearTimeout(old_timeout);
-        copy_done.style = "";
-        copy_failed.style = "display: none";
-        old_timeout = setTimeout(() => {
-          copy_done.style = "display: none";
-        }, 2000);
-      })
-      .catch((r) => {
-        console.log(r);
-        if (old_timeout) clearTimeout(old_timeout);
-        copy_done.style = "display: none";
-        copy_failed.style = "";
-        old_timeout = setTimeout(() => {
-          copy_failed.style = "display: none";
-        }, 2000);
-      }),
-  ),
-);
-
-rendered_result.addEventListener("click", (event) => {
-  let rect = rendered_result.getBoundingClientRect();
-  let x = event.clientX - rect.left;
-  let y = event.clientY - rect.top;
-
-  for (let chart in song_positions) {
-    let position = song_positions[chart];
-    if (position[0] <= x && x < position[2] && position[1] <= y && y < position[3]) {
-      window.location.href = `/vs-charts/chart?chart=${chart.slice(1)}&diff=${chart[0]}`;
-    }
-  }
-});
+copy_link.addEventListener("click", () => navigator.clipboard.writeText(window.location.href));
 
 updateState();
 
 cachedJsonFetch("/vs-charts/song_data.json").then((data) => {
   song_data = data;
-  renderResult();
-  for (let song of data) {
-    cachedImageFetch(`/vs-charts/jackets/${song.file_name}.png`).then((image) => {
-      song_jackets[song.file_name] = image;
-      renderResult();
-    });
-  }
-});
-
-cachedImageFetch("/vs-charts/num_font.png").then((image) => {
-  num_font = image;
   renderResult();
 });

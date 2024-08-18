@@ -1,6 +1,3 @@
-const difficulty_colors = [0x1aff55, 0x1ab9ff, 0xff1a4a, 0xc342ff];
-const difficulty_names = ["opening", "middle", "finale", "encore"];
-
 const scroll_speed = 10.0;
 const pixels_per_second = 100 + 20 * scroll_speed;
 

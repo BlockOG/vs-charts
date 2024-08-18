@@ -10,10 +10,74 @@
                 display: flex;
                 flex-direction: column;
                 max-height: calc(100vh - 8px * 2);
+                image-rendering: pixelated;
             }
 
             .right-aligned {
                 text-align: right;
+            }
+
+            .opening-link {
+                outline: solid 2px #1aff55;
+            }
+
+            .middle-link {
+                outline: solid 2px #1ab9ff;
+            }
+
+            .finale-link {
+                outline: solid 2px #ff1a4a;
+            }
+
+            .encore-link {
+                outline: solid 2px #c342ff;
+            }
+
+            .jacket-row {
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+                min-height: 100px;
+                height: 100px;
+            }
+
+            .before-dot-cc {
+                min-height: 100px;
+                height: 100px;
+                justify-content: end;
+                align-items: center;
+            }
+
+            .dot-cc {
+                min-height: 100px;
+                height: 100px;
+                align-items: center;
+            }
+
+            .after-dot-cc {
+                min-height: 100px;
+                height: 100px;
+                align-items: center;
+            }
+
+            .row {
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+            }
+
+            .column {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            #jackets-display {
+                display: flex;
+                flex-direction: row;
+                gap: 15px;
+                padding: 5px;
+                overflow: auto;
             }
         </style>
     </head>
@@ -38,12 +102,77 @@
             <input type="checkbox" id="difficulty-encore" checked />
         </div>
         <div>
-            <button id="copy-result">Copy result image</button>
-            <span style="display: none" id="done">&check;</span>
-            <span style="display: none" id="failed">&cross;</span>
+            <button id="copy-link">Copy link</button>
         </div>
-        <div style="overflow: auto">
-            <canvas id="rendered-result" style="display: block" width="0" height="0"></canvas>
+        <div id="jackets-display">
+            <div class="row">
+                <div class="column">
+                    <div class="row before-dot-cc">
+                        <div style="width: 10px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: -30px" />
+                        </div>
+                        <div style="width: 25px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: -5px" />
+                        </div>
+                    </div>
+                    <div class="row before-dot-cc">
+                        <div style="width: 25px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: -5px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="row dot-cc">
+                        <div style="width: 5px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: 0px" />
+                        </div>
+                    </div>
+                    <div class="row dot-cc">
+                        <div style="width: 5px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: 0px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="row after-dot-cc">
+                        <div style="width: 25px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: -5px" />
+                        </div>
+                    </div>
+                    <div class="row after-dot-cc">
+                        <div style="width: 10px; height: 35px; overflow: hidden">
+                            <img src="/vs-charts/num_font.png" style="margin-left: -30px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="jacket-row">
+                    <a class="opening-link" href="/vs-charts/chart?chart=marenol&amp;diff=0">
+                        <img src="/vs-charts/jackets/marenol.png" title="MARENOL opening 0.0" />
+                    </a>
+                    <a class="middle-link" href="/vs-charts/chart?chart=marenol&amp;diff=1">
+                        <img src="/vs-charts/jackets/marenol.png" title="MARENOL middle 0.0" />
+                    </a>
+                    <a class="finale-link" href="/vs-charts/chart?chart=marenol&amp;diff=2">
+                        <img src="/vs-charts/jackets/marenol.png" title="MARENOL finale 0.0" />
+                    </a>
+                </div>
+                <div class="jacket-row">
+                    <a class="opening-link" href="/vs-charts/chart?chart=marenol&amp;diff=0">
+                        <img src="/vs-charts/jackets/marenol.png" title="MARENOL opening 0.0" />
+                    </a>
+                    <a class="middle-link" href="/vs-charts/chart?chart=marenol&amp;diff=1">
+                        <img src="/vs-charts/jackets/marenol.png" title="MARENOL middle 0.0" />
+                    </a>
+                    <a class="finale-link" href="/vs-charts/chart?chart=poisongarden&amp;diff=2">
+                        <img src="/vs-charts/jackets/poisongarden.png" title="Poison Garden finale 0.0" />
+                    </a>
+                    <a class="encore-link" href="/vs-charts/chart?chart=unraveling&amp;diff=3">
+                        <img src="/vs-charts/jackets/unraveling.png" title="Unraveling Stasis encore 16.8" />
+                    </a>
+                </div>
+            </div>
         </div>
 
         <noscript>

@@ -1,40 +1,8 @@
 const game_version = "3.4.1.1";
-const version = "1.0.2";
+const version = "1.0.3";
 
-async function cachedImageFetch(url) {
-  const imgWidthData = localStorage.getItem(url);
-  if (imgWidthData) {
-    const firstComma = imgWidthData.indexOf(",");
-    const width = parseInt(imgWidthData.slice(0, firstComma));
-
-    const imgDataString = imgWidthData.slice(firstComma + 1);
-    const data = new Uint8ClampedArray(imgDataString.length);
-    for (let i in imgDataString) data[i] = imgDataString.charCodeAt(i);
-
-    const imgData = new ImageData(data, width);
-    return await createImageBitmap(imgData);
-  } else {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const image = await createImageBitmap(blob);
-
-    const canv = new OffscreenCanvas(image.width, image.height);
-    const ctx = canv.getContext("2d");
-    ctx.drawImage(image, 0, 0);
-    const imgData = ctx.getImageData(0, 0, image.width, image.height);
-    localStorage.setItem(
-      url,
-      `${image.width},${Array.from(imgData.data)
-        .map((i) => String.fromCharCode(i))
-        .join("")}`,
-    );
-    delete imgData;
-    delete ctx;
-    delete canv;
-
-    return image;
-  }
-}
+const difficulty_colors = [0x1aff55, 0x1ab9ff, 0xff1a4a, 0xc342ff];
+const difficulty_names = ["opening", "middle", "finale", "encore"];
 
 async function cachedJsonFetch(url) {
   const cachedJson = localStorage.getItem(url);
@@ -49,9 +17,7 @@ async function cachedJsonFetch(url) {
 }
 
 if (localStorage.getItem("version") != version || localStorage.getItem("game_version") != game_version) {
-  console.log("clearing outdated cache");
   localStorage.clear();
   localStorage.setItem("version", version);
   localStorage.setItem("game_version", game_version);
-  window.location.reload();
 }
