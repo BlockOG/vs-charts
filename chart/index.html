@@ -5,52 +5,105 @@
         <link rel="icon" type="image/png" id="icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
+            @font-face {
+                font-family: monaco9;
+                src: url(/vs-charts/monaco.ttf);
+            }
+
             body {
                 margin: 0px;
+            }
+
+            .chart-image {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .right-aligned {
+                text-align: right;
+            }
+
+            .top-left {
+                position: fixed;
+                left: 8px;
+                top: 8px;
+            }
+
+            .top-right {
+                position: fixed;
+                right: 8px;
+                top: 8px;
+            }
+
+            .opening-text {
+                color: #1aff55;
+            }
+
+            .middle-text {
+                color: #1ab9ff;
+            }
+
+            .finale-text {
+                color: #ff1a4a;
+            }
+
+            .encore-text {
+                color: #c342ff;
+            }
+
+            .row {
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+            }
+
+            .column {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
             }
         </style>
     </head>
     <body>
         <div>
-            <div style="position: fixed; left: 8px; top: 8px">
-                <div>
+            <div class="top-left column">
+                <div class="row">
                     <a href="/vs-charts">All charts</a>
                 </div>
-                <div>
+                <div class="row">
                     <span>Scroll speed:</span>
-                    <input type="text" style="text-align: right" value="10.0" size="3" disabled />
+                    <input type="text" class="right-aligned" value="10.0" size="3" disabled />
                 </div>
-                <div>
+                <div class="row">
                     Time:
-                    <input type="text" style="text-align: right" value="0.0" size="5" id="current-time" />
+                    <input type="text" class="right-aligned" value="0.0" size="5" id="current-time" />
                     /
                     <span id="total-time">0.0</span>
                 </div>
-                <div>
+                <div class="row">
                     <button id="opening">OP</button>
                     <button id="middle">MD</button>
                     <button id="finale">FN</button>
                     <button id="encore" style="display: none">EN</button>
                 </div>
-                <div>
+                <div class="row">
                     Level:
                     <span id="difficulty-level"></span>
                 </div>
             </div>
-            <div style="position: fixed; right: 8px; top: 8px">
-                <a href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214"
-                    >This tool was permitted by Cheryl.</a
-                >
+            <div class="top-right column">
+                <a href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214">
+                    This tool was permitted by Cheryl.
+                </a>
             </div>
-            <img style="display: none" id="chart-image" />
+            <img class="chart-image" style="display: none" id="chart-image" />
         </div>
 
         <noscript>
             Please enable javascript, nothing here is possible without it.
             <style>
-                div:not(.always),
-                span:not(.always),
-                input:not(.always) {
+                div {
                     display: none;
                 }
             </style>

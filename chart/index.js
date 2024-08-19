@@ -31,6 +31,13 @@ function updateTimes() {
   if (document.activeElement != current_time || !document.hasFocus()) current_time.value = parsed_current_time.toFixed(2);
 }
 
+function diffChanged() {
+  difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
+  difficulty_level.className = `${difficulty_names[difficulty]}-text`;
+  title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
+  chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
+}
+
 let url = new URL(window.location);
 
 if (url.searchParams.has("chart")) {
@@ -60,9 +67,7 @@ if (url.searchParams.has("chart")) {
             difficulty = diff;
             difficulty_buttons[difficulty].disabled = true;
 
-            difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
-            title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
-            chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
+            diffChanged();
 
             let url = new URL(window.location);
             url.searchParams.set("diff", difficulty);
@@ -70,10 +75,8 @@ if (url.searchParams.has("chart")) {
           });
         }
 
-        difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
-        title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
-        chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
-        chart_image.style = "display: block; margin-left: auto; margin-right: auto";
+        diffChanged();
+        chart_image.style = "";
 
         if (url.searchParams.has("time")) {
           parsed_current_time = parseFloat(url.searchParams.get("time")) || 0;
