@@ -8,6 +8,7 @@ let parsed_current_time = 0.0;
 const current_time = document.getElementById("current-time");
 const total_time = document.getElementById("total-time");
 
+let chart;
 const chart_scroller = document.getElementById("chart-scroller");
 const chart_image = document.getElementById("chart-image");
 
@@ -41,7 +42,7 @@ function diffChanged() {
 let url = new URL(window.location);
 
 if (url.searchParams.has("chart")) {
-  let chart = url.searchParams.get("chart");
+  chart = url.searchParams.get("chart");
   icon.href = `/vs-charts/jackets/${chart}.png`;
 
   cachedJsonFetch("/vs-charts/song_data.json").then((data) => {
