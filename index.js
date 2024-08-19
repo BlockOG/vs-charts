@@ -185,13 +185,6 @@ difficulties.forEach((diff) => diff.addEventListener("input", updateState));
 
 copy_link.addEventListener("click", () => navigator.clipboard.writeText(window.location.href));
 
-function setMaxHeight() {
-  document.body.style = `max-height: ${window.innerHeight - 8 * 2}px`;
-}
-
-window.addEventListener("resize", setMaxHeight);
-setMaxHeight();
-
 updateState();
 
 cachedJsonFetch("/vs-charts/song_data.json").then((data) => {
