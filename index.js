@@ -78,13 +78,16 @@ function renderResult() {
   for (let i in sorted_levels) {
     let level = sorted_levels[i][0];
 
-    let level_row = document.createElement("span");
-    level_row.className = `${difficulty_names[levels[level][0][1]]}-text`;
-    level_row.innerHTML = level;
+    let level_div = document.createElement("div");
+    
+    let level_elem = document.createElement("span");
+    level_elem.className = `${difficulty_names[levels[level][0][1]]}-text`;
+    level_elem.innerHTML = level;
 
-    if (level[level.length - 1] == "1") level_row.style = "padding-right: 15px";
+    if (level[level.length - 1] == "1") level_elem.style = "padding-right: 15px";
 
-    level_column.appendChild(level_row);
+    level_div.appendChild(level_elem);
+    level_column.appendChild(level_div);
 
     let jacket_row = document.createElement("div");
     jacket_row.className = "jacket-row";
