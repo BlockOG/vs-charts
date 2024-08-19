@@ -5,10 +5,16 @@
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
+            @font-face {
+                font-family: monaco9;
+                src: url(/vs-charts/monaco.ttf);
+            }
+
             body {
                 margin: 8px;
                 display: flex;
                 flex-direction: column;
+                gap: 2px;
                 max-height: calc(100vh - 8px * 2);
                 image-rendering: pixelated;
             }
@@ -33,31 +39,41 @@
                 outline: solid 2px #c342ff;
             }
 
+            .opening-text {
+                color: #1aff55;
+            }
+
+            .middle-text {
+                color: #1ab9ff;
+            }
+
+            .finale-text {
+                color: #ff1a4a;
+            }
+
+            .encore-text {
+                color: #c342ff;
+            }
+
             .jacket-row {
                 display: flex;
                 flex-direction: row;
                 gap: 5px;
-                min-height: 100px;
-                height: 100px;
             }
 
-            .before-dot-cc {
-                min-height: 100px;
+            .jacket-row a {
                 height: 100px;
-                justify-content: end;
-                align-items: center;
+                width: 100px;
             }
 
-            .dot-cc {
-                min-height: 100px;
-                height: 100px;
-                align-items: center;
+            .level-column {
+                font-family: monaco9;
+                font-size: 80px;
             }
 
-            .after-dot-cc {
+            .level-column span {
+                text-align: right;
                 min-height: 100px;
-                height: 100px;
-                align-items: center;
             }
 
             .row {
@@ -75,23 +91,26 @@
             #jackets-display {
                 display: flex;
                 flex-direction: row;
-                gap: 15px;
+                gap: 10px;
                 padding: 5px;
                 overflow: auto;
             }
         </style>
     </head>
     <body>
-        <div>
+        <div class="row" style="flex-wrap: wrap">
             Level range:
             <input type="text" class="right-aligned" id="level-range-start" size="3" />
             to
             <input type="text" class="right-aligned" id="level-range-end" size="3" />
-            <a style="float: right" href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214"
-                >This tool was permitted by Cheryl.</a
-            >
+
+            <input type="search" style="margin-left: auto; margin-right: auto" id="level-search" placeholder="Search" />
+
+            <a href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214">
+                This tool was permitted by Cheryl.
+            </a>
         </div>
-        <div>
+        <div class="row" style="flex-wrap: wrap">
             OP:
             <input type="checkbox" id="difficulty-opening" checked />
             MD:
@@ -101,7 +120,7 @@
             EN:
             <input type="checkbox" id="difficulty-encore" checked />
         </div>
-        <div>
+        <div class="row" style="flex-wrap: wrap">
             <button id="copy-link">Copy link</button>
         </div>
         <div id="jackets-display"></div>

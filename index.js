@@ -3,6 +3,8 @@ let jackets_display = document.getElementById("jackets-display");
 const level_range_start = document.getElementById("level-range-start");
 const level_range_end = document.getElementById("level-range-end");
 
+const level_search = document.getElementById("level-search");
+
 const difficulties = [
   document.getElementById("difficulty-opening"),
   document.getElementById("difficulty-middle"),
@@ -13,19 +15,6 @@ const difficulties = [
 const copy_link = document.getElementById("copy-link");
 
 let song_data;
-const num_font_data = {
-  ".": [0, 1],
-  0: [1, 5],
-  1: [6, 2],
-  2: [8, 5],
-  3: [13, 5],
-  4: [18, 5],
-  5: [23, 5],
-  6: [28, 5],
-  7: [33, 5],
-  8: [38, 5],
-  9: [43, 5],
-};
 
 function verifyLevel(level) {
   let dot = false;
@@ -52,6 +41,9 @@ function renderResult() {
   let levels = {};
   for (let i in song_data) {
     let song = song_data[i];
+    if (!song.name.toLowerCase().includes(level_search.value.toLowerCase()) && !song.file_name.includes(level_search.value.toLowerCase()))
+      continue;
+
     i = parseInt(i);
     let song_difficulties = song.difficulties;
     for (let j in song_difficulties) {
@@ -77,10 +69,8 @@ function renderResult() {
   let new_jackets_display = document.createElement("div");
   new_jackets_display.id = "jackets-display";
 
-  let column_elements = [document.createElement("div"), document.createElement("div"), document.createElement("div")];
-  column_elements[0].className = "column";
-  column_elements[1].className = "column";
-  column_elements[2].className = "column";
+  let level_column = document.createElement("div");
+  level_column.className = "column level-column";
 
   let jacket_column = document.createElement("div");
   jacket_column.className = "column";
@@ -88,31 +78,13 @@ function renderResult() {
   for (let i in sorted_levels) {
     let level = sorted_levels[i][0];
 
-    let elements = [document.createElement("div"), document.createElement("div"), document.createElement("div")];
-    elements[0].className = "row before-dot-cc";
-    elements[1].className = "row dot-cc";
-    elements[2].className = "row after-dot-cc";
+    let level_row = document.createElement("span");
+    level_row.className = `${difficulty_names[levels[level][0][1]]}-text`;
+    level_row.innerHTML = level;
 
-    let c = 0;
-    let col = levels[level][0][1];
-    for (let j of level) {
-      if (j == ".") c = 1;
-      else if (c == 1) c = 2;
+    if (level[level.length - 1] == "1") level_row.style = "padding-right: 15px";
 
-      let cropped_num = document.createElement("div");
-      let num_img = document.createElement("img");
-      num_img.src = "/vs-charts/num_font.png";
-      num_img.style = `margin-left: ${-5 * num_font_data[j][0]}px; margin-top: ${-5 * 7 * col}px`;
-
-      cropped_num.style = `width: ${5 * num_font_data[j][1]}px; height: ${5 * 7}px; overflow: hidden`;
-      cropped_num.appendChild(num_img);
-
-      elements[c].appendChild(cropped_num);
-    }
-
-    column_elements[0].appendChild(elements[0]);
-    column_elements[1].appendChild(elements[1]);
-    column_elements[2].appendChild(elements[2]);
+    level_column.appendChild(level_row);
 
     let jacket_row = document.createElement("div");
     jacket_row.className = "jacket-row";
@@ -133,11 +105,7 @@ function renderResult() {
     jacket_column.appendChild(jacket_row);
   }
 
-  let cc_element = document.createElement("div");
-  cc_element.className = "row";
-  cc_element.append(...column_elements);
-
-  new_jackets_display.appendChild(cc_element);
+  new_jackets_display.appendChild(level_column);
   new_jackets_display.appendChild(jacket_column);
   jackets_display.replaceWith(new_jackets_display);
   jackets_display = new_jackets_display;
@@ -150,6 +118,10 @@ function setSearchParams() {
   let level_range = level_range_start.value + "-" + level_range_end.value;
   if (level_range != "-") {
     url.searchParams.set("level-range", level_range);
+  }
+
+  if (level_search.value != "") {
+    url.searchParams.set("level-search", level_search.value);
   }
 
   let disabled = difficulties.map((i) => 1 - i.checked).join("");
@@ -173,6 +145,10 @@ if (url.searchParams.has("level-range")) {
     if (verifyLevel(level_range[0])) level_range_start.value = level_range[0];
     if (verifyLevel(level_range[1])) level_range_end.value = level_range[1];
   }
+}
+
+if (url.searchParams.has("level-search")) {
+  level_search.value = url.searchParams.get("level-search");
 }
 
 if (url.searchParams.has("disabled")) {
@@ -201,6 +177,7 @@ level_range_end.addEventListener("input", () => {
     updateState();
   } else level_range_end.value = old_level_range_end;
 });
+level_search.addEventListener("input", updateState);
 difficulties.forEach((diff) => diff.addEventListener("input", updateState));
 
 copy_link.addEventListener("click", () => navigator.clipboard.writeText(window.location.href));
