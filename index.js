@@ -79,7 +79,7 @@ function renderResult() {
     let level = sorted_levels[i][0];
 
     let level_div = document.createElement("div");
-    
+
     let level_elem = document.createElement("span");
     level_elem.className = `${difficulty_names[levels[level][0][1]]}-text`;
     level_elem.innerHTML = level;
@@ -184,6 +184,13 @@ level_search.addEventListener("input", updateState);
 difficulties.forEach((diff) => diff.addEventListener("input", updateState));
 
 copy_link.addEventListener("click", () => navigator.clipboard.writeText(window.location.href));
+
+function setMaxHeight() {
+  document.body.style = `max-height: ${window.innerHeight - 8 * 2}px`;
+}
+
+window.addEventListener("resize", setMaxHeight);
+setMaxHeight();
 
 updateState();
 
