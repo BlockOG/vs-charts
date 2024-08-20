@@ -5,8 +5,10 @@ const title = document.getElementById("title");
 const icon = document.getElementById("icon");
 
 let parsed_current_time = 0.0;
+let chart_duration = 1.0;
 const current_time = document.getElementById("current-time");
 const total_time = document.getElementById("total-time");
+const current_percentage = document.getElementById("current-percentage");
 
 let chart;
 const chart_scroller = document.getElementById("chart-scroller");
@@ -18,18 +20,21 @@ const difficulty_buttons = [
   document.getElementById("finale"),
   document.getElementById("encore"),
 ];
+const chart_name = document.getElementById("chart-name");
 const difficulty_level = document.getElementById("difficulty-level");
 
 let song_data;
 let difficulty;
 
 function updateTimes() {
-  if (difficulty == 3) total_time.innerHTML = (song_data.encore_duration || song_data.duration).toFixed(2);
-  else total_time.innerHTML = song_data.duration.toFixed(2);
+  if (difficulty == 3) total_time.innerHTML = chart_duration = (song_data.encore_duration || song_data.duration).toFixed(2);
+  else total_time.innerHTML = chart_duration = song_data.duration.toFixed(2);
   chart_scroller.scrollTop = chart_image.height - chart_scroller.clientHeight - parsed_current_time * pixels_per_second;
   parsed_current_time = (chart_image.height - chart_scroller.scrollTop - chart_scroller.clientHeight) / pixels_per_second;
 
   if (document.activeElement != current_time || !document.hasFocus()) current_time.value = parsed_current_time.toFixed(2);
+  if (document.activeElement != current_percentage || !document.hasFocus())
+    current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
 }
 
 function diffChanged() {
@@ -49,6 +54,7 @@ if (url.searchParams.has("chart")) {
     for (let song of data) {
       if (song.file_name == chart) {
         song_data = song;
+        chart_name.innerHTML = song_data.name;
 
         if (url.searchParams.has("diff")) {
           difficulty = parseInt(url.searchParams.get("diff"));
@@ -92,6 +98,8 @@ if (url.searchParams.has("chart")) {
           parsed_current_time = (chart_image.height - chart_scroller.scrollTop - chart_scroller.clientHeight) / pixels_per_second;
 
           if (document.activeElement != current_time || !document.hasFocus()) current_time.value = parsed_current_time.toFixed(2);
+          if (document.activeElement != current_percentage || !document.hasFocus())
+            current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
 
           if (update_search_time_timeout) clearTimeout(update_search_time_timeout);
           update_search_time_timeout = setTimeout(() => {
@@ -104,6 +112,11 @@ if (url.searchParams.has("chart")) {
 
         current_time.addEventListener("input", () => {
           parsed_current_time = parseFloat(current_time.value) || parsed_current_time;
+          updateTimes();
+        });
+
+        current_percentage.addEventListener("input", () => {
+          parsed_current_time = (parseFloat(current_percentage.value) / 100) * chart_duration || parsed_current_time;
           updateTimes();
         });
 

@@ -72,14 +72,23 @@
                     <a href="/vs-charts">All charts</a>
                 </div>
                 <div class="row">
+                    <span>Name:</span>
+                    <span id="chart-name"></span>
+                </div>
+                <div class="row">
                     <span>Scroll speed:</span>
                     <input type="text" class="right-aligned" value="10.0" size="3" disabled />
                 </div>
                 <div class="row">
                     Time:
-                    <input type="text" class="right-aligned" value="0.0" size="5" id="current-time" />
+                    <input type="text" class="right-aligned" value="0.00" size="5" id="current-time" />
                     /
                     <span id="total-time">0.0</span>
+                    <div class="row" style="gap: 2px">
+                        (
+                        <input type="text" class="right-aligned" value="0.00" size="5" id="current-percentage" />
+                        %)
+                    </div>
                 </div>
                 <div class="row">
                     <button id="opening">OP</button>
