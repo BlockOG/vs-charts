@@ -68,14 +68,14 @@ function ratingFromScore(score, bonus) {
   else if (950000 < score) res = (1000 * (score - 950000)) / 30000;
   else if (600000 < score) res = -7000 + (7000 * (score - 600000)) / 350000;
 
-  return Math.max(0, song_data.difficulties[difficulty] * 1000 + res + bonus * 500 - 500);
+  return Math.max(0, song_data.difficulties[difficulty] * 1000 + res + bonus * 250 - 500);
 }
 
 function scoreFromRating(rating, bonus) {
   if (rating < 0) return;
   else if (rating == 0) return 0;
 
-  rating -= song_data.difficulties[difficulty] * 1000 + bonus * 500 - 500;
+  rating -= song_data.difficulties[difficulty] * 1000 + bonus * 250 - 500;
 
   let res = 0;
   if (2000 < rating) return;
