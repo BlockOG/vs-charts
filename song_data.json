@@ -272,7 +272,7 @@
     },
     {
         "name": "Proper Rhythm",
-        "file_name": "properrhythm",
+        "file_name": "collab_prp",
         "duration": 149.725,
         "difficulties": [
             1.0,
@@ -762,7 +762,7 @@
     },
     {
         "name": "All The Times",
-        "file_name": "times",
+        "file_name": "collab_time",
         "duration": 158.897,
         "difficulties": [
             2.0,
@@ -773,7 +773,7 @@
     },
     {
         "name": "It Go (Cheryl Stelli remix)",
-        "file_name": "itgo",
+        "file_name": "collab_gormx",
         "duration": 156.0,
         "difficulties": [
             5.0,
@@ -937,7 +937,7 @@
     },
     {
         "name": "Trip Coffee",
-        "file_name": "tripcoffee",
+        "file_name": "collab_trip",
         "duration": 144.0,
         "difficulties": [
             4.0,
@@ -947,7 +947,7 @@
     },
     {
         "name": "ULTIMATE",
-        "file_name": "ultimate",
+        "file_name": "collab_ult",
         "duration": 166.457,
         "difficulties": [
             6.0,
@@ -958,7 +958,7 @@
     },
     {
         "name": "Rafflesia",
-        "file_name": "rafflesia",
+        "file_name": "collab_garden",
         "duration": 197.179,
         "difficulties": [
             8.0,
@@ -968,7 +968,7 @@
     },
     {
         "name": "CITY RIDE IN THE JUNGLE",
-        "file_name": "cityride",
+        "file_name": "collab_city",
         "duration": 138.182,
         "difficulties": [
             7.0,
@@ -978,7 +978,7 @@
     },
     {
         "name": "Faux Real (VIVID REDUX)",
-        "file_name": "fauxreal",
+        "file_name": "collab_real",
         "duration": 140.645,
         "difficulties": [
             3.0,
@@ -1041,7 +1041,7 @@
     },
     {
         "name": "Battle in Enemy Territory",
-        "file_name": "biet",
+        "file_name": "collab_battle",
         "duration": 168.0,
         "difficulties": [
             5.0,
@@ -1051,7 +1051,7 @@
     },
     {
         "name": "Star Dream -Millenium Vision-",
-        "file_name": "stardream",
+        "file_name": "collab_star",
         "duration": 126.857,
         "difficulties": [
             1.0,
