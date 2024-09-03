@@ -1,4 +1,4 @@
-const game_version = "3.4.1.1";
+const game_version = "3.4.1.2a";
 const version = "1.0.4";
 
 const difficulty_colors = [0x1aff55, 0x1ab9ff, 0xff1a4a, 0xc342ff];
