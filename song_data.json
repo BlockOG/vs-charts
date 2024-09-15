@@ -1069,5 +1069,15 @@
             14.4,
             15.2
         ]
+    },
+    {
+        "name": "Luxvinore",
+        "file_name": "tiebreaker1",
+        "duration": 157.241,
+        "difficulties": [
+            5.0,
+            10.6,
+            14.1
+        ]
     }
 ]
