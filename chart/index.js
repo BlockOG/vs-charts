@@ -1,5 +1,6 @@
-let scroll_speed = parseFloat(localStorage.getItem("scroll_speed")) || 10.0;
-localStorage.setItem("scroll_speed", scroll_speed);
+// let scroll_speed = parseFloat(localStorage.getItem("scroll_speed")) || 10.0;
+// localStorage.setItem("scroll_speed", scroll_speed);
+const scroll_speed = 10.0;
 let pixels_per_second = 100 + 20 * scroll_speed;
 
 const title = document.getElementById("title");
@@ -126,7 +127,8 @@ function diffChanged() {
     difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
     difficulty_level.className = `${difficulty_names[difficulty]}-text`;
     title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
-    chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}-${scroll_speed.toFixed(1)}.png`;
+    // chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}-${scroll_speed.toFixed(1)}.png`;
+    chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
 }
 
 let url = new URL(window.location);
@@ -209,28 +211,28 @@ if (url.searchParams.has("chart")) {
                         }, 100);
                     });
 
-                    scroll_speed_range.addEventListener("input", () => {
-                        scroll_speed = parseFloat(scroll_speed_range.value);
-                        localStorage.setItem("scroll_speed", scroll_speed);
-                        pixels_per_second = 100 + 20 * scroll_speed;
-                        scroll_speed_text.value = scroll_speed.toFixed(1);
+                    // scroll_speed_range.addEventListener("input", () => {
+                    //     scroll_speed = parseFloat(scroll_speed_range.value);
+                    //     localStorage.setItem("scroll_speed", scroll_speed);
+                    //     pixels_per_second = 100 + 20 * scroll_speed;
+                    //     scroll_speed_text.value = scroll_speed.toFixed(1);
 
-                        diffChanged();
-                        updateTimes();
-                    });
+                    //     diffChanged();
+                    //     updateTimes();
+                    // });
 
-                    scroll_speed_text.addEventListener("input", () => {
-                        let new_scroll_speed = parseFloat(scroll_speed_text.value);
-                        if (!isNaN(new_scroll_speed) && 1 <= new_scroll_speed && new_scroll_speed <= 20) {
-                            scroll_speed = Math.round(new_scroll_speed * 10) / 10;
-                            localStorage.setItem("scroll_speed", scroll_speed);
-                            pixels_per_second = 100 + 20 * scroll_speed;
-                            scroll_speed_range.value = scroll_speed;
+                    // scroll_speed_text.addEventListener("input", () => {
+                    //     let new_scroll_speed = parseFloat(scroll_speed_text.value);
+                    //     if (!isNaN(new_scroll_speed) && 1 <= new_scroll_speed && new_scroll_speed <= 20) {
+                    //         scroll_speed = Math.round(new_scroll_speed * 10) / 10;
+                    //         localStorage.setItem("scroll_speed", scroll_speed);
+                    //         pixels_per_second = 100 + 20 * scroll_speed;
+                    //         scroll_speed_range.value = scroll_speed;
 
-                            diffChanged();
-                            updateTimes();
-                        }
-                    });
+                    //         diffChanged();
+                    //         updateTimes();
+                    //     }
+                    // });
 
                     current_time.addEventListener("input", () => {
                         let new_value = parseFloat(current_time.value);
