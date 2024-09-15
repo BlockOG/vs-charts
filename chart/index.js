@@ -68,34 +68,6 @@ function updateTimes() {
         current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
 }
 
-function ratingFromScore(score, bonus) {
-    let res = -Infinity;
-    if (1008000 < score) res = 2000;
-    else if (1000000 < score) res = 1500 + (500 * (score - 1000000)) / 8000;
-    else if (980000 < score) res = 1000 + (500 * (score - 980000)) / 20000;
-    else if (950000 < score) res = (1000 * (score - 950000)) / 30000;
-    else if (600000 < score) res = -7000 + (7000 * (score - 600000)) / 350000;
-
-    return Math.max(0, song_data.difficulties[difficulty] * 1000 + res + bonus * 250 - 500);
-}
-
-function scoreFromRating(rating, bonus) {
-    if (rating < 0) return;
-    else if (rating == 0) return 0;
-
-    rating -= song_data.difficulties[difficulty] * 1000 + bonus * 250 - 500;
-
-    let res = 0;
-    if (2000 < rating) return;
-    else if (1500 < rating) res = 1000000 + (8000 * (rating - 1500)) / 500;
-    else if (1000 < rating) res = 980000 + (20000 * (rating - 1000)) / 500;
-    else if (0 < rating) res = 950000 + (30000 * rating) / 1000;
-    else if (-7000 < rating) res = 600000 + (350000 * (rating - -7000)) / 7000;
-    else return;
-
-    return res;
-}
-
 function setScoreRatingCalc() {
     if (score_rating_switch_selection) {
         score_rating_switch.innerHTML = "->";
