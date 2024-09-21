@@ -1040,6 +1040,17 @@
         ]
     },
     {
+        "name": "Synthesis.",
+        "file_name": "synthesis",
+        "duration": 192.0,
+        "difficulties": [
+            6.0,
+            10.6,
+            14.2,
+            14.8
+        ]
+    },
+    {
         "name": "Battle in Enemy Territory",
         "file_name": "collab_battle",
         "duration": 168.0,
