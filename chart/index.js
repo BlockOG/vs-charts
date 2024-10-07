@@ -12,6 +12,11 @@ const scroll_speed_text = document.getElementById("scroll-speed-text");
 scroll_speed_range.value = scroll_speed;
 scroll_speed_text.value = scroll_speed.toFixed(1);
 
+let parsed_scale = parseFloat(localStorage.getItem("scale")) || 1;
+const scale_text = document.getElementById("scale-text");
+
+scale_text.value = parsed_scale;
+
 let parsed_current_time = 0.0;
 let chart_duration = 1.0;
 const current_time = document.getElementById("current-time");
@@ -60,8 +65,12 @@ let difficulty;
 function updateTimes() {
     if (difficulty == 3) total_time.innerHTML = chart_duration = (song_data.encore_duration || song_data.duration).toFixed(2);
     else total_time.innerHTML = chart_duration = song_data.duration.toFixed(2);
-    chart_scroller.scrollTop = chart_image.height - chart_scroller.clientHeight - parsed_current_time * pixels_per_second;
-    parsed_current_time = (chart_image.height - chart_scroller.scrollTop - chart_scroller.clientHeight) / pixels_per_second;
+    chart_scroller.scrollTop =
+        (chart_image.height / parsed_scale - chart_scroller.clientHeight / parsed_scale - parsed_current_time * pixels_per_second) *
+        parsed_scale;
+    parsed_current_time =
+        (chart_image.height / parsed_scale - chart_scroller.scrollTop / parsed_scale - chart_scroller.clientHeight / parsed_scale) /
+        pixels_per_second;
 
     if (document.activeElement != current_time || !document.hasFocus()) current_time.value = parsed_current_time.toFixed(2);
     if (document.activeElement != current_percentage || !document.hasFocus())
@@ -154,7 +163,7 @@ if (url.searchParams.has("chart")) {
                     }
 
                     diffChanged();
-                    chart_image.style = "";
+                    chart_image.style = `width: ${91 * parsed_scale}px; outline-width: ${parsed_scale}px`;
 
                     if (url.searchParams.has("time")) {
                         parsed_current_time = parseFloat(url.searchParams.get("time")) || 0;
@@ -167,7 +176,10 @@ if (url.searchParams.has("chart")) {
                     let update_search_time_timeout;
                     addEventListener("scroll", () => {
                         parsed_current_time =
-                            (chart_image.height - chart_scroller.scrollTop - chart_scroller.clientHeight) / pixels_per_second;
+                            (chart_image.height / parsed_scale -
+                                chart_scroller.scrollTop / parsed_scale -
+                                chart_scroller.clientHeight / parsed_scale) /
+                            pixels_per_second;
 
                         if (document.activeElement != current_time || !document.hasFocus())
                             current_time.value = parsed_current_time.toFixed(2);
@@ -205,6 +217,17 @@ if (url.searchParams.has("chart")) {
                     //         updateTimes();
                     //     }
                     // });
+
+                    scale_text.addEventListener("input", () => {
+                        let new_scale = parseFloat(scale_text.value);
+                        if (!isNaN(new_scale)) {
+                            parsed_scale = new_scale;
+                            localStorage.setItem("scale", parsed_scale);
+
+                            chart_image.style = `width: ${91 * parsed_scale}px; outline-width: ${parsed_scale}px`;
+                            updateTimes();
+                        }
+                    });
 
                     current_time.addEventListener("input", () => {
                         let new_value = parseFloat(current_time.value);
