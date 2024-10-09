@@ -220,7 +220,7 @@ if (url.searchParams.has("chart")) {
 
                     scale_text.addEventListener("input", () => {
                         let new_scale = parseFloat(scale_text.value);
-                        if (!isNaN(new_scale)) {
+                        if (!isNaN(new_scale) && new_scale > 0) {
                             parsed_scale = new_scale;
                             localStorage.setItem("scale", parsed_scale);
 
