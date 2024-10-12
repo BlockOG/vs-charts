@@ -171,6 +171,8 @@ if (url.searchParams.has("disabled")) {
 let old_level_range_start = level_range_start.value;
 let old_level_range_end = level_range_end.value;
 
+updateState();
+
 level_range_start.addEventListener("input", () => {
     if (verifyLevel(level_range_start.value)) {
         old_level_range_start = level_range_start.value;
@@ -187,8 +189,6 @@ level_search.addEventListener("input", updateState);
 difficulties.forEach((diff) => diff.addEventListener("input", updateState));
 
 copy_link.addEventListener("click", () => navigator.clipboard.writeText(window.location.href));
-
-updateState();
 
 fetch("/vs-charts/song_data.json").then((data) => {
     data.json().then((data) => {
