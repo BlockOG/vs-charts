@@ -83,7 +83,11 @@ function setScoreRatingCalc() {
         rating_score.style = "display: none";
         score_rating.style = "";
 
-        score_rating_rating.innerHTML = ratingFromScore(parsed_score_rating_score, score_rating_selection).toFixed(2);
+        score_rating_rating.innerHTML = ratingFromScore(
+            song_data.difficulties[difficulty],
+            parsed_score_rating_score,
+            score_rating_selection
+        ).toFixed(2);
     } else {
         score_rating_switch.innerHTML = "<-";
         score_rating.style = "display: none";
@@ -92,7 +96,7 @@ function setScoreRatingCalc() {
         for (let i in rating_score_score_texts) {
             i = parseInt(i);
 
-            let score = scoreFromRating(parsed_rating_score_rating, i);
+            let score = scoreFromRating(song_data.difficulties[difficulty], parsed_rating_score_rating, i);
 
             if (score != undefined) {
                 rating_score_score_texts[i].innerHTML = score.toFixed(2);
