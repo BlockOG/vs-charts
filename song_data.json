@@ -26,7 +26,8 @@
         "difficulties": [
             3.0,
             8.0,
-            10.6
+            10.6,
+            12.9
         ]
     },
     {
@@ -592,7 +593,7 @@
         "duration": 167.892,
         "difficulties": [
             9.6,
-            12.5,
+            12.7,
             15.5,
             16.8
         ]
@@ -778,7 +779,7 @@
         "difficulties": [
             5.0,
             10.6,
-            12.4
+            12.7
         ]
     },
     {
@@ -1002,8 +1003,8 @@
         "duration": 217.261,
         "difficulties": [
             9.6,
-            13.0,
-            15.0,
+            13.2,
+            15.1,
             16.4
         ]
     },
@@ -1023,7 +1024,7 @@
         "duration": 170.582,
         "difficulties": [
             9.0,
-            12.7,
+            12.5,
             15.6,
             16.7
         ]
@@ -1110,6 +1111,48 @@
             9.6,
             12.3,
             14.7
+        ]
+    },
+    {
+        "name": "Dreams From Another World",
+        "file_name": "collab_dreams",
+        "duration": 150.923,
+        "difficulties": [
+            9.0,
+            12.9,
+            15.5
+        ]
+    },
+    {
+        "name": "Etiquette",
+        "file_name": "collab_et",
+        "duration": 137.618,
+        "difficulties": [
+            4.0,
+            10.0,
+            13.5,
+            14.0
+        ]
+    },
+    {
+        "name": "IGNITED",
+        "file_name": "collab_ign",
+        "duration": 160.5,
+        "difficulties": [
+            6.0,
+            12.3,
+            14.3
+        ]
+    },
+    {
+        "name": "SENT://INEL",
+        "file_name": "sentinel",
+        "duration": 207.067,
+        "difficulties": [
+            9.0,
+            13.0,
+            15.0,
+            16.8
         ]
     }
 ]
