@@ -23,10 +23,17 @@
             }
 
             .chart-image {
-                display: block;
+                display: flex;
+                flex-direction: column;
+                gap: 0px;
                 margin-left: auto;
                 margin-right: auto;
-                outline: solid #fff;
+                border-left: solid #fff;
+                border-right: solid #fff;
+            }
+
+            .chart-image > img {
+                display: block;
             }
 
             .right-aligned {
@@ -78,7 +85,7 @@
         <div>
             <div class="top-left column">
                 <div class="row">
-                    <a href="/vs-charts">All charts</a>
+                    <a href="/vs-charts/others">Boundary Shatter charts</a>
                 </div>
                 <div class="row">
                     <span>Name:</span>
@@ -106,60 +113,13 @@
                         %)
                     </div>
                 </div>
-                <div class="row">
-                    <button id="opening">OP</button>
-                    <button id="middle">MD</button>
-                    <button id="finale">FN</button>
-                    <button id="encore" style="display: none">EN</button>
-                </div>
-                <div class="row">
-                    Level:
-                    <span id="difficulty-level"></span>
-                </div>
-                <div class="row">
-                    Score
-                    <button id="score-rating-switch">-></button>
-                    Rating
-                </div>
-                <div id="score-rating" class="column">
-                    <div class="row">
-                        <input type="text" class="right-aligned" value="0" size="6" id="score-rating-score" />
-                        <button id="score-rating-na" disabled>NA</button>
-                        <button id="score-rating-fc">FC</button>
-                        <button id="score-rating-ac">AC</button>
-                    </div>
-                    <div class="row">
-                        <span id="score-rating-rating">0.00</span>
-                        rating
-                    </div>
-                </div>
-                <div id="rating-score" class="column" style="display: none">
-                    <div class="row">
-                        <input type="text" class="right-aligned" value="0" size="4" id="rating-score-rating" />
-                    </div>
-                    <div class="row">
-                        NA:
-                        <span id="rating-score-score-na">0</span>
-                        score
-                    </div>
-                    <div class="row">
-                        FC:
-                        <span id="rating-score-score-fc">0</span>
-                        score
-                    </div>
-                    <div class="row">
-                        AC:
-                        <span id="rating-score-score-ac">0</span>
-                        score
-                    </div>
-                </div>
             </div>
             <div class="top-right column">
                 <a href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214">
                     This tool was permitted by Cheryl.
                 </a>
             </div>
-            <img class="chart-image" style="display: none" id="chart-image" />
+            <div class="chart-image" id="chart-image"></div>
         </div>
 
         <noscript>

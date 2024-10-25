@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html style="color-scheme: dark">
     <head>
-        <title>vivid/stasis chart list</title>
+        <title>vivid/stasis boundary shatter list</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
@@ -47,6 +47,10 @@
                 outline: solid 2px #c342ff;
             }
 
+            .fallback-link {
+                outline: solid 2px #808080;
+            }
+
             .opening-text {
                 color: #1aff55;
             }
@@ -61,6 +65,10 @@
 
             .encore-text {
                 color: #c342ff;
+            }
+
+            .fallback-text {
+                color: #808080;
             }
 
             .jacket-row {
@@ -110,33 +118,17 @@
     </head>
     <body>
         <div class="row" style="flex-wrap: wrap">
-            Level range:
-            <input type="text" class="right-aligned" id="level-range-start" size="3" />
-            to
-            <input type="text" class="right-aligned" id="level-range-end" size="3" />
-
-            <input type="search" style="margin-left: auto" id="level-search" placeholder="Search" />
+            <input type="search" id="level-search" placeholder="Search" />
 
             <a style="margin-left: auto" href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214">
                 This tool was permitted by Cheryl.
             </a>
         </div>
         <div class="row" style="flex-wrap: wrap">
-            OP:
-            <input type="checkbox" id="difficulty-opening" checked />
-            MD:
-            <input type="checkbox" id="difficulty-middle" checked />
-            FN:
-            <input type="checkbox" id="difficulty-finale" checked />
-            EN:
-            <input type="checkbox" id="difficulty-encore" checked />
-
             <a style="margin-left: auto" href="https://github.com/BlockOG/vs-charts/issues">Any feedback is appreciated</a>
         </div>
         <div class="row" style="flex-wrap: wrap">
-            <button id="copy-link">Copy link</button>
-
-            <a style="margin-left: auto; color: #000" href="/vs-charts/others">ooo scawwy</a>
+            <a style="margin-left: auto" href="/vs-charts">All charts</a>
         </div>
         <div id="jackets-display"></div>
 
