@@ -195,7 +195,7 @@
         "file_name": "whatyoulove",
         "duration": 141.562,
         "difficulties": [
-            6.0,
+            5.0,
             9.0,
             12.3
         ]
@@ -370,7 +370,7 @@
         "file_name": "orphen",
         "duration": 154.8,
         "difficulties": [
-            7.0,
+            8.0,
             11.9,
             15.2
         ]
@@ -410,7 +410,7 @@
         "file_name": "tormented",
         "duration": 149.333,
         "difficulties": [
-            2.0,
+            4.0,
             10.6,
             13.9
         ]
@@ -521,7 +521,7 @@
         "file_name": "minus1",
         "duration": 147.586,
         "difficulties": [
-            6.0,
+            5.0,
             10.6,
             14.3
         ]
@@ -656,7 +656,7 @@
         "file_name": "opslimone",
         "duration": 132.571,
         "difficulties": [
-            3.0,
+            4.0,
             8.0,
             13.2
         ]
@@ -778,7 +778,7 @@
         "file_name": "collab_gormx",
         "duration": 156.0,
         "difficulties": [
-            5.0,
+            7.0,
             10.6,
             12.7
         ]
@@ -1063,6 +1063,27 @@
         ]
     },
     {
+        "name": "MVURBD",
+        "file_name": "collab_body",
+        "duration": 170.057,
+        "difficulties": [
+            5.0,
+            10.6,
+            13.1,
+            14.4
+        ]
+    },
+    {
+        "name": "Secret Illumination",
+        "file_name": "collab_secil",
+        "duration": 150.0,
+        "difficulties": [
+            3.0,
+            11.1,
+            13.1
+        ]
+    },
+    {
         "name": "Battle in Enemy Territory",
         "file_name": "collab_battle",
         "duration": 168.0,
@@ -1154,6 +1175,16 @@
             6.0,
             12.3,
             14.3
+        ]
+    },
+    {
+        "name": "Un-TECHNiCAL Reason",
+        "file_name": "untechnical",
+        "duration": 175.543,
+        "difficulties": [
+            6.0,
+            9.0,
+            14.2
         ]
     },
     {
