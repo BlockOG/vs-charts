@@ -999,6 +999,17 @@
         ]
     },
     {
+        "name": "APOCALYPSE CALL",
+        "file_name": "apocalypse",
+        "duration": 204.63,
+        "difficulties": [
+            10.0,
+            13.6,
+            16.9,
+            17.3
+        ]
+    },
+    {
         "name": "Surtr's Wish",
         "file_name": "surtr",
         "duration": 146.556,
@@ -1189,6 +1200,37 @@
         ]
     },
     {
+        "name": "micro.wav",
+        "file_name": "collab_wave",
+        "duration": 124.186,
+        "difficulties": [
+            5.0,
+            11.4,
+            13.9
+        ]
+    },
+    {
+        "name": "Rrhar'il",
+        "file_name": "collab_8boss1",
+        "duration": 132.632,
+        "difficulties": [
+            8.0,
+            13.4,
+            16.7
+        ]
+    },
+    {
+        "name": "Distorted Fate",
+        "file_name": "collab_8boss2",
+        "duration": 160.0,
+        "difficulties": [
+            7.0,
+            12.2,
+            15.3,
+            16.5
+        ]
+    },
+    {
         "name": "Un-TECHNiCAL Reason",
         "file_name": "untechnical",
         "duration": 175.543,
@@ -1207,6 +1249,17 @@
             13.0,
             15.2,
             16.8
+        ]
+    },
+    {
+        "name": "slic.hertz",
+        "file_name": "slic",
+        "duration": 124.138,
+        "difficulties": [
+            7.0,
+            11.6,
+            13.8,
+            13.8
         ]
     }
 ]
