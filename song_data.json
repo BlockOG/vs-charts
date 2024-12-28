@@ -724,6 +724,27 @@
         ]
     },
     {
+        "name": "stardust",
+        "file_name": "stardust",
+        "duration": 166.897,
+        "difficulties": [
+            8.0,
+            10.6,
+            14.0
+        ]
+    },
+    {
+        "name": "Gauntlet",
+        "file_name": "gauntlet",
+        "duration": 165.333,
+        "difficulties": [
+            5.0,
+            9.0,
+            12.4,
+            13.8
+        ]
+    },
+    {
         "name": "3.1V.C1",
         "file_name": "31vc1",
         "duration": 156.939,
@@ -908,6 +929,26 @@
         ]
     },
     {
+        "name": "final farewell -aquaregia-",
+        "file_name": "aquaregia",
+        "duration": 142.737,
+        "difficulties": [
+            3.0,
+            9.0,
+            12.7
+        ]
+    },
+    {
+        "name": "NONSENSE",
+        "file_name": "nonsense",
+        "duration": 131.368,
+        "difficulties": [
+            7.0,
+            11.6,
+            14.9
+        ]
+    },
+    {
         "name": "CLAUDIA -estella-",
         "file_name": "claudia",
         "duration": 164.4,
@@ -1000,6 +1041,17 @@
         ]
     },
     {
+        "name": "Prismatic Vortex",
+        "file_name": "prismatic",
+        "duration": 134.237,
+        "difficulties": [
+            4.0,
+            9.6,
+            11.6,
+            13.4
+        ]
+    },
+    {
         "name": "APOCALYPSE CALL",
         "file_name": "apocalypse",
         "duration": 204.63,
@@ -1011,6 +1063,16 @@
         ]
     },
     {
+        "name": "the more i carry on...",
+        "file_name": "moreicarry",
+        "duration": 160.0,
+        "difficulties": [
+            3.0,
+            9.0,
+            13.6
+        ]
+    },
+    {
         "name": "Surtr's Wish",
         "file_name": "surtr",
         "duration": 146.556,
@@ -1019,6 +1081,27 @@
             11.6,
             15.2,
             16.3
+        ]
+    },
+    {
+        "name": "heptagramme",
+        "file_name": "heptagramme",
+        "duration": 172.203,
+        "difficulties": [
+            7.0,
+            12.3,
+            14.4
+        ]
+    },
+    {
+        "name": "CONVERGENCE",
+        "file_name": "convergence",
+        "duration": 194.4,
+        "difficulties": [
+            9.0,
+            12.6,
+            15.3,
+            16.9
         ]
     },
     {
@@ -1086,6 +1169,16 @@
         ]
     },
     {
+        "name": "lost contact",
+        "file_name": "lostconnection",
+        "duration": 158.667,
+        "difficulties": [
+            5.0,
+            10.0,
+            12.7
+        ]
+    },
+    {
         "name": "MVURBD",
         "file_name": "collab_body",
         "duration": 170.057,
@@ -1138,6 +1231,16 @@
         ]
     },
     {
+        "name": "(execute.)",
+        "file_name": "execute",
+        "duration": 137.455,
+        "difficulties": [
+            6.0,
+            10.0,
+            13.3
+        ]
+    },
+    {
         "name": "Luxvinore",
         "file_name": "tiebreaker1",
         "duration": 157.241,
@@ -1156,6 +1259,16 @@
             12.2,
             14.7,
             16.2
+        ]
+    },
+    {
+        "name": "even at the end of the world, you left it",
+        "file_name": "attheend",
+        "duration": 171.2,
+        "difficulties": [
+            4.0,
+            9.6,
+            12.2
         ]
     },
     {
@@ -1217,7 +1330,7 @@
         "difficulties": [
             8.0,
             13.4,
-            16.7
+            16.6
         ]
     },
     {
@@ -1261,6 +1374,16 @@
             11.5,
             13.8,
             13.8
+        ]
+    },
+    {
+        "name": "Crimson Dance (vivid/stasis Edit)",
+        "file_name": "crimson",
+        "duration": 189.538,
+        "difficulties": [
+            8.0,
+            11.9,
+            15.0
         ]
     },
     {
