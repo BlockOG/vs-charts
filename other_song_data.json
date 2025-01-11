@@ -58,5 +58,11 @@
         "file_name": "dual",
         "duration": 221.704,
         "difficulty": "shatter"
+    },
+    {
+        "name": "Memories Sacrafice",
+        "file_name": "memories",
+        "duration": 159.654,
+        "difficulty": "shatter"
     }
 ]

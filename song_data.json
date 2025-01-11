@@ -909,6 +909,16 @@
         ]
     },
     {
+        "name": "Attractor Force",
+        "file_name": "attractor",
+        "duration": 141.277,
+        "difficulties": [
+            2.0,
+            6.0,
+            10.6
+        ]
+    },
+    {
         "name": "Synthesizer Party",
         "file_name": "synthesizerparty",
         "duration": 132.923,
@@ -939,6 +949,17 @@
         ]
     },
     {
+        "name": "Voltage Strike",
+        "file_name": "voltage",
+        "duration": 151.784,
+        "difficulties": [
+            6.0,
+            9.0,
+            12.5,
+            13.5
+        ]
+    },
+    {
         "name": "NONSENSE",
         "file_name": "nonsense",
         "duration": 131.368,
@@ -956,6 +977,17 @@
             6.0,
             11.7,
             15.1
+        ]
+    },
+    {
+        "name": "B3611V",
+        "file_name": "calypso",
+        "duration": 190.506,
+        "difficulties": [
+            9.6,
+            13.5,
+            15.6,
+            16.7
         ]
     },
     {
@@ -1060,6 +1092,16 @@
             13.6,
             16.9,
             17.3
+        ]
+    },
+    {
+        "name": "See You Move",
+        "file_name": "seeyoumove",
+        "duration": 120.0,
+        "difficulties": [
+            6.0,
+            10.6,
+            12.7
         ]
     },
     {
@@ -1395,6 +1437,16 @@
             6.0,
             9.0,
             14.1
+        ]
+    },
+    {
+        "name": "reFract::dense",
+        "file_name": "refract",
+        "duration": 134.71,
+        "difficulties": [
+            5.0,
+            10.0,
+            14.9
         ]
     },
     {
