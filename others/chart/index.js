@@ -29,6 +29,7 @@ const chart_scroller = document.getElementById("chart-scroller");
 const chart_image = document.getElementById("chart-image");
 
 const chart_name = document.getElementById("chart-name");
+const chart_bpm = document.getElementById("chart-bpm");
 
 let song_data = {};
 let difficulty;
@@ -76,6 +77,7 @@ if (url.searchParams.has("chart")) {
                 if (song.file_name == chart && song.difficulty == difficulty) {
                     song_data = song;
                     chart_name.innerHTML = song_data.name;
+                    chart_bpm.innerHTML = song_data.bpm;
 
                     height = song_data.duration * pixels_per_second;
                     diffChanged();

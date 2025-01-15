@@ -2,6 +2,7 @@
     {
         "name": "Acolyte",
         "file_name": "acolyte",
+        "bpm": 170.0,
         "duration": 176.471,
         "difficulties": [
             1.0,
@@ -13,6 +14,7 @@
     {
         "name": "Wavetapper",
         "file_name": "wavetapper",
+        "bpm": 112.0,
         "duration": 159.643,
         "difficulties": [
             3.0,
@@ -23,6 +25,7 @@
     {
         "name": "There",
         "file_name": "there",
+        "bpm": 127.0,
         "duration": 120.945,
         "encore_duration": 186.435,
         "difficulties": [
@@ -35,6 +38,7 @@
     {
         "name": "+ERABY+E CONNEC+10N",
         "file_name": "terabyte",
+        "bpm": 230.0,
         "duration": 188.87,
         "encore_duration": 170.087,
         "difficulties": [
@@ -47,6 +51,7 @@
     {
         "name": "FULi AUTO SHOOTER",
         "file_name": "fuli",
+        "bpm": 145.0,
         "duration": 129.103,
         "difficulties": [
             1.0,
@@ -57,6 +62,7 @@
     {
         "name": "Spell Diver",
         "file_name": "spelldiver",
+        "bpm": 180.0,
         "duration": 121.333,
         "difficulties": [
             5.0,
@@ -67,6 +73,7 @@
     {
         "name": "ENERGY SYNERGY MATRIX",
         "file_name": "esm",
+        "bpm": 160.0,
         "duration": 124.5,
         "difficulties": [
             5.0,
@@ -78,6 +85,7 @@
     {
         "name": "G e n g a o z o",
         "file_name": "gengaozo",
+        "bpm": 153.0,
         "duration": 164.706,
         "difficulties": [
             7.0,
@@ -88,6 +96,7 @@
     {
         "name": "The 89's Momentum",
         "file_name": "89momentum",
+        "bpm": 128.0,
         "duration": 135.938,
         "difficulties": [
             6.0,
@@ -98,6 +107,7 @@
     {
         "name": "GOODRAGE",
         "file_name": "goodrage",
+        "bpm": 222.0,
         "duration": 121.081,
         "difficulties": [
             4.0,
@@ -109,6 +119,7 @@
     {
         "name": "Crosshatch",
         "file_name": "crosshatch",
+        "bpm": 231.0,
         "duration": 106.494,
         "difficulties": [
             5.0,
@@ -119,6 +130,7 @@
     {
         "name": "Chronomia",
         "file_name": "chronomia",
+        "bpm": 227.0,
         "duration": 146.96,
         "difficulties": [
             2.0,
@@ -130,6 +142,7 @@
     {
         "name": "Pictured as Perfect",
         "file_name": "pictured",
+        "bpm": 190.0,
         "duration": 154.105,
         "difficulties": [
             4.0,
@@ -140,6 +153,7 @@
     {
         "name": "BADSECRET",
         "file_name": "badsecret",
+        "bpm": 178.0,
         "duration": 151.011,
         "difficulties": [
             8.0,
@@ -151,6 +165,7 @@
     {
         "name": "Credits",
         "file_name": "credits",
+        "bpm": 179.0,
         "duration": 142.123,
         "encore_duration": 139.441,
         "difficulties": [
@@ -163,6 +178,7 @@
     {
         "name": "\u2200",
         "file_name": "avalon",
+        "bpm": 245.0,
         "duration": 159.625,
         "difficulties": [
             4.0,
@@ -174,6 +190,7 @@
     {
         "name": "Tavgha",
         "file_name": "tavgha",
+        "bpm": 132.0,
         "duration": 150.909,
         "difficulties": [
             3.0,
@@ -184,6 +201,7 @@
     {
         "name": "Perfect ConfeCute!!",
         "file_name": "confecute",
+        "bpm": 177.0,
         "duration": 112.542,
         "difficulties": [
             6.0,
@@ -194,6 +212,7 @@
     {
         "name": "What You Love",
         "file_name": "whatyoulove",
+        "bpm": 128.0,
         "duration": 141.562,
         "difficulties": [
             5.0,
@@ -204,6 +223,7 @@
     {
         "name": "PYROMANIA",
         "file_name": "pyromania",
+        "bpm": 225.0,
         "duration": 171.733,
         "difficulties": [
             9.0,
@@ -215,6 +235,7 @@
     {
         "name": "septima",
         "file_name": "septima",
+        "bpm": 160.0,
         "duration": 166.5,
         "difficulties": [
             4.0,
@@ -225,6 +246,7 @@
     {
         "name": "obair-ghreis",
         "file_name": "obair",
+        "bpm": 174.0,
         "duration": 172.414,
         "difficulties": [
             5.0,
@@ -236,6 +258,7 @@
     {
         "name": "HTTPS",
         "file_name": "https",
+        "bpm": 190.0,
         "duration": 138.947,
         "difficulties": [
             3.0,
@@ -246,6 +269,7 @@
     {
         "name": "Lost City",
         "file_name": "lostcity",
+        "bpm": 254.0,
         "duration": 130.394,
         "difficulties": [
             1.0,
@@ -256,6 +280,7 @@
     {
         "name": "Asymmetry (takehirotei remix)",
         "file_name": "asymmetry",
+        "bpm": 177.0,
         "duration": 120.678,
         "difficulties": [
             3.0,
@@ -266,6 +291,7 @@
     {
         "name": "FULi AUTO BUSTER",
         "file_name": "fulibuster",
+        "bpm": 145.0,
         "duration": 120.828,
         "difficulties": [
             6.0,
@@ -276,6 +302,7 @@
     {
         "name": "Proper Rhythm",
         "file_name": "collab_prp",
+        "bpm": 109.0,
         "duration": 149.725,
         "difficulties": [
             1.0,
@@ -287,6 +314,7 @@
     {
         "name": "INFiNiTE ENERZY -Overdoze-",
         "file_name": "infiniteenergy",
+        "bpm": 180.0,
         "duration": 116.0,
         "difficulties": [
             2.0,
@@ -297,6 +325,7 @@
     {
         "name": "Nhelv",
         "file_name": "nhelv",
+        "bpm": 174.59,
         "duration": 159.459,
         "difficulties": [
             5.0,
@@ -307,6 +336,7 @@
     {
         "name": "Random",
         "file_name": "random",
+        "bpm": 132.0,
         "duration": 132.727,
         "difficulties": [
             5.0,
@@ -317,6 +347,7 @@
     {
         "name": "F1055",
         "file_name": "f1055",
+        "bpm": 178.0,
         "duration": 164.494,
         "difficulties": [
             3.0,
@@ -328,6 +359,7 @@
     {
         "name": "Doppelganger",
         "file_name": "doppelganger",
+        "bpm": 280.0,
         "duration": 145.682,
         "difficulties": [
             9.0,
@@ -338,6 +370,7 @@
     {
         "name": "hotline_ophiucus",
         "file_name": "hotline",
+        "bpm": 144.0,
         "duration": 201.667,
         "difficulties": [
             6.0,
@@ -348,6 +381,7 @@
     {
         "name": "Luminaria",
         "file_name": "luminaria",
+        "bpm": 227.0,
         "duration": 145.057,
         "difficulties": [
             1.0,
@@ -359,6 +393,7 @@
     {
         "name": "Options",
         "file_name": "options",
+        "bpm": 174.0,
         "duration": 131.034,
         "difficulties": [
             2.0,
@@ -369,6 +404,7 @@
     {
         "name": "Orphen",
         "file_name": "orphen",
+        "bpm": 200.0,
         "duration": 154.8,
         "difficulties": [
             8.0,
@@ -379,6 +415,7 @@
     {
         "name": "UTF-8000000000",
         "file_name": "utf",
+        "bpm": 222.0,
         "duration": 149.192,
         "difficulties": [
             4.0,
@@ -389,6 +426,7 @@
     {
         "name": "BPM",
         "file_name": "bpm",
+        "bpm": 170.0,
         "duration": 172.235,
         "difficulties": [
             4.0,
@@ -399,6 +437,7 @@
     {
         "name": "Fixations Toward the Stars",
         "file_name": "fixations",
+        "bpm": 150.0,
         "duration": 169.6,
         "difficulties": [
             4.0,
@@ -409,6 +448,7 @@
     {
         "name": "Tormented World",
         "file_name": "tormented",
+        "bpm": 180.0,
         "duration": 149.333,
         "difficulties": [
             4.0,
@@ -419,6 +459,7 @@
     {
         "name": "LET THE CREATION BEGIN",
         "file_name": "creation",
+        "bpm": 235.0,
         "duration": 151.149,
         "difficulties": [
             3.0,
@@ -429,6 +470,7 @@
     {
         "name": "grode",
         "file_name": "grode",
+        "bpm": 140.0,
         "duration": 126.857,
         "difficulties": [
             1.0,
@@ -440,6 +482,7 @@
     {
         "name": "Signals Afar",
         "file_name": "signals",
+        "bpm": 160.0,
         "duration": 142.5,
         "difficulties": [
             2.0,
@@ -450,6 +493,7 @@
     {
         "name": "QUASAR",
         "file_name": "quasar",
+        "bpm": 360.0,
         "duration": 125.333,
         "difficulties": [
             7.0,
@@ -460,6 +504,7 @@
     {
         "name": "APO11O",
         "file_name": "apollo",
+        "bpm": 196.0,
         "duration": 142.041,
         "difficulties": [
             4.0,
@@ -470,6 +515,7 @@
     {
         "name": "3, 2, 1, Let's Go",
         "file_name": "321",
+        "bpm": 321.0,
         "duration": 131.589,
         "difficulties": [
             5.0,
@@ -480,6 +526,7 @@
     {
         "name": "The Last Page",
         "file_name": "lastpage",
+        "bpm": 195.0,
         "duration": 140.308,
         "difficulties": [
             3.0,
@@ -490,6 +537,7 @@
     {
         "name": "Farewell to Syzygia",
         "file_name": "farewell",
+        "bpm": 202.0,
         "duration": 171.447,
         "difficulties": [
             8.0,
@@ -500,6 +548,7 @@
     {
         "name": "Dear My Endsummer",
         "file_name": "endsummer",
+        "bpm": 195.0,
         "duration": 155.077,
         "difficulties": [
             8.0,
@@ -510,6 +559,7 @@
     {
         "name": "Macropolis",
         "file_name": "macro",
+        "bpm": 128.0,
         "duration": 125.625,
         "difficulties": [
             3.0,
@@ -520,6 +570,7 @@
     {
         "name": "-1",
         "file_name": "minus1",
+        "bpm": 174.0,
         "duration": 147.586,
         "difficulties": [
             5.0,
@@ -530,6 +581,7 @@
     {
         "name": "POISON GARDEN",
         "file_name": "poisongarden",
+        "bpm": 180.0,
         "duration": 161.908,
         "difficulties": [
             4.0,
@@ -540,6 +592,7 @@
     {
         "name": "Singularity",
         "file_name": "singularity",
+        "bpm": 147.0,
         "duration": 166.531,
         "difficulties": [
             4.0,
@@ -550,6 +603,7 @@
     {
         "name": "energy trixxx",
         "file_name": "energy",
+        "bpm": 160.0,
         "duration": 141.0,
         "difficulties": [
             7.0,
@@ -561,6 +615,7 @@
     {
         "name": "Chronoexplorers",
         "file_name": "chrono",
+        "bpm": 267.0,
         "duration": 147.641,
         "difficulties": [
             8.0,
@@ -572,6 +627,7 @@
     {
         "name": "Courage",
         "file_name": "courage",
+        "bpm": 170.0,
         "duration": 165.176,
         "difficulties": [
             3.0,
@@ -582,6 +638,7 @@
     {
         "name": "Cosmogyral",
         "file_name": "cosmo",
+        "bpm": 180.0,
         "duration": 145.333,
         "difficulties": [
             5.0,
@@ -592,6 +649,7 @@
     {
         "name": "Unraveling Stasis",
         "file_name": "unraveling",
+        "bpm": 223.0,
         "duration": 167.892,
         "difficulties": [
             9.6,
@@ -603,6 +661,7 @@
     {
         "name": "Prime",
         "file_name": "prime",
+        "bpm": 199.9,
         "duration": 145.273,
         "difficulties": [
             5.0,
@@ -613,6 +672,7 @@
     {
         "name": "Happy Go Lucky!!!",
         "file_name": "happygo",
+        "bpm": 246.0,
         "duration": 159.024,
         "difficulties": [
             5.0,
@@ -624,6 +684,7 @@
     {
         "name": "Cyclical Rebellion",
         "file_name": "cyclical",
+        "bpm": 180.0,
         "duration": 140.0,
         "difficulties": [
             8.0,
@@ -634,6 +695,7 @@
     {
         "name": "exterminate()",
         "file_name": "exterminate",
+        "bpm": 170.0,
         "duration": 155.294,
         "difficulties": [
             7.0,
@@ -644,6 +706,7 @@
     {
         "name": "valor/starcross",
         "file_name": "valor",
+        "bpm": 175.0,
         "duration": 159.981,
         "difficulties": [
             9.0,
@@ -655,6 +718,7 @@
     {
         "name": "Ops:Limone",
         "file_name": "opslimone",
+        "bpm": 210.0,
         "duration": 132.571,
         "difficulties": [
             4.0,
@@ -665,6 +729,7 @@
     {
         "name": "Yamai",
         "file_name": "yamai",
+        "bpm": 180.0,
         "duration": 142.667,
         "difficulties": [
             8.0,
@@ -675,6 +740,7 @@
     {
         "name": "Revelation",
         "file_name": "revelation",
+        "bpm": 210.0,
         "duration": 154.467,
         "difficulties": [
             6.0,
@@ -685,6 +751,7 @@
     {
         "name": "Angel's Window",
         "file_name": "angelswindow",
+        "bpm": 169.0,
         "duration": 143.432,
         "difficulties": [
             2.0,
@@ -695,6 +762,7 @@
     {
         "name": "Octava",
         "file_name": "octava",
+        "bpm": 165.0,
         "duration": 142.545,
         "difficulties": [
             3.0,
@@ -705,6 +773,7 @@
     {
         "name": "\u2200NARCHIC LIGHT",
         "file_name": "anarchic",
+        "bpm": 175.0,
         "duration": 120.581,
         "difficulties": [
             5.0,
@@ -716,6 +785,7 @@
     {
         "name": "Candy@-Cracker",
         "file_name": "candy",
+        "bpm": 165.0,
         "duration": 137.119,
         "difficulties": [
             5.0,
@@ -726,6 +796,7 @@
     {
         "name": "stardust",
         "file_name": "stardust",
+        "bpm": 174.0,
         "duration": 166.897,
         "difficulties": [
             8.0,
@@ -736,6 +807,7 @@
     {
         "name": "Gauntlet",
         "file_name": "gauntlet",
+        "bpm": 180.0,
         "duration": 165.333,
         "difficulties": [
             5.0,
@@ -747,6 +819,7 @@
     {
         "name": "3.1V.C1",
         "file_name": "31vc1",
+        "bpm": 210.0,
         "duration": 156.939,
         "difficulties": [
             8.0,
@@ -757,6 +830,7 @@
     {
         "name": "Ione",
         "file_name": "ione",
+        "bpm": 185.0,
         "duration": 180.324,
         "difficulties": [
             4.0,
@@ -767,6 +841,7 @@
     {
         "name": "Seraphiel",
         "file_name": "seraphiel",
+        "bpm": 210.0,
         "duration": 168.0,
         "difficulties": [
             5.0,
@@ -777,6 +852,7 @@
     {
         "name": "The Next Arcady",
         "file_name": "arcady",
+        "bpm": 130.0,
         "duration": 123.692,
         "difficulties": [
             6.0,
@@ -787,6 +863,7 @@
     {
         "name": "All The Times",
         "file_name": "collab_time",
+        "bpm": 145.0,
         "duration": 158.897,
         "difficulties": [
             2.0,
@@ -798,6 +875,7 @@
     {
         "name": "It Go (Cheryl Stelli remix)",
         "file_name": "collab_gormx",
+        "bpm": 160.0,
         "duration": 156.0,
         "difficulties": [
             7.0,
@@ -808,6 +886,7 @@
     {
         "name": "execution_program",
         "file_name": "execution",
+        "bpm": 205.0,
         "duration": 174.439,
         "difficulties": [
             7.0,
@@ -818,6 +897,7 @@
     {
         "name": "grode (Wyvren's Remix)",
         "file_name": "grodermx",
+        "bpm": 180.0,
         "duration": 134.667,
         "difficulties": [
             5.0,
@@ -828,6 +908,7 @@
     {
         "name": "ASTELLION",
         "file_name": "astellion",
+        "bpm": 696.0,
         "duration": 193.103,
         "difficulties": [
             1.0,
@@ -839,6 +920,7 @@
     {
         "name": "MARENOL",
         "file_name": "marenol",
+        "bpm": 140.0,
         "duration": 147.429,
         "difficulties": [
             0.0,
@@ -849,6 +931,7 @@
     {
         "name": "Simulated Reality",
         "file_name": "simulated",
+        "bpm": 168.0,
         "duration": 157.143,
         "difficulties": [
             7.0,
@@ -859,6 +942,7 @@
     {
         "name": "safe_state (MANIAQ Sound Team Remix)",
         "file_name": "safestate",
+        "bpm": 160.0,
         "duration": 165.0,
         "difficulties": [
             4.0,
@@ -869,6 +953,7 @@
     {
         "name": "SUPERNOVA",
         "file_name": "supernova",
+        "bpm": 252.0,
         "duration": 208.095,
         "difficulties": [
             9.0,
@@ -880,6 +965,7 @@
     {
         "name": "The Night of Fright",
         "file_name": "nightfright",
+        "bpm": 193.0,
         "duration": 139.275,
         "difficulties": [
             6.0,
@@ -890,6 +976,7 @@
     {
         "name": "nullbreak",
         "file_name": "nullbreak",
+        "bpm": 228.0,
         "duration": 125.263,
         "difficulties": [
             4.0,
@@ -900,6 +987,7 @@
     {
         "name": "WATAGASHI RUSH",
         "file_name": "rush",
+        "bpm": 151.0,
         "duration": 128.742,
         "difficulties": [
             4.0,
@@ -911,6 +999,7 @@
     {
         "name": "Attractor Force",
         "file_name": "attractor",
+        "bpm": 141.0,
         "duration": 141.277,
         "difficulties": [
             2.0,
@@ -921,6 +1010,7 @@
     {
         "name": "Synthesizer Party",
         "file_name": "synthesizerparty",
+        "bpm": 130.0,
         "duration": 132.923,
         "difficulties": [
             3.0,
@@ -931,6 +1021,7 @@
     {
         "name": "Sternstunde",
         "file_name": "sternstunde",
+        "bpm": 240.0,
         "duration": 126.134,
         "difficulties": [
             5.0,
@@ -941,6 +1032,7 @@
     {
         "name": "final farewell -aquaregia-",
         "file_name": "aquaregia",
+        "bpm": 190.0,
         "duration": 142.737,
         "difficulties": [
             3.0,
@@ -951,6 +1043,7 @@
     {
         "name": "Voltage Strike",
         "file_name": "voltage",
+        "bpm": 185.0,
         "duration": 151.784,
         "difficulties": [
             6.0,
@@ -962,6 +1055,7 @@
     {
         "name": "NONSENSE",
         "file_name": "nonsense",
+        "bpm": 190.0,
         "duration": 131.368,
         "difficulties": [
             7.0,
@@ -972,6 +1066,7 @@
     {
         "name": "CLAUDIA -estella-",
         "file_name": "claudia",
+        "bpm": 200.0,
         "duration": 164.4,
         "difficulties": [
             6.0,
@@ -982,6 +1077,7 @@
     {
         "name": "B3611V",
         "file_name": "calypso",
+        "bpm": 1028.0,
         "duration": 190.506,
         "difficulties": [
             9.6,
@@ -993,6 +1089,7 @@
     {
         "name": "STARGAZERS",
         "file_name": "stargazers",
+        "bpm": 186.0,
         "duration": 171.613,
         "difficulties": [
             8.0,
@@ -1003,6 +1100,7 @@
     {
         "name": "stop-motion",
         "file_name": "stopmotion",
+        "bpm": 72.0,
         "duration": 200.0,
         "difficulties": [
             8.0,
@@ -1014,6 +1112,7 @@
     {
         "name": "Trip Coffee",
         "file_name": "collab_trip",
+        "bpm": 190.0,
         "duration": 144.0,
         "difficulties": [
             4.0,
@@ -1024,6 +1123,7 @@
     {
         "name": "ULTIMATE",
         "file_name": "collab_ult",
+        "bpm": 200.0,
         "duration": 166.457,
         "difficulties": [
             6.0,
@@ -1035,6 +1135,7 @@
     {
         "name": "Rafflesia",
         "file_name": "collab_garden",
+        "bpm": 210.0,
         "duration": 197.179,
         "difficulties": [
             9.0,
@@ -1045,6 +1146,7 @@
     {
         "name": "CITY RIDE IN THE JUNGLE",
         "file_name": "collab_city",
+        "bpm": 165.0,
         "duration": 138.182,
         "difficulties": [
             7.0,
@@ -1055,6 +1157,7 @@
     {
         "name": "Faux Real (VIVID REDUX)",
         "file_name": "collab_real",
+        "bpm": 186.0,
         "duration": 140.645,
         "difficulties": [
             3.0,
@@ -1065,6 +1168,7 @@
     {
         "name": "Shattered Sky After Rain",
         "file_name": "shatteredsky",
+        "bpm": 175.0,
         "duration": 149.486,
         "difficulties": [
             4.0,
@@ -1075,6 +1179,7 @@
     {
         "name": "Prismatic Vortex",
         "file_name": "prismatic",
+        "bpm": 177.0,
         "duration": 134.237,
         "difficulties": [
             4.0,
@@ -1086,6 +1191,7 @@
     {
         "name": "APOCALYPSE CALL",
         "file_name": "apocalypse",
+        "bpm": 150.0,
         "duration": 204.63,
         "difficulties": [
             10.0,
@@ -1097,6 +1203,7 @@
     {
         "name": "See You Move",
         "file_name": "seeyoumove",
+        "bpm": 160.0,
         "duration": 120.0,
         "difficulties": [
             6.0,
@@ -1107,6 +1214,7 @@
     {
         "name": "the more i carry on...",
         "file_name": "moreicarry",
+        "bpm": 210.0,
         "duration": 160.0,
         "difficulties": [
             3.0,
@@ -1117,6 +1225,7 @@
     {
         "name": "Surtr's Wish",
         "file_name": "surtr",
+        "bpm": 215.0,
         "duration": 146.556,
         "difficulties": [
             8.0,
@@ -1128,6 +1237,7 @@
     {
         "name": "heptagramme",
         "file_name": "heptagramme",
+        "bpm": 177.0,
         "duration": 172.203,
         "difficulties": [
             7.0,
@@ -1138,6 +1248,7 @@
     {
         "name": "CONVERGENCE",
         "file_name": "convergence",
+        "bpm": 200.0,
         "duration": 194.4,
         "difficulties": [
             9.0,
@@ -1149,6 +1260,7 @@
     {
         "name": "Last Wish (vivid/stasis ver.)",
         "file_name": "lastwish",
+        "bpm": 240.0,
         "duration": 217.261,
         "difficulties": [
             9.6,
@@ -1160,6 +1272,7 @@
     {
         "name": "Aleph-0",
         "file_name": "aleph",
+        "bpm": 125.0,
         "duration": 140.136,
         "difficulties": [
             5.0,
@@ -1170,6 +1283,7 @@
     {
         "name": "CLAUDIA -libertia-",
         "file_name": "libertia",
+        "bpm": 230.0,
         "duration": 170.582,
         "difficulties": [
             9.0,
@@ -1181,6 +1295,7 @@
     {
         "name": "NULCTRL",
         "file_name": "nulctrl",
+        "bpm": 100.0,
         "duration": 148.8,
         "difficulties": [
             3.0,
@@ -1192,6 +1307,7 @@
     {
         "name": "When the Dragon Falls",
         "file_name": "dragon",
+        "bpm": 203.0,
         "duration": 180.887,
         "difficulties": [
             4.0,
@@ -1202,6 +1318,7 @@
     {
         "name": "Synthesis.",
         "file_name": "synthesis",
+        "bpm": 180.0,
         "duration": 192.0,
         "difficulties": [
             6.0,
@@ -1213,6 +1330,7 @@
     {
         "name": "lost contact",
         "file_name": "lostconnection",
+        "bpm": 180.0,
         "duration": 158.667,
         "difficulties": [
             5.0,
@@ -1223,6 +1341,7 @@
     {
         "name": "MVURBD",
         "file_name": "collab_body",
+        "bpm": 170.0,
         "duration": 170.057,
         "difficulties": [
             5.0,
@@ -1234,6 +1353,7 @@
     {
         "name": "Secret Illumination",
         "file_name": "collab_secil",
+        "bpm": 160.0,
         "duration": 150.0,
         "difficulties": [
             3.0,
@@ -1244,6 +1364,7 @@
     {
         "name": "Battle in Enemy Territory",
         "file_name": "collab_battle",
+        "bpm": 170.0,
         "duration": 168.0,
         "difficulties": [
             5.0,
@@ -1254,6 +1375,7 @@
     {
         "name": "Star Dream -Millenium Vision-",
         "file_name": "collab_star",
+        "bpm": 140.0,
         "duration": 126.857,
         "difficulties": [
             1.0,
@@ -1264,6 +1386,7 @@
     {
         "name": "grode(decoherence)",
         "file_name": "grodefrums",
+        "bpm": 210.0,
         "duration": 130.0,
         "difficulties": [
             5.0,
@@ -1275,6 +1398,7 @@
     {
         "name": "(execute.)",
         "file_name": "execute",
+        "bpm": 220.0,
         "duration": 137.455,
         "difficulties": [
             6.0,
@@ -1285,6 +1409,7 @@
     {
         "name": "Luxvinore",
         "file_name": "tiebreaker1",
+        "bpm": 174.0,
         "duration": 157.241,
         "difficulties": [
             5.0,
@@ -1295,6 +1420,7 @@
     {
         "name": ":3c",
         "file_name": "c3c",
+        "bpm": 291.66,
         "duration": 195.175,
         "difficulties": [
             8.0,
@@ -1306,6 +1432,7 @@
     {
         "name": "Nightshade",
         "file_name": "nightshade",
+        "bpm": 180.0,
         "duration": 189.304,
         "difficulties": [
             7.0,
@@ -1317,6 +1444,7 @@
     {
         "name": "even at the end of the world, you left it",
         "file_name": "attheend",
+        "bpm": 150.0,
         "duration": 171.2,
         "difficulties": [
             4.0,
@@ -1327,6 +1455,7 @@
     {
         "name": "crack in the earth",
         "file_name": "crack",
+        "bpm": 200.0,
         "duration": 108.0,
         "difficulties": [
             7.0,
@@ -1337,6 +1466,7 @@
     {
         "name": "And So You Felt",
         "file_name": "soyoufelt",
+        "bpm": 200.0,
         "duration": 180.3,
         "difficulties": [
             4.0,
@@ -1348,6 +1478,7 @@
     {
         "name": "Dreams From Another World",
         "file_name": "collab_dreams",
+        "bpm": 130.0,
         "duration": 150.923,
         "difficulties": [
             9.0,
@@ -1358,6 +1489,7 @@
     {
         "name": "Etiquette",
         "file_name": "collab_et",
+        "bpm": 150.0,
         "duration": 137.618,
         "difficulties": [
             4.0,
@@ -1369,6 +1501,7 @@
     {
         "name": "IGNITED",
         "file_name": "collab_ign",
+        "bpm": 160.0,
         "duration": 160.5,
         "difficulties": [
             6.0,
@@ -1379,6 +1512,7 @@
     {
         "name": "micro.wav",
         "file_name": "collab_wave",
+        "bpm": 172.0,
         "duration": 124.186,
         "difficulties": [
             5.0,
@@ -1389,6 +1523,7 @@
     {
         "name": "Rrhar'il",
         "file_name": "collab_8boss1",
+        "bpm": 190.0,
         "duration": 132.632,
         "difficulties": [
             8.0,
@@ -1399,6 +1534,7 @@
     {
         "name": "Distorted Fate",
         "file_name": "collab_8boss2",
+        "bpm": 300.0,
         "duration": 160.0,
         "difficulties": [
             7.0,
@@ -1410,6 +1546,7 @@
     {
         "name": "Concrete Jungle",
         "file_name": "concrete",
+        "bpm": 160.0,
         "duration": 178.5,
         "difficulties": [
             7.0,
@@ -1421,6 +1558,7 @@
     {
         "name": "aria of ruinated winds",
         "file_name": "ruinatedwinds",
+        "bpm": 225.0,
         "duration": 166.4,
         "difficulties": [
             5.0,
@@ -1432,6 +1570,7 @@
     {
         "name": "Un-TECHNiCAL Reason",
         "file_name": "untechnical",
+        "bpm": 175.0,
         "duration": 175.543,
         "difficulties": [
             6.0,
@@ -1442,6 +1581,7 @@
     {
         "name": "reFract::dense",
         "file_name": "refract",
+        "bpm": 155.0,
         "duration": 134.71,
         "difficulties": [
             5.0,
@@ -1452,6 +1592,7 @@
     {
         "name": "Reboot",
         "file_name": "reboot",
+        "bpm": 170.0,
         "duration": 194.824,
         "difficulties": [
             8.0,
@@ -1462,6 +1603,7 @@
     {
         "name": "ULTiM\u2200TUM",
         "file_name": "ultimatum",
+        "bpm": 220.0,
         "duration": 170.503,
         "difficulties": [
             8.0,
@@ -1472,6 +1614,7 @@
     {
         "name": "SENT://INEL",
         "file_name": "sentinel",
+        "bpm": 222.0,
         "duration": 207.067,
         "difficulties": [
             9.0,
@@ -1483,6 +1626,7 @@
     {
         "name": "slic.hertz",
         "file_name": "slic",
+        "bpm": 145.0,
         "duration": 124.138,
         "difficulties": [
             7.0,
@@ -1494,6 +1638,7 @@
     {
         "name": "Crimson Dance (vivid/stasis Edit)",
         "file_name": "crimson",
+        "bpm": 195.0,
         "duration": 189.538,
         "difficulties": [
             8.0,
@@ -1504,6 +1649,7 @@
     {
         "name": "Beyond the Heart (Broken Heart Mix)",
         "file_name": "brokenheart",
+        "bpm": 130.0,
         "duration": 130.655,
         "difficulties": [
             2.0,

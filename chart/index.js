@@ -34,6 +34,7 @@ const difficulty_buttons = [
     document.getElementById("encore"),
 ];
 const chart_name = document.getElementById("chart-name");
+const chart_bpm = document.getElementById("chart-bpm");
 const difficulty_level = document.getElementById("difficulty-level");
 
 const score_rating_switch = document.getElementById("score-rating-switch");
@@ -128,6 +129,7 @@ if (url.searchParams.has("chart")) {
                 if (song.file_name == chart) {
                     song_data = song;
                     chart_name.innerHTML = song_data.name;
+                    chart_bpm.innerHTML = song_data.bpm;
 
                     if (url.searchParams.has("diff")) {
                         difficulty = parseInt(url.searchParams.get("diff"));
