@@ -1,281 +1,238 @@
-// let scroll_speed = parseFloat(localStorage.getItem("scroll_speed")) || 10.0;
-// localStorage.setItem("scroll_speed", scroll_speed);
-const scroll_speed = 10.0;
-let pixels_per_second = 100 + 20 * scroll_speed;
-
-const title = document.getElementById("title");
-const icon = document.getElementById("icon");
-
-const scroll_speed_range = document.getElementById("scroll-speed-range");
-const scroll_speed_text = document.getElementById("scroll-speed-text");
-
-scroll_speed_range.value = scroll_speed;
-scroll_speed_text.value = scroll_speed.toFixed(1);
-
-let parsed_scale = parseFloat(localStorage.getItem("scale")) || 1;
-const scale_text = document.getElementById("scale-text");
-
-scale_text.value = parsed_scale;
-
-let parsed_current_time = 0.0;
-let chart_duration = 1.0;
-const current_time = document.getElementById("current-time");
-const total_time = document.getElementById("total-time");
-const current_percentage = document.getElementById("current-percentage");
-
-let chart;
-const chart_scroller = document.getElementById("chart-scroller");
-const chart_image = document.getElementById("chart-image");
-
-const difficulty_buttons = [
-    document.getElementById("opening"),
-    document.getElementById("middle"),
-    document.getElementById("finale"),
-    document.getElementById("encore"),
-];
-const chart_name = document.getElementById("chart-name");
-const chart_bpm = document.getElementById("chart-bpm");
-const difficulty_level = document.getElementById("difficulty-level");
-
-const score_rating_switch = document.getElementById("score-rating-switch");
-let score_rating_switch_selection = true;
-
-const score_rating = document.getElementById("score-rating");
-let parsed_score_rating_score = 0;
-const score_rating_score = document.getElementById("score-rating-score");
-const score_rating_buttons = [
-    document.getElementById("score-rating-na"),
-    document.getElementById("score-rating-fc"),
-    document.getElementById("score-rating-ac"),
-];
-let score_rating_selection = 0;
-const score_rating_rating = document.getElementById("score-rating-rating");
-
-const rating_score = document.getElementById("rating-score");
-const rating_score_rating = document.getElementById("rating-score-rating");
-let parsed_rating_score_rating = 0;
-const rating_score_score_texts = [
-    document.getElementById("rating-score-score-na"),
-    document.getElementById("rating-score-score-fc"),
-    document.getElementById("rating-score-score-ac"),
-];
-
-let song_data;
-let difficulty;
-
-function updateTimes() {
-    if (difficulty == 3) total_time.innerHTML = chart_duration = (song_data.encore_duration || song_data.duration).toFixed(2);
-    else total_time.innerHTML = chart_duration = song_data.duration.toFixed(2);
-    chart_scroller.scrollTop =
-        (chart_image.height / parsed_scale - chart_scroller.clientHeight / parsed_scale - parsed_current_time * pixels_per_second) *
-        parsed_scale;
-    parsed_current_time =
-        (chart_image.height / parsed_scale - chart_scroller.scrollTop / parsed_scale - chart_scroller.clientHeight / parsed_scale) /
-        pixels_per_second;
-
-    if (document.activeElement != current_time || !document.hasFocus()) current_time.value = parsed_current_time.toFixed(2);
-    if (document.activeElement != current_percentage || !document.hasFocus())
-        current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
-}
-
-function setScoreRatingCalc() {
-    if (score_rating_switch_selection) {
-        score_rating_switch.innerHTML = "->";
-        rating_score.style = "display: none";
-        score_rating.style = "";
-
-        score_rating_rating.innerHTML = ratingFromScore(
-            song_data.difficulties[difficulty],
-            parsed_score_rating_score,
-            score_rating_selection
-        ).toFixed(2);
-    } else {
-        score_rating_switch.innerHTML = "<-";
-        score_rating.style = "display: none";
-        rating_score.style = "";
-
-        for (let i in rating_score_score_texts) {
-            i = parseInt(i);
-
-            let score = scoreFromRating(song_data.difficulties[difficulty], parsed_rating_score_rating, i);
-
-            if (score != undefined) {
-                rating_score_score_texts[i].innerHTML = score.toFixed(2);
-                rating_score_score_texts[i].parentElement.style = "";
-            } else {
-                rating_score_score_texts[i].parentElement.style = "display: none";
-            }
-        }
-    }
-}
-
-function diffChanged() {
-    difficulty_level.innerHTML = song_data.difficulties[difficulty].toFixed(1);
-    difficulty_level.className = `${difficulty_names[difficulty]}-text`;
-    title.innerHTML = `${song_data.name} ${difficulty_names[difficulty]} ${difficulty_level.innerHTML}`;
-    // chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}-${scroll_speed.toFixed(1)}.png`;
-    chart_image.src = `/vs-charts/charts/${chart}/${difficulty_names[difficulty]}.png`;
-}
+let { a, button, div, img, input, link, span, title } = van.tags;
 
 let url = new URL(window.location);
+if (!url.searchParams.has("chart")) window.location.href = "/vs-charts";
 
-if (url.searchParams.has("chart")) {
-    chart = url.searchParams.get("chart");
-    icon.href = `/vs-charts/jackets/${chart}.png`;
+const chart = url.searchParams.get("chart");
+fetch("/vs-charts/song_data.json").then((data) => {
+    data.json().then((data) => {
+        for (let song of data) {
+            if (song.file_name !== chart) continue;
 
-    fetch("/vs-charts/song_data.json").then((data) => {
-        data.json().then((data) => {
-            for (let song of data) {
-                if (song.file_name == chart) {
-                    song_data = song;
-                    chart_name.innerHTML = song_data.name;
-                    chart_bpm.innerHTML = song_data.bpm;
+            const difficulty = van.state(parseInt(url.searchParams.get("diff")) || 0);
 
-                    if (url.searchParams.has("diff")) {
-                        difficulty = parseInt(url.searchParams.get("diff"));
-                        if (!difficulty || 0 > difficulty || difficulty >= song_data.difficulties.length) difficulty = 0;
-                    } else {
-                        difficulty = 0;
-                    }
+            const scroll_speed = van.state(10.0);
+            const pixels_per_second = van.derive(() => 100 + 20 * scroll_speed.val);
 
-                    if (song_data.difficulties.length == 4) difficulty_buttons[3].style = "";
+            const chart_scroller = document.getElementById("chart-scroller");
+            const window_height = van.state(chart_scroller.clientHeight);
 
-                    difficulty_buttons[difficulty].disabled = true;
+            const scale = van.savedState("scale", 1);
 
-                    for (let diff in song_data.difficulties) {
-                        diff = parseInt(diff);
-                        difficulty_buttons[diff].addEventListener("click", () => {
-                            difficulty_buttons[difficulty].disabled = false;
-                            difficulty = diff;
-                            difficulty_buttons[difficulty].disabled = true;
+            const chart_duration = van.derive(() => (difficulty.val === 3 && song.encore_duration) || song.duration);
+            const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
+            const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
+            const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
 
-                            diffChanged();
+            const score_rating_switch_selection = van.state(true);
 
-                            let url = new URL(window.location);
-                            url.searchParams.set("diff", difficulty);
-                            window.history.replaceState(null, null, url);
-                        });
-                    }
+            const score_rating_score = van.state(0);
+            const score_rating_selection = van.state(0);
 
-                    for (let i in score_rating_buttons) {
-                        i = parseInt(i);
-                        score_rating_buttons[i].addEventListener("click", () => {
-                            score_rating_buttons[score_rating_selection].disabled = false;
-                            score_rating_selection = i;
-                            score_rating_buttons[score_rating_selection].disabled = true;
+            const rating_score_rating = van.state(0);
 
-                            setScoreRatingCalc();
-                        });
-                    }
+            van.add(
+                document.head,
+                title(() => `${song.name} ${difficulty_names[difficulty.val]} ${song.difficulties[difficulty.val].toFixed(1)}`),
+                link({ rel: "icon", type: "image/png", href: `/vs-charts/jackets/${chart}.png` })
+            );
+            van.add(
+                document.body,
+                div(
+                    { class: "top-left column" },
+                    div(a({ href: "/vs-charts" }, "All charts")),
+                    div(`Name: ${song.name}`),
+                    div(`BPM: ${song.bpm}`),
+                    div("Scroll speed: ", input({ type: "number", class: "right-aligned", value: scroll_speed, size: 3, disabled: true })),
+                    div(
+                        "Scale: ",
+                        nonInterferingInput({
+                            type: "number",
+                            class: "right-aligned",
+                            value: scale,
+                            oninput: (v) => {
+                                if (v.target.value > 0) scale.val = v.target.value;
+                            },
+                            size: 3,
+                        })
+                    ),
+                    div(
+                        "Time: ",
+                        nonInterferingInput({
+                            type: "number",
+                            class: "right-aligned",
+                            value: () => current_time.val.toFixed(2),
+                            oninput: (v) => {
+                                if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, v.target.value));
+                            },
+                            size: 5,
+                        }),
+                        () => `/${chart_duration.val.toFixed(2)} (`,
+                        nonInterferingInput({
+                            type: "number",
+                            class: "right-aligned",
+                            value: () => current_percentage.val.toFixed(2),
+                            oninput: (v) => {
+                                if (v.target.value !== "")
+                                    current_time.val = Math.max(
+                                        0,
+                                        Math.min(chart_duration.val, (v.target.value / 100) * chart_duration.val)
+                                    );
+                            },
+                            size: 5,
+                        }),
+                        "%)"
+                    ),
+                    div(
+                        { class: "row" },
+                        song.difficulties.map((_, i) =>
+                            button(
+                                {
+                                    onclick: () => {
+                                        difficulty.val = i;
+                                    },
+                                    disabled: () => difficulty.val === i,
+                                },
+                                ["OP", "MD", "FN", "EN"][i]
+                            )
+                        )
+                    ),
+                    div(
+                        "Level: ",
+                        span({ class: () => `${difficulty_names[difficulty.val]}-text` }, () =>
+                            song.difficulties[difficulty.val].toFixed(1)
+                        )
+                    ),
+                    div(
+                        "Score ",
+                        button(
+                            {
+                                id: "score-rating-switch",
+                                onclick: () => (score_rating_switch_selection.val = !score_rating_switch_selection.val),
+                            },
+                            () => (score_rating_switch_selection.val ? "->" : "<-")
+                        ),
+                        " Rating"
+                    ),
+                    div(
+                        {
+                            id: "score-rating",
+                            class: "column",
+                            style: () => (score_rating_switch_selection.val ? "" : "display: none"),
+                        },
+                        div(
+                            { class: "row" },
+                            input({
+                                type: "number",
+                                class: "right-aligned",
+                                value: score_rating_score,
+                                oninput: (v) => (score_rating_score.val = v.target.value),
+                                size: 6,
+                            }),
+                            ["NA", "FC", "AC"].map((v, i) =>
+                                button(
+                                    {
+                                        onclick: () => (score_rating_selection.val = i),
+                                        disabled: () => score_rating_selection.val === i,
+                                    },
+                                    v
+                                )
+                            )
+                        ),
+                        div(
+                            { class: "row" },
+                            () =>
+                                `${ratingFromScore(
+                                    song.difficulties[difficulty.val],
+                                    score_rating_score.val,
+                                    score_rating_selection.val
+                                ).toFixed(2)} rating`
+                        )
+                    ),
+                    div(
+                        {
+                            id: "rating-score",
+                            class: "column",
+                            style: () => (score_rating_switch_selection.val ? "display: none" : ""),
+                        },
+                        div(
+                            { class: "row" },
+                            input({
+                                type: "number",
+                                class: "right-aligned",
+                                value: rating_score_rating,
+                                oninput: (v) => (rating_score_rating.val = v.target.value),
+                                size: 4,
+                            })
+                        ),
+                        ["NA", "FC", "AC"].map((v, i) =>
+                            div(
+                                {
+                                    class: "row",
+                                    style: () =>
+                                        scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i) === undefined
+                                            ? "display: none"
+                                            : "",
+                                },
+                                () => `${v}: ${scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i)} score`
+                            )
+                        )
+                    )
+                ),
+                div(
+                    { class: "top-right column" },
+                    div(
+                        a(
+                            { href: "https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214" },
+                            "This tool was permitted by Cheryl."
+                        )
+                    )
+                ),
+                img({
+                    class: "chart-image",
+                    style: () =>
+                        `width: ${91 * scale.val}px; height: ${chart_height.val}px; border-left-width: ${
+                            scale.val
+                        }px; border-right-width: ${scale.val}px`,
+                    src: () => `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}.png`,
+                })
+            );
 
-                    diffChanged();
-                    chart_image.style = `width: ${91 * parsed_scale}px; outline-width: ${parsed_scale}px`;
+            van.derive(() => {
+                chart_scroller.scrollTop =
+                    (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) * scale.val;
+            });
 
-                    if (url.searchParams.has("time")) {
-                        parsed_current_time = parseFloat(url.searchParams.get("time")) || 0;
-                    }
+            function changeURL() {
+                let url = new URL(window.location);
+                url.search = "";
+                url.searchParams.set("chart", chart);
+                url.searchParams.set("diff", difficulty.val);
+                url.searchParams.set("time", current_time.val.toFixed(2));
+                window.history.replaceState(null, null, url);
 
-                    if (chart_image.complete) updateTimes();
-                    chart_image.addEventListener("load", updateTimes);
-                    window.addEventListener("resize", updateTimes);
-
-                    let update_search_time_timeout;
-                    addEventListener("scroll", () => {
-                        parsed_current_time =
-                            (chart_image.height / parsed_scale -
-                                chart_scroller.scrollTop / parsed_scale -
-                                chart_scroller.clientHeight / parsed_scale) /
-                            pixels_per_second;
-
-                        if (document.activeElement != current_time || !document.hasFocus())
-                            current_time.value = parsed_current_time.toFixed(2);
-                        if (document.activeElement != current_percentage || !document.hasFocus())
-                            current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
-
-                        if (update_search_time_timeout) clearTimeout(update_search_time_timeout);
-                        update_search_time_timeout = setTimeout(() => {
-                            update_search_time_timeout = undefined;
-                            let url = new URL(window.location);
-                            url.searchParams.set("time", parsed_current_time.toFixed(2));
-                            window.history.replaceState(null, null, url);
-                        }, 100);
-                    });
-
-                    // scroll_speed_range.addEventListener("input", () => {
-                    //     scroll_speed = parseFloat(scroll_speed_range.value);
-                    //     localStorage.setItem("scroll_speed", scroll_speed);
-                    //     pixels_per_second = 100 + 20 * scroll_speed;
-                    //     scroll_speed_text.value = scroll_speed.toFixed(1);
-
-                    //     diffChanged();
-                    //     updateTimes();
-                    // });
-
-                    // scroll_speed_text.addEventListener("input", () => {
-                    //     let new_scroll_speed = parseFloat(scroll_speed_text.value);
-                    //     if (!isNaN(new_scroll_speed) && 1 <= new_scroll_speed && new_scroll_speed <= 20) {
-                    //         scroll_speed = Math.round(new_scroll_speed * 10) / 10;
-                    //         localStorage.setItem("scroll_speed", scroll_speed);
-                    //         pixels_per_second = 100 + 20 * scroll_speed;
-                    //         scroll_speed_range.value = scroll_speed;
-
-                    //         diffChanged();
-                    //         updateTimes();
-                    //     }
-                    // });
-
-                    scale_text.addEventListener("input", () => {
-                        let new_scale = parseFloat(scale_text.value);
-                        if (!isNaN(new_scale) && new_scale > 0) {
-                            parsed_scale = new_scale;
-                            localStorage.setItem("scale", parsed_scale);
-
-                            chart_image.style = `width: ${91 * parsed_scale}px; outline-width: ${parsed_scale}px`;
-                            updateTimes();
-                        }
-                    });
-
-                    current_time.addEventListener("input", () => {
-                        let new_value = parseFloat(current_time.value);
-                        if (!isNaN(new_value)) parsed_current_time = new_value;
-                        updateTimes();
-                    });
-
-                    current_percentage.addEventListener("input", () => {
-                        let new_value = (parseFloat(current_percentage.value) / 100) * chart_duration;
-                        if (!isNaN(new_value)) parsed_current_time = new_value;
-                        updateTimes();
-                    });
-
-                    score_rating_switch.addEventListener("click", () => {
-                        score_rating_switch_selection = !score_rating_switch_selection;
-                        setScoreRatingCalc();
-                    });
-
-                    score_rating_score.addEventListener("input", () => {
-                        let new_value = parseFloat(score_rating_score.value);
-                        if (!isNaN(new_value)) parsed_score_rating_score = new_value;
-                        setScoreRatingCalc();
-                    });
-
-                    rating_score_rating.addEventListener("input", () => {
-                        let new_value = parseFloat(rating_score_rating.value);
-                        if (!isNaN(new_value)) parsed_rating_score_rating = new_value;
-                        setScoreRatingCalc();
-                    });
-
-                    url.search = "";
-                    url.searchParams.set("chart", chart);
-                    url.searchParams.set("diff", difficulty);
-                    url.searchParams.set("time", parsed_current_time.toFixed(2));
-                    window.history.replaceState(null, null, url);
-                    return;
-                }
+                setTimeout(changeURL, 200);
             }
 
-            window.location.href = "/vs-charts";
-        });
+            changeURL();
+
+            let in_scroll = false;
+            addEventListener("scroll", () => {
+                if (!in_scroll) {
+                    in_scroll = true;
+                    current_time.val =
+                        (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
+                        pixels_per_second.val;
+                    in_scroll = false;
+                }
+            });
+            addEventListener("resize", () => {
+                window_height.val = chart_scroller.clientHeight;
+            });
+
+            return;
+        }
+
+        window.location.href = "/vs-charts";
     });
-} else {
-    window.location.href = "/vs-charts";
-}
+});
