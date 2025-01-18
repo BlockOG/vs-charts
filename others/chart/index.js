@@ -1,186 +1,140 @@
-// let scroll_speed = parseFloat(localStorage.getItem("scroll_speed")) || 10.0;
-// localStorage.setItem("scroll_speed", scroll_speed);
-const scroll_speed = 10.0;
-let pixels_per_second = 100 + 20 * scroll_speed;
-
-const title = document.getElementById("title");
-const icon = document.getElementById("icon");
-
-const scroll_speed_range = document.getElementById("scroll-speed-range");
-const scroll_speed_text = document.getElementById("scroll-speed-text");
-
-scroll_speed_range.value = scroll_speed;
-scroll_speed_text.value = scroll_speed.toFixed(1);
-
-let parsed_scale = parseFloat(localStorage.getItem("scale")) || 1;
-const scale_text = document.getElementById("scale-text");
-
-scale_text.value = parsed_scale;
-
-let parsed_current_time = 0.0;
-let chart_duration = 1.0;
-const current_time = document.getElementById("current-time");
-const total_time = document.getElementById("total-time");
-const current_percentage = document.getElementById("current-percentage");
-
-let chart;
-let height = 0;
-const chart_scroller = document.getElementById("chart-scroller");
-const chart_image = document.getElementById("chart-image");
-
-const chart_name = document.getElementById("chart-name");
-const chart_bpm = document.getElementById("chart-bpm");
-
-let song_data = {};
-let difficulty;
-
-function updateTimes() {
-    total_time.innerHTML = chart_duration = song_data.duration.toFixed(2);
-    height = chart_duration * pixels_per_second;
-
-    chart_scroller.scrollTop =
-        (height - chart_scroller.clientHeight / parsed_scale - parsed_current_time * pixels_per_second) * parsed_scale;
-    parsed_current_time =
-        (height - chart_scroller.scrollTop / parsed_scale - chart_scroller.clientHeight / parsed_scale) / pixels_per_second;
-
-    if (document.activeElement != current_time || !document.hasFocus()) current_time.value = parsed_current_time.toFixed(2);
-    if (document.activeElement != current_percentage || !document.hasFocus())
-        current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
-}
-
-function diffChanged() {
-    title.innerHTML = `${song_data.name} ${difficulty}`;
-
-    chart_image.innerHTML = "";
-
-    let segments = Math.ceil(height / 65535);
-    for (let i = 0; i < segments; i++) {
-        chart_image.innerHTML += `<img src="/vs-charts/charts/${song_data.file_name}/${difficulty}-${i}.png">`;
-    }
-}
+let { a, div, img, input, link, title } = van.tags;
 
 let url = new URL(window.location);
+if (!url.searchParams.has("chart") || !url.searchParams.has("diff")) window.location.href = "/vs-charts/others";
 
-if (url.searchParams.has("chart")) {
-    chart = url.searchParams.get("chart");
-    icon.href = `/vs-charts/jackets/${chart}.png`;
+const chart = url.searchParams.get("chart");
+const difficulty = van.state(url.searchParams.get("diff"));
+fetch("/vs-charts/other_song_data.json").then((data) => {
+    data.json().then((data) => {
+        for (let song of data) {
+            if (song.file_name !== chart || song.difficulty !== difficulty.val) continue;
 
-    fetch("/vs-charts/other_song_data.json").then((data) => {
-        data.json().then((data) => {
-            if (url.searchParams.has("diff")) {
-                difficulty = url.searchParams.get("diff");
-            } else {
-                window.location.href = "/vs-charts/others";
+            const scroll_speed = van.state(10.0);
+            const pixels_per_second = van.derive(() => 100 + 20 * scroll_speed.val);
+
+            const chart_scroller = document.getElementById("chart-scroller");
+            const window_height = van.state(chart_scroller.clientHeight);
+
+            const scale = van.savedState("scale", 1);
+
+            const chart_duration = van.derive(() => song.duration);
+            const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
+            const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
+            const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
+
+            van.add(
+                document.head,
+                title(() => `${song.name} ${difficulty.val}`),
+                link({ rel: "icon", type: "image/png", href: `/vs-charts/jackets/${chart}.png` })
+            );
+            van.add(
+                document.body,
+                div(
+                    { class: "top-left column" },
+                    div(a({ href: "/vs-charts/others" }, "Boundary Shatter charts")),
+                    div(`Name: ${song.name}`),
+                    div(`BPM: ${song.bpm}`),
+                    div("Scroll speed: ", input({ type: "number", class: "right-aligned", value: scroll_speed, size: 3, disabled: true })),
+                    div(
+                        "Scale: ",
+                        nonInterferingInput({
+                            type: "number",
+                            class: "right-aligned",
+                            value: scale,
+                            oninput: (v) => {
+                                if (v.target.value > 0) scale.val = v.target.value;
+                            },
+                            size: 3,
+                        })
+                    ),
+                    div(
+                        "Time: ",
+                        nonInterferingInput({
+                            type: "number",
+                            class: "right-aligned",
+                            value: () => current_time.val.toFixed(2),
+                            oninput: (v) => {
+                                if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, v.target.value));
+                            },
+                            size: 5,
+                        }),
+                        () => `/${chart_duration.val.toFixed(2)} (`,
+                        nonInterferingInput({
+                            type: "number",
+                            class: "right-aligned",
+                            value: () => current_percentage.val.toFixed(2),
+                            oninput: (v) => {
+                                if (v.target.value !== "")
+                                    current_time.val = Math.max(
+                                        0,
+                                        Math.min(chart_duration.val, (v.target.value / 100) * chart_duration.val)
+                                    );
+                            },
+                            size: 5,
+                        }),
+                        "%)"
+                    )
+                ),
+                div(
+                    { class: "top-right column" },
+                    div(
+                        a(
+                            { href: "https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214" },
+                            "This tool was permitted by Cheryl."
+                        )
+                    )
+                ),
+                () =>
+                    div(
+                        {
+                            class: "chart-image",
+                            style: () =>
+                                `width: ${91 * scale.val}px; height: ${chart_height.val}px; border-left-width: ${
+                                    scale.val
+                                }px; border-right-width: ${scale.val}px`,
+                        },
+                        Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
+                            img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
+                        )
+                    )
+            );
+
+            van.derive(() => {
+                chart_scroller.scrollTop =
+                    (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) * scale.val;
+            });
+
+            function changeURL() {
+                let url = new URL(window.location);
+                url.search = "";
+                url.searchParams.set("chart", chart);
+                url.searchParams.set("diff", difficulty.val);
+                url.searchParams.set("time", current_time.val.toFixed(2));
+                window.history.replaceState(null, null, url);
+
+                setTimeout(changeURL, 200);
             }
 
-            for (let song of data) {
-                if (song.file_name == chart && song.difficulty == difficulty) {
-                    song_data = song;
-                    chart_name.innerHTML = song_data.name;
-                    chart_bpm.innerHTML = song_data.bpm;
+            changeURL();
 
-                    height = song_data.duration * pixels_per_second;
-                    diffChanged();
-                    chart_image.style = `width: ${
-                        91 * parsed_scale
-                    }px; border-left-width: ${parsed_scale}px; border-right-width: ${parsed_scale}px`;
-
-                    if (url.searchParams.has("time")) {
-                        parsed_current_time = parseFloat(url.searchParams.get("time")) || 0;
-                    }
-
-                    let segments = Math.ceil(height / 65535);
-                    let num_complete = 0;
-                    for (let img of chart_image.children) {
-                        num_complete += img.complete;
-                        img.addEventListener("load", () => {
-                            num_complete++;
-                            if (num_complete == segments) updateTimes();
-                        });
-                    }
-                    if (num_complete == segments) updateTimes();
-                    window.addEventListener("resize", updateTimes);
-
-                    let update_search_time_timeout;
-                    addEventListener("scroll", () => {
-                        parsed_current_time =
-                            (height - chart_scroller.scrollTop / parsed_scale - chart_scroller.clientHeight / parsed_scale) /
-                            pixels_per_second;
-
-                        if (document.activeElement != current_time || !document.hasFocus())
-                            current_time.value = parsed_current_time.toFixed(2);
-                        if (document.activeElement != current_percentage || !document.hasFocus())
-                            current_percentage.value = ((parsed_current_time * 100) / chart_duration).toFixed(2);
-
-                        if (update_search_time_timeout) clearTimeout(update_search_time_timeout);
-                        update_search_time_timeout = setTimeout(() => {
-                            update_search_time_timeout = undefined;
-                            let url = new URL(window.location);
-                            url.searchParams.set("time", parsed_current_time.toFixed(2));
-                            window.history.replaceState(null, null, url);
-                        }, 100);
-                    });
-
-                    // scroll_speed_range.addEventListener("input", () => {
-                    //     scroll_speed = parseFloat(scroll_speed_range.value);
-                    //     localStorage.setItem("scroll_speed", scroll_speed);
-                    //     pixels_per_second = 100 + 20 * scroll_speed;
-                    //     scroll_speed_text.value = scroll_speed.toFixed(1);
-
-                    //     diffChanged();
-                    //     updateTimes();
-                    // });
-
-                    // scroll_speed_text.addEventListener("input", () => {
-                    //     let new_scroll_speed = parseFloat(scroll_speed_text.value);
-                    //     if (!isNaN(new_scroll_speed) && 1 <= new_scroll_speed && new_scroll_speed <= 20) {
-                    //         scroll_speed = Math.round(new_scroll_speed * 10) / 10;
-                    //         localStorage.setItem("scroll_speed", scroll_speed);
-                    //         pixels_per_second = 100 + 20 * scroll_speed;
-                    //         scroll_speed_range.value = scroll_speed;
-
-                    //         diffChanged();
-                    //         updateTimes();
-                    //     }
-                    // });
-
-                    scale_text.addEventListener("input", () => {
-                        let new_scale = parseFloat(scale_text.value);
-                        if (!isNaN(new_scale) && new_scale > 0) {
-                            parsed_scale = new_scale;
-                            localStorage.setItem("scale", parsed_scale);
-
-                            chart_image.style = `width: ${
-                                91 * parsed_scale
-                            }px; border-left-width: ${parsed_scale}px; border-right-width: ${parsed_scale}px`;
-                            updateTimes();
-                        }
-                    });
-
-                    current_time.addEventListener("input", () => {
-                        let new_value = parseFloat(current_time.value);
-                        if (!isNaN(new_value)) parsed_current_time = new_value;
-                        updateTimes();
-                    });
-
-                    current_percentage.addEventListener("input", () => {
-                        let new_value = (parseFloat(current_percentage.value) / 100) * chart_duration;
-                        if (!isNaN(new_value)) parsed_current_time = new_value;
-                        updateTimes();
-                    });
-
-                    url.search = "";
-                    url.searchParams.set("chart", chart);
-                    url.searchParams.set("diff", difficulty);
-                    url.searchParams.set("time", parsed_current_time.toFixed(2));
-                    window.history.replaceState(null, null, url);
-                    return;
+            let in_scroll = false;
+            addEventListener("scroll", () => {
+                if (!in_scroll) {
+                    in_scroll = true;
+                    current_time.val =
+                        (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
+                        pixels_per_second.val;
+                    in_scroll = false;
                 }
-            }
+            });
+            addEventListener("resize", () => {
+                window_height.val = chart_scroller.clientHeight;
+            });
 
-            window.location.href = "/vs-charts";
-        });
+            return;
+        }
+
+        window.location.href = "/vs-charts/others";
     });
-} else {
-    window.location.href = "/vs-charts";
-}
+});
