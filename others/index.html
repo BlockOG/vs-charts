@@ -10,6 +10,10 @@
                 src: url(/vs-charts/monaco.ttf);
             }
 
+            input[type="number"] {
+                appearance: textfield;
+            }
+
             body {
                 background: #000;
                 margin: 8px;
@@ -107,7 +111,18 @@
                 gap: 5px;
             }
 
-            #jackets-display {
+            .text-column {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .text-column > div {
+                height: 22px;
+                line-height: 22px;
+            }
+
+            .jackets-display {
                 display: flex;
                 flex-direction: row;
                 gap: 10px;
@@ -117,30 +132,10 @@
         </style>
     </head>
     <body>
-        <div class="row" style="flex-wrap: wrap">
-            <input type="search" id="level-search" placeholder="Search" />
+        <noscript> Please enable javascript, nothing here is possible without it. </noscript>
 
-            <a style="margin-left: auto" href="https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214">
-                This tool was permitted by Cheryl.
-            </a>
-        </div>
-        <div class="row" style="flex-wrap: wrap">
-            <a style="margin-left: auto" href="https://github.com/BlockOG/vs-charts/issues">Any feedback is appreciated</a>
-        </div>
-        <div class="row" style="flex-wrap: wrap">
-            <a style="margin-left: auto" href="/vs-charts">All charts</a>
-        </div>
-        <div id="jackets-display"></div>
-
-        <noscript>
-            Please enable javascript, nothing here is possible without it.
-            <style>
-                div {
-                    display: none;
-                }
-            </style>
-        </noscript>
-        <script src="/vs-charts/common.js"></script>
-        <script src="index.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.3.nomodule.min.js"></script>
+        <script type="text/javascript" src="/vs-charts/common.js"></script>
+        <script type="text/javascript" src="index.js"></script>
     </body>
 </html>
