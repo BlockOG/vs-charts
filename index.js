@@ -45,17 +45,17 @@ fetch("/vs-charts/song_data.json").then((data) => {
                     nonInterferingInput({
                         type: "number",
                         class: "right-aligned",
+                        style: "width: 26px",
                         value: level_range_start,
                         oninput: (v) => (level_range_start.val = parseFloat(v.target.value) || -Infinity),
-                        size: 3,
                     }),
                     " to ",
                     nonInterferingInput({
                         type: "number",
                         class: "right-aligned",
+                        style: "width: 26px",
                         value: level_range_end,
                         oninput: (v) => (level_range_end.val = parseFloat(v.target.value) || Infinity),
-                        size: 3,
                     }),
                     input({
                         type: "search",

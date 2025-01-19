@@ -44,17 +44,20 @@ fetch("/vs-charts/song_data.json").then((data) => {
                     div(a({ href: "/vs-charts" }, "All charts")),
                     div(`Name: ${song.name}`),
                     div(`BPM: ${song.bpm}`),
-                    div("Scroll speed: ", input({ type: "number", class: "right-aligned", value: scroll_speed, size: 3, disabled: true })),
+                    div(
+                        "Scroll speed: ",
+                        input({ type: "number", class: "right-aligned", style: "width: 26px", value: scroll_speed, disabled: true })
+                    ),
                     div(
                         "Scale: ",
                         nonInterferingInput({
                             type: "number",
                             class: "right-aligned",
+                            style: "width: 26px",
                             value: scale,
                             oninput: (v) => {
                                 if (v.target.value > 0) scale.val = v.target.value;
                             },
-                            size: 3,
                         })
                     ),
                     div(
@@ -62,16 +65,17 @@ fetch("/vs-charts/song_data.json").then((data) => {
                         nonInterferingInput({
                             type: "number",
                             class: "right-aligned",
+                            style: "width: 40px",
                             value: () => current_time.val.toFixed(2),
                             oninput: (v) => {
                                 if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, v.target.value));
                             },
-                            size: 5,
                         }),
                         () => `/${chart_duration.val.toFixed(2)} (`,
                         nonInterferingInput({
                             type: "number",
                             class: "right-aligned",
+                            style: "width: 40px",
                             value: () => current_percentage.val.toFixed(2),
                             oninput: (v) => {
                                 if (v.target.value !== "")
@@ -80,7 +84,6 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                         Math.min(chart_duration.val, (v.target.value / 100) * chart_duration.val)
                                     );
                             },
-                            size: 5,
                         }),
                         "%)"
                     ),
@@ -126,9 +129,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             input({
                                 type: "number",
                                 class: "right-aligned",
+                                style: "width: 51px",
                                 value: score_rating_score,
                                 oninput: (v) => (score_rating_score.val = v.target.value),
-                                size: 6,
                             }),
                             ["NA", "FC", "AC"].map((v, i) =>
                                 button(
@@ -161,9 +164,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             input({
                                 type: "number",
                                 class: "right-aligned",
+                                style: "width: 37px",
                                 value: rating_score_rating,
                                 oninput: (v) => (rating_score_rating.val = v.target.value),
-                                size: 4,
                             })
                         ),
                         ["NA", "FC", "AC"].map((v, i) =>
