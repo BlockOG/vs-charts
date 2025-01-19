@@ -74,7 +74,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 ),
                 div(
                     { class: "row" },
-                    ...["OP:", "MD:", "FN:", "EN"].map((v, i) => [
+                    ...["OP:", "MD:", "FN:", "EN:"].map((v, i) => [
                         v,
                         input({
                             type: "checkbox",
