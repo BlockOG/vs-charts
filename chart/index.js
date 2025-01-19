@@ -18,6 +18,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
             const window_height = van.state(chart_scroller.clientHeight);
 
             const scale = van.savedState("scale", 1);
+            if (scale.val <= 0) scale.val = 1;
 
             const chart_duration = van.derive(() => (difficulty.val === 3 && song.encore_duration) || song.duration);
             const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
