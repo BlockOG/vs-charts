@@ -26,6 +26,9 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
 
             const upscroll = van.savedState("upscroll", false, (v) => v == "true");
 
+            const column_split = van.savedState("column-split", false, (v) => v == "true");
+            const column_split_reverse = van.savedState("column-split-reverse", false, (v) => v == "true");
+
             van.add(
                 document.head,
                 title(() => `${song.name} ${difficulty.val}`),
@@ -33,6 +36,60 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             );
             van.add(
                 document.body,
+                () => {
+                    if (column_split.val) {
+                        let ppb = (pixels_per_second.val / song.bpm) * 60;
+                        let split_height = Math.max(Math.floor((window_height.val - 20) / ppb), 1) * ppb;
+                        let num_splits = Math.ceil(chart_height.val / split_height);
+
+                        let images = Array.from({ length: num_splits }, (_, i) =>
+                            div(
+                                {
+                                    class: "chart-image",
+                                    style: `width: ${91 * scale.val}px; height: ${split_height}px; rotate: ${
+                                        upscroll.val * 180
+                                    }deg; border-left-width: ${scale.val}px; border-right-width: ${scale.val}px; overflow: hidden;`,
+                                },
+                                Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, j) =>
+                                    img({
+                                        style: `transform: translate(0px, ${split_height * (i + 1) - chart_height.val}px)`,
+                                        src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${j}.png`,
+                                    })
+                                )
+                            )
+                        );
+
+                        if (column_split_reverse.val) images.reverse();
+
+                        return div(
+                            { style: "display: table; position: absolute; top: 0px; height: 100%;" },
+                            div(
+                                { style: "display: table-cell; vertical-align: middle;" },
+                                div(
+                                    {
+                                        class: "row",
+                                        style: `width: ${(93 * scale.val + 50) * num_splits - 50}px; gap: 50px; padding: 0px calc(50vw - ${
+                                            (93 * scale.val) / 2
+                                        }px)`,
+                                    },
+                                    images
+                                )
+                            )
+                        );
+                    } else {
+                        return div(
+                            {
+                                class: "chart-image",
+                                style: `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${
+                                    upscroll.val * 180
+                                }deg; border-left-width: ${scale.val}px; border-right-width: ${scale.val}px`,
+                            },
+                            Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
+                                img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
+                            )
+                        );
+                    }
+                },
                 div(
                     { class: "top-left column" },
                     div(a({ href: "/vs-charts/others" }, "Boundary Shatter charts")),
@@ -62,6 +119,23 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             oninput: (v) => (upscroll.val = v.target.checked),
                         })
                     ),
+                    () =>
+                        div(
+                            "Column split: ",
+                            input({
+                                type: "checkbox",
+                                checked: column_split,
+                                oninput: (v) => (column_split.val = v.target.checked),
+                            }),
+                            column_split.val ? " Reverse: " : undefined,
+                            column_split.val
+                                ? input({
+                                      type: "checkbox",
+                                      checked: column_split_reverse,
+                                      oninput: (v) => (column_split_reverse.val = v.target.checked),
+                                  })
+                                : undefined
+                        ),
                     div(
                         "Time: ",
                         nonInterferingInput({
@@ -98,30 +172,39 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             "This tool was permitted by Cheryl."
                         )
                     )
-                ),
-                () =>
-                    div(
-                        {
-                            class: "chart-image",
-                            style: () =>
-                                `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${
-                                    upscroll.val * 180
-                                }deg; border-left-width: ${scale.val}px; border-right-width: ${scale.val}px`,
-                        },
-                        Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
-                            img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
-                        )
-                    )
+                )
             );
 
-            van.derive(() => {
-                if (upscroll.val) {
-                    chart_scroller.scrollTop = current_time.val * pixels_per_second.val * scale.val;
-                } else {
-                    chart_scroller.scrollTop =
-                        (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) *
-                        scale.val;
+            let last_column_split = column_split.val;
+            let overwrite_scroll = false;
+            let scroll = van.derive(() => {
+                if (last_column_split != column_split.val) {
+                    overwrite_scroll = true;
+                    setTimeout(onScroll, 0);
+                    last_column_split = column_split.val;
                 }
+
+                let scroll;
+                if (column_split.val) {
+                    let ppb = (pixels_per_second.val / song.bpm) * 60;
+                    let split_height = Math.max(Math.floor(window_height.val / ppb), 1) * ppb;
+                    let num_splits = Math.ceil(chart_height.val / split_height);
+
+                    let width = (93 * scale.val + 50) * (num_splits - 1);
+                    scroll = (current_time.val / chart_duration.val) * width;
+                    if (column_split_reverse.val) chart_scroller.scrollLeft = scroll = width - scroll;
+                    else chart_scroller.scrollLeft = scroll;
+                } else {
+                    if (upscroll.val) {
+                        chart_scroller.scrollTop = scroll = current_time.val * pixels_per_second.val * scale.val;
+                    } else {
+                        chart_scroller.scrollTop = scroll =
+                            (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) *
+                            scale.val;
+                    }
+                }
+
+                return scroll;
             });
 
             function changeURL() {
@@ -138,19 +221,38 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             changeURL();
 
             let in_scroll = false;
-            addEventListener("scroll", () => {
+            function onScroll() {
                 if (!in_scroll) {
                     in_scroll = true;
-                    if (upscroll.val) {
-                        current_time.val = chart_scroller.scrollTop / scale.val / pixels_per_second.val;
+
+                    if (overwrite_scroll) {
+                        chart_scroller.scrollTop = scroll.val;
+                        chart_scroller.scrollLeft = scroll.val;
+                        overwrite_scroll = false;
                     } else {
-                        current_time.val =
-                            (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
-                            pixels_per_second.val;
+                        if (column_split.val) {
+                            let ppb = (pixels_per_second.val / song.bpm) * 60;
+                            let split_height = Math.max(Math.floor(window_height.val / ppb), 1) * ppb;
+                            let num_splits = Math.ceil(chart_height.val / split_height);
+
+                            let width = (93 * scale.val + 50) * (num_splits - 1);
+                            if (column_split_reverse.val) current_time.val = (1 - chart_scroller.scrollLeft / width) * chart_duration.val;
+                            else current_time.val = (chart_scroller.scrollLeft / width) * chart_duration.val;
+                        } else {
+                            if (upscroll.val) {
+                                current_time.val = chart_scroller.scrollTop / scale.val / pixels_per_second.val;
+                            } else {
+                                current_time.val =
+                                    (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
+                                    pixels_per_second.val;
+                            }
+                        }
                     }
+
                     in_scroll = false;
                 }
-            });
+            }
+            addEventListener("scroll", onScroll);
             addEventListener("resize", () => {
                 window_height.val = chart_scroller.clientHeight;
             });
