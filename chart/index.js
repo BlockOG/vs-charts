@@ -17,13 +17,15 @@ fetch("/vs-charts/song_data.json").then((data) => {
             const chart_scroller = document.getElementById("chart-scroller");
             const window_height = van.state(chart_scroller.clientHeight);
 
-            const scale = van.savedState("scale", 1);
+            const scale = van.savedState("scale", 1, parseFloat);
             if (scale.val <= 0) scale.val = 1;
 
             const chart_duration = van.derive(() => (difficulty.val === 3 && song.encore_duration) || song.duration);
             const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
             const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
+
+            const upscroll = van.savedState("upscroll", false, (v) => v == "true");
 
             const score_rating_switch_selection = van.state(true);
 
@@ -58,6 +60,14 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             oninput: (v) => {
                                 if (v.target.value > 0) scale.val = v.target.value;
                             },
+                        })
+                    ),
+                    div(
+                        "Upscroll: ",
+                        input({
+                            type: "checkbox",
+                            checked: upscroll,
+                            oninput: (v) => (upscroll.val = v.target.checked),
                         })
                     ),
                     div(
@@ -195,7 +205,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 img({
                     class: "chart-image",
                     style: () =>
-                        `width: ${91 * scale.val}px; height: ${chart_height.val}px; border-left-width: ${
+                        `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
                             scale.val
                         }px; border-right-width: ${scale.val}px`,
                     src: () => `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}.png`,
@@ -203,8 +213,13 @@ fetch("/vs-charts/song_data.json").then((data) => {
             );
 
             van.derive(() => {
-                chart_scroller.scrollTop =
-                    (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) * scale.val;
+                if (upscroll.val) {
+                    chart_scroller.scrollTop = current_time.val * pixels_per_second.val * scale.val;
+                } else {
+                    chart_scroller.scrollTop =
+                        (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) *
+                        scale.val;
+                }
             });
 
             function changeURL() {
@@ -224,9 +239,13 @@ fetch("/vs-charts/song_data.json").then((data) => {
             addEventListener("scroll", () => {
                 if (!in_scroll) {
                     in_scroll = true;
-                    current_time.val =
-                        (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
-                        pixels_per_second.val;
+                    if (upscroll.val) {
+                        current_time.val = chart_scroller.scrollTop / scale.val / pixels_per_second.val;
+                    } else {
+                        current_time.val =
+                            (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
+                            pixels_per_second.val;
+                    }
                     in_scroll = false;
                 }
             });

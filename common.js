@@ -43,8 +43,8 @@ function val(v) {
     return v;
 }
 
-van.savedState = function (id, default_value) {
-    let s = van.state(default_value.constructor(localStorage.getItem(id) ?? default_value));
+van.savedState = function (id, default_value, func = (v) => v) {
+    let s = van.state(func(localStorage.getItem(id) ?? default_value));
     van.derive(() => localStorage.setItem(id, s.val));
     return s;
 };

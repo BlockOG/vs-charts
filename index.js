@@ -79,9 +79,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                         input({
                             type: "checkbox",
                             checked: difficulties[i],
-                            oninput: (v) => {
-                                difficulties[i].val = v.target.checked;
-                            },
+                            oninput: (v) => (difficulties[i].val = v.target.checked),
                         }),
                     ]),
                     a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vs-charts/issues" }, "Any feedback is appreciated")
