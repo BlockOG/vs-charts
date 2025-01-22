@@ -95,6 +95,7 @@
             .row {
                 display: flex;
                 flex-direction: row;
+                flex-wrap: wrap;
                 gap: 5px;
             }
 
@@ -110,9 +111,9 @@
                 gap: 2px;
             }
 
-            .text-column > div {
-                height: 22px;
+            .text-column div {
                 line-height: 22px;
+                white-space: nowrap;
             }
 
             .jackets-display {
