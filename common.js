@@ -31,7 +31,6 @@ function scoreFromRating(cc, rating, bonus) {
 }
 
 function defaultIfNaN(v, d) {
-    console.log(v);
     return isNaN(v) ? d : v;
 }
 
