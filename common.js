@@ -15,7 +15,7 @@ function ratingFromScore(cc, score, bonus) {
 
 function scoreFromRating(cc, rating, bonus) {
     if (rating < 0) return;
-    else if (rating == 0) return 0;
+    else if (rating === 0) return 0;
 
     rating -= Math.max(0, cc * 1000) + bonus * 100;
 

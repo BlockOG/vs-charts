@@ -13,8 +13,8 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             const scroll_speed = van.state(10.0);
             const pixels_per_second = van.derive(() => 100 + 20 * scroll_speed.val);
 
-            const chart_scroller = document.getElementById("chart-scroller");
-            const window_height = van.state(chart_scroller.clientHeight);
+            const html = document.getElementById("html");
+            const window_height = van.state(html.clientHeight);
 
             const scale = van.savedState("scale", 1, parseFloat);
             if (scale.val <= 0) scale.val = 1;
@@ -24,10 +24,10 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
 
-            const upscroll = van.savedState("upscroll", false, (v) => v == "true");
+            const upscroll = van.savedState("upscroll", false, (v) => v === "true");
 
-            const column_split = van.savedState("column-split", false, (v) => v == "true");
-            const column_split_reverse = van.savedState("column-split-reverse", false, (v) => v == "true");
+            const column_split = van.savedState("column-split", false, (v) => v === "true");
+            const column_split_reverse = van.savedState("column-split-reverse", false, (v) => v === "true");
 
             van.add(
                 document.head,
@@ -37,10 +37,12 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             van.add(
                 document.body,
                 () => {
+                    window_height.val;
                     if (column_split.val) {
                         let ppb = (pixels_per_second.val / song.bpm) * 60;
-                        let split_height = Math.max(Math.floor((window_height.val - 20) / ppb), 1) * ppb;
+                        let split_height = Math.max(Math.floor((html.clientHeight - 20) / ppb), 1) * ppb;
                         let num_splits = Math.ceil(chart_height.val / split_height);
+                        let width = (93 * scale.val + 50) * (num_splits - 1);
 
                         let images = Array.from({ length: num_splits }, (_, i) =>
                             div(
@@ -61,33 +63,71 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
 
                         if (column_split_reverse.val) images.reverse();
 
-                        return div(
-                            { style: "display: table; position: absolute; top: 0px; height: 100%;" },
+                        let scroll_div = div(
+                            {
+                                style: "max-width: 100dvw; overflow-x: auto",
+                                onscroll: (v) => {
+                                    if (column_split_reverse.val) current_time.val = (1 - v.target.scrollLeft / width) * chart_duration.val;
+                                    else current_time.val = (v.target.scrollLeft / width) * chart_duration.val;
+                                },
+                            },
                             div(
-                                { style: "display: table-cell; vertical-align: middle;" },
-                                div(
-                                    {
-                                        class: "row",
-                                        style: `width: ${(93 * scale.val + 50) * num_splits - 50}px; gap: 50px; padding: 0px calc(50vw - ${
-                                            (93 * scale.val) / 2
-                                        }px)`,
-                                    },
-                                    images
+                                {
+                                    class: "row",
+                                    style: `width: ${width + 93 * scale.val}px; gap: 50px; padding: calc(50dvh - ${
+                                        split_height / 2
+                                    }px) calc(50dvw - ${(93 * scale.val) / 2}px)`,
+                                },
+                                images
+                            )
+                        );
+
+                        van.derive(() => {
+                            current_time.val, chart_duration.val, scale.val, column_split_reverse.val;
+
+                            requestAnimationFrame(() => {
+                                let scroll = (current_time.val / chart_duration.val) * width;
+                                scroll_div.scrollLeft = column_split_reverse.val ? width - scroll : scroll;
+                            });
+                        });
+
+                        return scroll_div;
+                    } else {
+                        let height = chart_height.val * scale.val - html.clientHeight;
+
+                        let scroll_div = div(
+                            {
+                                style: "height: 100dvh; overflow: auto",
+                                onscroll: (v) => {
+                                    current_time.val =
+                                        (upscroll.val ? v.target.scrollTop : height - v.target.scrollTop) /
+                                        scale.val /
+                                        pixels_per_second.val;
+                                },
+                            },
+                            div(
+                                {
+                                    class: "chart-image",
+                                    style: `width: ${91 * scale.val}px; height: ${chart_height}px; rotate: ${
+                                        upscroll.val * 180
+                                    }deg; border-left-width: ${scale.val}px; border-right-width: ${scale.val}px`,
+                                },
+                                Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
+                                    img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
                                 )
                             )
                         );
-                    } else {
-                        return div(
-                            {
-                                class: "chart-image",
-                                style: `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${
-                                    upscroll.val * 180
-                                }deg; border-left-width: ${scale.val}px; border-right-width: ${scale.val}px`,
-                            },
-                            Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
-                                img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
-                            )
-                        );
+
+                        van.derive(() => {
+                            current_time.val, pixels_per_second.val, scale.val, upscroll.val;
+
+                            requestAnimationFrame(() => {
+                                let scroll = current_time.val * pixels_per_second.val * scale.val;
+                                scroll_div.scrollTop = upscroll.val ? scroll : height - scroll;
+                            });
+                        });
+
+                        return scroll_div;
                     }
                 },
                 div(
@@ -175,38 +215,6 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                 )
             );
 
-            let last_column_split = column_split.val;
-            let overwrite_scroll = false;
-            let scroll = van.derive(() => {
-                if (last_column_split != column_split.val) {
-                    overwrite_scroll = true;
-                    setTimeout(onScroll, 0);
-                    last_column_split = column_split.val;
-                }
-
-                let scroll;
-                if (column_split.val) {
-                    let ppb = (pixels_per_second.val / song.bpm) * 60;
-                    let split_height = Math.max(Math.floor(window_height.val / ppb), 1) * ppb;
-                    let num_splits = Math.ceil(chart_height.val / split_height);
-
-                    let width = (93 * scale.val + 50) * (num_splits - 1);
-                    scroll = (current_time.val / chart_duration.val) * width;
-                    if (column_split_reverse.val) chart_scroller.scrollLeft = scroll = width - scroll;
-                    else chart_scroller.scrollLeft = scroll;
-                } else {
-                    if (upscroll.val) {
-                        chart_scroller.scrollTop = scroll = current_time.val * pixels_per_second.val * scale.val;
-                    } else {
-                        chart_scroller.scrollTop = scroll =
-                            (chart_height.val / scale.val - window_height.val / scale.val - current_time.val * pixels_per_second.val) *
-                            scale.val;
-                    }
-                }
-
-                return scroll;
-            });
-
             function changeURL() {
                 let url = new URL(window.location);
                 url.search = "";
@@ -220,41 +228,8 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
 
             changeURL();
 
-            let in_scroll = false;
-            function onScroll() {
-                if (!in_scroll) {
-                    in_scroll = true;
-
-                    if (overwrite_scroll) {
-                        chart_scroller.scrollTop = scroll.val;
-                        chart_scroller.scrollLeft = scroll.val;
-                        overwrite_scroll = false;
-                    } else {
-                        if (column_split.val) {
-                            let ppb = (pixels_per_second.val / song.bpm) * 60;
-                            let split_height = Math.max(Math.floor(window_height.val / ppb), 1) * ppb;
-                            let num_splits = Math.ceil(chart_height.val / split_height);
-
-                            let width = (93 * scale.val + 50) * (num_splits - 1);
-                            if (column_split_reverse.val) current_time.val = (1 - chart_scroller.scrollLeft / width) * chart_duration.val;
-                            else current_time.val = (chart_scroller.scrollLeft / width) * chart_duration.val;
-                        } else {
-                            if (upscroll.val) {
-                                current_time.val = chart_scroller.scrollTop / scale.val / pixels_per_second.val;
-                            } else {
-                                current_time.val =
-                                    (chart_height.val / scale.val - chart_scroller.scrollTop / scale.val - window_height.val / scale.val) /
-                                    pixels_per_second.val;
-                            }
-                        }
-                    }
-
-                    in_scroll = false;
-                }
-            }
-            addEventListener("scroll", onScroll);
             addEventListener("resize", () => {
-                window_height.val = chart_scroller.clientHeight;
+                window_height.val = html.clientHeight;
             });
 
             return;

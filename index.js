@@ -112,7 +112,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                 let sorted_levels = [];
                 for (let [level, level_charts] of Object.entries(levels)) {
-                    level_charts.sort((a, b) => (a[1] == b[1] ? a[2] - b[2] : a[1] - b[1]));
+                    level_charts.sort((a, b) => (a[1] === b[1] ? a[2] - b[2] : a[1] - b[1]));
                     sorted_levels.push([level, parseFloat(level)]);
                 }
 
@@ -128,7 +128,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             span(
                                 {
                                     class: `${difficulty_names[levels[level][0][1]]}-text`,
-                                    style: level[level.length - 1] == "1" ? "padding-right: 15px" : "",
+                                    style: level[level.length - 1] === "1" ? "padding-right: 15px" : "",
                                 },
                                 level
                             )

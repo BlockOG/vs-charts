@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="color-scheme: dark">
+<html style="color-scheme: dark; overflow: hidden">
     <head>
         <title>vivid/stasis chart list</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -21,10 +21,7 @@
             body {
                 background: #000;
                 margin: 8px;
-                display: flex;
-                flex-direction: column;
-                gap: 2px;
-                max-height: calc(100vh - 8px * 2);
+                max-height: calc(100dvh - 8px * 2);
                 image-rendering: pixelated;
                 overflow: hidden;
                 font-family: Arial, Helvetica, sans-serif;
@@ -127,7 +124,7 @@
             }
         </style>
     </head>
-    <body>
+    <body class="column">
         <noscript> Please enable javascript, nothing here is possible without it. </noscript>
 
         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.3.nomodule.min.js"></script>
