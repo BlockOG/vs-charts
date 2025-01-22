@@ -44,7 +44,7 @@ function val(v) {
 }
 
 van.savedState = function (id, default_value, func = (v) => v) {
-    let s = van.state(func(localStorage.getItem(id) ?? default_value));
+    const s = van.state(func(localStorage.getItem(id) ?? default_value));
     van.derive(() => localStorage.setItem(id, s.val));
     return s;
 };
@@ -52,9 +52,9 @@ van.savedState = function (id, default_value, func = (v) => v) {
 function nonInterferingInput(...args) {
     let elem;
     if (args.length >= 1 && typeof args[0] === "object" && args[0].hasOwnProperty("value")) {
-        let v = args[0].value;
+        const v = args[0].value;
         args[0].value = (cv) => {
-            let nv = val(v);
+            const nv = val(v);
             if (document.activeElement === elem && document.hasFocus()) {
                 return cv;
             } else {
