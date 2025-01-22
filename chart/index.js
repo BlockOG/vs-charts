@@ -1,12 +1,12 @@
-let { a, button, div, img, input, link, span, title } = van.tags;
+const { a, button, div, img, input, link, span, title } = van.tags;
 
-let url = new URL(window.location);
+const url = new URL(window.location);
 if (!url.searchParams.has("chart")) window.location.href = "/vs-charts";
 
 const chart = url.searchParams.get("chart");
 fetch("/vs-charts/song_data.json").then((data) => {
     data.json().then((data) => {
-        for (let song of data) {
+        for (const song of data) {
             if (song.file_name !== chart) continue;
 
             const difficulty = van.state(parseInt(url.searchParams.get("diff")) || 0);
@@ -47,12 +47,12 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 () => {
                     window_height.val;
                     if (column_split.val) {
-                        let ppb = (pixels_per_second.val / song.bpm) * 60;
-                        let split_height = Math.max(Math.floor(html.clientHeight / ppb), 1) * ppb;
-                        let num_splits = Math.ceil(chart_height.val / split_height);
-                        let width = (93 * scale.val + 50) * (num_splits - 1);
+                        const ppb = (pixels_per_second.val / song.bpm) * 60;
+                        const split_height = Math.max(Math.floor(html.clientHeight / ppb), 1) * ppb;
+                        const num_splits = Math.ceil(chart_height.val / split_height);
+                        const width = (93 * scale.val + 50) * (num_splits - 1);
 
-                        let images = Array.from({ length: num_splits }, (_, i) =>
+                        const images = Array.from({ length: num_splits }, (_, i) =>
                             img({
                                 class: "chart-image",
                                 style: `width: ${91 * scale.val}px; height: ${split_height}px; rotate: ${
@@ -68,7 +68,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         if (column_split_reverse.val) images.reverse();
 
-                        let scroll_div = div(
+                        const scroll_div = div(
                             {
                                 style: "max-width: 100dvw; overflow-x: auto",
                                 onscroll: (v) => {
@@ -90,18 +90,17 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         van.derive(() => {
                             current_time.val, chart_duration.val, scale.val, column_split_reverse.val;
-
                             requestAnimationFrame(() => {
-                                let scroll = (current_time.val / chart_duration.val) * width;
+                                const scroll = (current_time.val / chart_duration.val) * width;
                                 scroll_div.scrollLeft = column_split_reverse.val ? width - scroll : scroll;
                             });
                         });
 
                         return scroll_div;
                     } else {
-                        let height = chart_height.val * scale.val - html.clientHeight;
+                        const height = chart_height.val * scale.val - html.clientHeight;
 
-                        let scroll_div = div(
+                        const scroll_div = div(
                             {
                                 style: `height: 100dvh; overflow-y: auto`,
                                 onscroll: (v) => {
@@ -122,9 +121,8 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         van.derive(() => {
                             current_time.val, pixels_per_second.val, scale.val, upscroll.val;
-
                             requestAnimationFrame(() => {
-                                let scroll = current_time.val * pixels_per_second.val * scale.val;
+                                const scroll = current_time.val * pixels_per_second.val * scale.val;
                                 scroll_div.scrollTop = upscroll.val ? scroll : height - scroll;
                             });
                         });
@@ -313,7 +311,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
             );
 
             function changeURL() {
-                let url = new URL(window.location);
+                const url = new URL(window.location);
                 url.search = "";
                 url.searchParams.set("chart", chart);
                 url.searchParams.set("diff", difficulty.val);

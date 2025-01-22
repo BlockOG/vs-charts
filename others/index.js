@@ -1,4 +1,4 @@
-let { a, button, div, img, input, span } = van.tags;
+const { a, button, div, img, input, span } = van.tags;
 
 fetch("/vs-charts/other_song_data.json").then((data) => {
     data.json().then((song_data) => {
@@ -23,17 +23,17 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                 div({ class: "row" }, a({ style: "margin-left: auto", href: "/vs-charts" }, "All charts"))
             ),
             () => {
-                let diff_to_charts = {};
-                for (let song of song_data) {
+                const diff_to_charts = {};
+                for (const song of song_data) {
                     diff_to_charts[song.difficulty] = diff_to_charts[song.difficulty] || [];
                     diff_to_charts[song.difficulty].push(song);
                 }
 
-                let level_column = [];
-                let jacket_column = [];
-                for (let i in diff_to_charts) {
-                    let i_fall = difficulty_names.includes(i) ? i : "fallback";
-                    let i_titled = i[0].toUpperCase() + i.slice(1);
+                const level_column = [];
+                const jacket_column = [];
+                for (const i in diff_to_charts) {
+                    const i_fall = difficulty_names.includes(i) ? i : "fallback";
+                    const i_titled = i[0].toUpperCase() + i.slice(1);
 
                     level_column.push(div(span({ class: `${i_fall}-text` }, i_titled)));
 
@@ -59,7 +59,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
         );
 
         van.derive(() => {
-            let url = new URL(window.location);
+            const url = new URL(window.location);
             url.search = "";
             window.history.replaceState(null, null, url);
         });

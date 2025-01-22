@@ -1,13 +1,13 @@
-let { a, button, div, img, input, span } = van.tags;
+const { a, button, div, img, input, span } = van.tags;
 
 fetch("/vs-charts/song_data.json").then((data) => {
     data.json().then((song_data) => {
-        let url = new URL(window.location);
+        const url = new URL(window.location);
 
         const level_range_start = van.state(-Infinity);
         const level_range_end = van.state(Infinity);
         if (url.searchParams.has("level-range")) {
-            let level_range = url.searchParams.get("level-range").split("-");
+            const level_range = url.searchParams.get("level-range").split("-");
             if (level_range.length >= 2) {
                 level_range_start.val = parseFloat(level_range[0]) || -Infinity;
                 level_range_end.val = parseFloat(level_range[1]) || Infinity;
@@ -25,9 +25,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
         const difficulties = Array.from({ length: 4 }, () => van.state(true));
         if (url.searchParams.has("disabled")) {
-            let disabled = url.searchParams.get("disabled");
+            const disabled = url.searchParams.get("disabled");
             if (disabled.length >= 4) {
-                for (let i = 0; i < 4; i++) {
+                for (const i = 0; i < 4; i++) {
                     difficulties[i].val = disabled[i] === "0";
                 }
             }
@@ -91,37 +91,37 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 )
             ),
             () => {
-                let levels = {};
-                for (let [i, song] of song_data.entries()) {
+                const levels = {};
+                for (const [i, song] of song_data.entries()) {
                     if (
                         !song.name.toLowerCase().includes(level_search.val.toLowerCase()) &&
                         !song.file_name.includes(level_search.val.toLowerCase())
                     )
                         continue;
 
-                    let song_difficulties = song.difficulties;
-                    for (let [j, level] of song_difficulties.entries()) {
+                    const song_difficulties = song.difficulties;
+                    for (const [j, level] of song_difficulties.entries()) {
                         if (!difficulties[j].val) continue;
                         if (level_range_start.val > level || level > level_range_end.val) continue;
 
-                        let level_string = level.toFixed(1);
+                        const level_string = level.toFixed(1);
                         if (!levels[level_string]) levels[level_string] = [];
                         levels[level_string].push([song.file_name, j, i, song.name]);
                     }
                 }
 
-                let sorted_levels = [];
-                for (let [level, level_charts] of Object.entries(levels)) {
+                const sorted_levels = [];
+                for (const [level, level_charts] of Object.entries(levels)) {
                     level_charts.sort((a, b) => (a[1] === b[1] ? a[2] - b[2] : a[1] - b[1]));
                     sorted_levels.push([level, parseFloat(level)]);
                 }
 
                 sorted_levels.sort((a, b) => a[1] - b[1]);
 
-                let level_column = [];
-                let jacket_column = [];
-                for (let i in sorted_levels) {
-                    let level = sorted_levels[i][0];
+                const level_column = [];
+                const jacket_column = [];
+                for (const i in sorted_levels) {
+                    const level = sorted_levels[i][0];
 
                     level_column.push(
                         div(
@@ -163,7 +163,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
         );
 
         van.derive(() => {
-            let url = new URL(window.location);
+            const url = new URL(window.location);
             url.search = "";
             if (level_range.val != "-") url.searchParams.set("level-range", level_range.val);
             if (level_search.val != "") url.searchParams.set("level-search", level_search.val);
