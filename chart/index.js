@@ -127,7 +127,8 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         image_times.push(Math.min(time_in, chart_duration.val));
 
-                        const width = (93 * scale.val + 50) * (images.length - 1);
+                        const image_width = 91 * scale.val + 2 * Math.max(1, scale.val);
+                        const width = (image_width + 50) * (images.length - 1);
 
                         if (column_split_reverse.val) images.reverse();
 
@@ -136,8 +137,8 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                 style: "max-width: 100dvw; overflow-x: auto",
                                 onscroll: (v) => {
                                     const scroll = column_split_reverse.val ? width - v.target.scrollLeft : v.target.scrollLeft;
-                                    const i = Math.floor(scroll / (93 * scale.val + 50));
-                                    const t = (scroll % (93 * scale.val + 50)) / (93 * scale.val + 50);
+                                    const i = Math.floor(scroll / (image_width + 50));
+                                    const t = (scroll % (image_width + 50)) / (image_width + 50);
                                     current_time.val =
                                         image_times[i] + t * (image_times[column_split_reverse.val ? i - 1 : i + 1] - image_times[i]);
                                 },
@@ -145,9 +146,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             div(
                                 {
                                     class: "row",
-                                    style: `width: ${width + 93 * scale.val}px; gap: 50px; padding: calc(50dvh - ${
+                                    style: `width: ${width + image_width}px; gap: 50px; padding: calc(50dvh - ${
                                         (max_height * scale.val) / 2
-                                    }px) calc(50dvw - ${(93 * scale.val) / 2}px); align-items: ${upscroll.val ? "start" : "end"}`,
+                                    }px) calc(50dvw - ${image_width / 2}px); align-items: ${upscroll.val ? "start" : "end"}`,
                                 },
                                 images
                             )
@@ -159,7 +160,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                 for (let i = 0; i < image_times.length - 1; i++) {
                                     if (image_times[i] <= current_time.val && current_time.val < image_times[i + 1]) {
                                         const t = (current_time.val - image_times[i]) / (image_times[i + 1] - image_times[i]);
-                                        const scroll = (i + t) * (93 * scale.val + 50);
+                                        const scroll = (i + t) * (image_width + 50);
                                         scroll_div.scrollLeft = column_split_reverse.val ? width - scroll : scroll;
 
                                         break;
