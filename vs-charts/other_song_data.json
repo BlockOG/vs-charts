@@ -63,6 +63,20 @@
         "difficulty": "evil"
     },
     {
+        "name": "nullbreak",
+        "file_name": "nullbreak",
+        "bpm": 228.0,
+        "duration": 125.263,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "NULCTRL EX",
+        "file_name": "nulctrlex",
+        "bpm": 100.0,
+        "duration": 244.8,
+        "difficulty": "shatter"
+    },
+    {
         "name": "_",
         "file_name": "dual",
         "bpm": 200.0,
