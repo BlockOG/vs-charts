@@ -27,7 +27,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
         if (url.searchParams.has("disabled")) {
             const disabled = url.searchParams.get("disabled");
             if (disabled.length >= 4) {
-                for (const i = 0; i < 4; i++) {
+                for (let i = 0; i < 4; i++) {
                     difficulties[i].val = disabled[i] === "0";
                 }
             }
