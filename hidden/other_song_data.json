@@ -1,0 +1,100 @@
+[
+    {
+        "name": "+ERABY+E CONNEC+10N",
+        "file_name": "terabyte",
+        "bpm": 230.0,
+        "duration": 308.87,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "00 [Shatter]",
+        "file_name": "00",
+        "bpm": 127.0,
+        "duration": 186.435,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "00 [Slumpage]",
+        "file_name": "00",
+        "bpm": 127.0,
+        "duration": 186.435,
+        "difficulty": "slumpage"
+    },
+    {
+        "name": "Locked Out",
+        "file_name": "lockedout",
+        "bpm": 120.0,
+        "duration": 120.0,
+        "difficulty": "vandalized"
+    },
+    {
+        "name": "calming patterns to soothe the mind",
+        "file_name": "calming",
+        "bpm": 158.0,
+        "duration": 170.127,
+        "difficulty": "middle"
+    },
+    {
+        "name": "grode (DJ HOE SCARER REMIX)",
+        "file_name": "grodescarer",
+        "bpm": 206.0,
+        "duration": 94.369,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "grode (A-Saph Multigenre Remix)",
+        "file_name": "multigrode",
+        "bpm": 200.0,
+        "duration": 451.297,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "DeSPAROLA",
+        "file_name": "desparola",
+        "bpm": 224.0,
+        "duration": 199.214,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "evil pimp dracula fire beat",
+        "file_name": "dracula",
+        "bpm": 104.0,
+        "duration": 125.597,
+        "difficulty": "evil"
+    },
+    {
+        "name": "nullbreak",
+        "file_name": "nullbreak",
+        "bpm": 228.0,
+        "duration": 125.263,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "NULCTRL EX",
+        "file_name": "nulctrlex",
+        "bpm": 100.0,
+        "duration": 244.8,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "acta est fabula, plaudite",
+        "file_name": "plaudite",
+        "bpm": 200.0,
+        "duration": 836.527,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "_",
+        "file_name": "dual",
+        "bpm": 200.0,
+        "duration": 221.704,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "Memories Sacrafice",
+        "file_name": "memories",
+        "bpm": 161.0,
+        "duration": 159.654,
+        "difficulty": "shatter"
+    }
+]
