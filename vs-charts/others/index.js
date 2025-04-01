@@ -16,10 +16,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                         "This tool was permitted by Cheryl."
                     )
                 ),
-                div(
-                    { class: "row" },
-                    a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vs-charts/issues" }, "Any feedback is appreciated")
-                ),
+                div({ class: "row" }, a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vs-charts/issues" }, "Any feedback is appreciated")),
                 div({ class: "row" }, a({ style: "margin-left: auto", href: "/vs-charts" }, "All charts"))
             ),
             () => {
@@ -43,18 +40,14 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             diff_to_charts[i].map((chart) =>
                                 a(
                                     { class: `${i_fall}-link`, href: `/vs-charts/others/chart?chart=${chart.file_name}&diff=${i}` },
-                                    img({ src: `/vs-charts/jackets/${chart.file_name}.png`, title: `${chart.name} ${i}` })
+                                    img({ style: `width: 100px`, src: `/vs-charts/jackets/${chart.file_name}.png`, title: `${chart.name} ${i}` })
                                 )
                             )
                         )
                     );
                 }
 
-                return div(
-                    { class: "jackets-display" },
-                    div({ class: "column level-column" }, level_column),
-                    div({ class: "column" }, jacket_column)
-                );
+                return div({ class: "jackets-display" }, div({ class: "column level-column" }, level_column), div({ class: "column" }, jacket_column));
             }
         );
 

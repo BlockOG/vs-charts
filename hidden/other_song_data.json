@@ -1,12 +1,5 @@
 [
     {
-        "name": "+ERABY+E CONNEC+10N",
-        "file_name": "terabyte",
-        "bpm": 230.0,
-        "duration": 308.87,
-        "difficulty": "shatter"
-    },
-    {
         "name": "00 [Shatter]",
         "file_name": "00",
         "bpm": 127.0,
@@ -21,18 +14,18 @@
         "difficulty": "slumpage"
     },
     {
+        "name": "+ERABY+E CONNEC+10N",
+        "file_name": "terabyte",
+        "bpm": 230.0,
+        "duration": 308.87,
+        "difficulty": "shatter"
+    },
+    {
         "name": "Locked Out",
         "file_name": "lockedout",
         "bpm": 120.0,
         "duration": 120.0,
         "difficulty": "vandalized"
-    },
-    {
-        "name": "calming patterns to soothe the mind",
-        "file_name": "calming",
-        "bpm": 158.0,
-        "duration": 170.127,
-        "difficulty": "middle"
     },
     {
         "name": "grode (DJ HOE SCARER REMIX)",
@@ -47,6 +40,20 @@
         "bpm": 200.0,
         "duration": 451.297,
         "difficulty": "shatter"
+    },
+    {
+        "name": "RAM (Rotating Auto-Mobiles)",
+        "file_name": "ram",
+        "bpm": 164.0,
+        "duration": 128.7805,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "calming patterns to soothe the mind",
+        "file_name": "calming",
+        "bpm": 158.0,
+        "duration": 170.127,
+        "difficulty": "middle"
     },
     {
         "name": "DeSPAROLA",
@@ -77,13 +84,6 @@
         "difficulty": "shatter"
     },
     {
-        "name": "acta est fabula, plaudite",
-        "file_name": "plaudite",
-        "bpm": 200.0,
-        "duration": 836.527,
-        "difficulty": "shatter"
-    },
-    {
         "name": "_",
         "file_name": "dual",
         "bpm": 200.0,
@@ -95,6 +95,13 @@
         "file_name": "memories",
         "bpm": 161.0,
         "duration": 159.654,
+        "difficulty": "shatter"
+    },
+    {
+        "name": "acta est fabula, plaudite",
+        "file_name": "plaudite",
+        "bpm": 200.0,
+        "duration": 836.527,
         "difficulty": "shatter"
     }
 ]

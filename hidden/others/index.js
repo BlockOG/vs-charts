@@ -40,7 +40,7 @@ fetch("/hidden/other_song_data.json").then((data) => {
                             diff_to_charts[i].map((chart) =>
                                 a(
                                     { class: `${i_fall}-link`, href: `/hidden/others/chart?chart=${chart.file_name}&diff=${i}` },
-                                    img({ src: `/hidden/jackets/${chart.file_name}.png`, style: "width: 100px", title: `${chart.name} ${i}` })
+                                    img({ style: `width: 100px`, src: `/hidden/jackets/${chart.file_name}.png`, style: "width: 100px", title: `${chart.name} ${i}` })
                                 )
                             )
                         )
