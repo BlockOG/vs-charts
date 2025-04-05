@@ -1,11 +1,11 @@
 const { a, div, img, input, link, title } = van.tags;
 
 const url = new URL(window.location);
-if (!url.searchParams.has("chart") || !url.searchParams.has("diff")) window.location.href = "/hidden/others";
+if (!url.searchParams.has("chart") || !url.searchParams.has("diff")) window.location.href = "/vs-charts/others";
 
 const chart = url.searchParams.get("chart");
 const difficulty = van.state(url.searchParams.get("diff"));
-fetch("/hidden/other_song_data.json").then((data) => {
+fetch("/vs-charts/other_song_data.json").then((data) => {
     data.json().then((data) => {
         for (const song of data) {
             if (song.file_name !== chart || song.difficulty !== difficulty.val) continue;
@@ -32,7 +32,7 @@ fetch("/hidden/other_song_data.json").then((data) => {
             van.add(
                 document.head,
                 title(() => `${song.name} ${difficulty.val}`),
-                link({ rel: "icon", type: "image/png", href: `/hidden/jackets/${chart}.png` })
+                link({ rel: "icon", type: "image/png", href: `/vs-charts/jackets/${chart}.png` })
             );
             van.add(
                 document.body,
@@ -50,12 +50,12 @@ fetch("/hidden/other_song_data.json").then((data) => {
                                     class: "chart-image",
                                     style: `width: ${91 * scale.val}px; height: ${split_height}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
                                         scale.val
-                                    }px; border-right-width: ${scale.val}px; overflow: hidden;`,
+                                    }px; border-right-width: ${scale.val}px; overflow: vs-charts;`,
                                 },
                                 Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, j) =>
                                     img({
                                         style: `transform: translate(0px, ${split_height * (i + 1) - chart_height.val}px)`,
-                                        src: `/hidden/charts/${song.file_name}/${difficulty.val}-${j}.png`,
+                                        src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${j}.png`,
                                     })
                                 )
                             )
@@ -108,7 +108,7 @@ fetch("/hidden/other_song_data.json").then((data) => {
                                     }px; border-right-width: ${scale.val}px`,
                                 },
                                 Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
-                                    img({ src: `/hidden/charts/${song.file_name}/${difficulty.val}-${i}.png` })
+                                    img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
                                 )
                             )
                         );
@@ -126,7 +126,7 @@ fetch("/hidden/other_song_data.json").then((data) => {
                 },
                 div(
                     { class: "top-left column" },
-                    div(a({ href: "/hidden/others" }, "Boundary Shatter charts")),
+                    div(a({ href: "/vs-charts/others" }, "Boundary Shatter charts")),
                     div(`Name: ${song.name}`),
                     div(`BPM: ${song.bpm}`),
                     div("Scroll speed: ", input({ type: "number", class: "right-aligned", style: "width: 26px", value: scroll_speed, disabled: true })),
@@ -217,6 +217,6 @@ fetch("/hidden/other_song_data.json").then((data) => {
             return;
         }
 
-        window.location.href = "/hidden/others";
+        window.location.href = "/vs-charts/others";
     });
 });
