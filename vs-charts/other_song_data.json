@@ -96,5 +96,12 @@
         "bpm": 161.0,
         "duration": 159.654,
         "difficulty": "shatter"
+    },
+    {
+        "name": "acta est fabula, plaudite",
+        "file_name": "plaudite",
+        "bpm": 200.0,
+        "duration": 836.527,
+        "difficulty": "shatter"
     }
 ]

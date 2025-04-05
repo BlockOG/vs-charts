@@ -93,11 +93,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
             () => {
                 const levels = {};
                 for (const [i, song] of song_data.entries()) {
-                    if (
-                        !song.name.toLowerCase().includes(level_search.val.toLowerCase()) &&
-                        !song.file_name.includes(level_search.val.toLowerCase())
-                    )
-                        continue;
+                    if (!song.name.toLowerCase().includes(level_search.val.toLowerCase()) && !song.file_name.includes(level_search.val.toLowerCase())) continue;
 
                     const song_difficulties = song.difficulties;
                     for (const [j, level] of song_difficulties.entries()) {
@@ -146,6 +142,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                     },
                                     img({
                                         src: `/vs-charts/jackets/${chart[0]}.png`,
+                                        style: "width: 100px",
                                         title: `${chart[3]} ${difficulty_names[chart[1]]} ${level}`,
                                     })
                                 )
@@ -154,11 +151,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                     );
                 }
 
-                return div(
-                    { class: "jackets-display" },
-                    div({ class: "column level-column" }, level_column),
-                    div({ class: "column" }, jacket_column)
-                );
+                return div({ class: "jackets-display" }, div({ class: "column level-column" }, level_column), div({ class: "column" }, jacket_column));
             }
         );
 

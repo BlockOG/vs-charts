@@ -79,12 +79,8 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                                 ) * scale.val
                                             }px; rotate: ${upscroll.val * 180}deg; border-left-width: ${scale.val}px; border-right-width: ${
                                                 scale.val
-                                            }px; object-fit: cover; object-position: left 0px bottom ${
-                                                -Math.floor(time_in * pixels_per_second.val) * scale.val
-                                            }px`,
-                                            src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${
-                                                show_bpm.val ? "-bpm" : ""
-                                            }.png`,
+                                            }px; object-fit: cover; object-position: left 0px bottom ${-Math.floor(time_in * pixels_per_second.val) * scale.val}px`,
+                                            src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                                         })
                                     );
 
@@ -104,17 +100,11 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                     img({
                                         class: "chart-image",
                                         style: `width: ${91 * scale.val}px; height: ${
-                                            Math.floor(
-                                                Math.min(curr_height, chart_height.val / scale.val - time_in * pixels_per_second.val)
-                                            ) * scale.val
+                                            Math.floor(Math.min(curr_height, chart_height.val / scale.val - time_in * pixels_per_second.val)) * scale.val
                                         }px; rotate: ${upscroll.val * 180}deg; border-left-width: ${scale.val}px; border-right-width: ${
                                             scale.val
-                                        }px; object-fit: cover; object-position: left 0px bottom ${
-                                            -Math.floor(time_in * pixels_per_second.val) * scale.val
-                                        }px`,
-                                        src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${
-                                            show_bpm.val ? "-bpm" : ""
-                                        }.png`,
+                                        }px; object-fit: cover; object-position: left 0px bottom ${-Math.floor(time_in * pixels_per_second.val) * scale.val}px`,
+                                        src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                                     })
                                 );
 
@@ -139,16 +129,15 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                     const scroll = column_split_reverse.val ? width - v.target.scrollLeft : v.target.scrollLeft;
                                     const i = Math.floor(scroll / (image_width + 50));
                                     const t = (scroll % (image_width + 50)) / (image_width + 50);
-                                    current_time.val =
-                                        image_times[i] + t * (image_times[column_split_reverse.val ? i - 1 : i + 1] - image_times[i]);
+                                    current_time.val = image_times[i] + t * (image_times[column_split_reverse.val ? i - 1 : i + 1] - image_times[i]);
                                 },
                             },
                             div(
                                 {
                                     class: "row",
-                                    style: `width: ${width + image_width}px; gap: 50px; padding: calc(50dvh - ${
-                                        (max_height * scale.val) / 2
-                                    }px) calc(50dvw - ${image_width / 2}px); align-items: ${upscroll.val ? "start" : "end"}`,
+                                    style: `width: ${width + image_width}px; gap: 50px; padding: calc(50dvh - ${(max_height * scale.val) / 2}px) calc(50dvw - ${
+                                        image_width / 2
+                                    }px); align-items: ${upscroll.val ? "start" : "end"}`,
                                 },
                                 images
                             )
@@ -177,17 +166,14 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             {
                                 style: `height: 100dvh; overflow-y: auto`,
                                 onscroll: (v) => {
-                                    current_time.val =
-                                        (upscroll.val ? v.target.scrollTop : height - v.target.scrollTop) /
-                                        scale.val /
-                                        pixels_per_second.val;
+                                    current_time.val = (upscroll.val ? v.target.scrollTop : height - v.target.scrollTop) / scale.val / pixels_per_second.val;
                                 },
                             },
                             img({
                                 class: "chart-image",
-                                style: `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${
-                                    upscroll.val * 180
-                                }deg; border-left-width: ${scale.val}px; border-right-width: ${scale.val}px`,
+                                style: `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
+                                    scale.val
+                                }px; border-right-width: ${scale.val}px`,
                                 src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                             })
                         );
@@ -215,10 +201,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             oninput: (v) => (show_bpm.val = v.target.checked),
                         })
                     ),
-                    div(
-                        "Scroll speed: ",
-                        input({ type: "number", class: "right-aligned", style: "width: 26px", value: scroll_speed, disabled: true })
-                    ),
+                    div("Scroll speed: ", input({ type: "number", class: "right-aligned", style: "width: 26px", value: scroll_speed, disabled: true })),
                     div(
                         "Scale: ",
                         nonInterferingInput({
@@ -274,11 +257,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             style: "width: 40px",
                             value: () => current_percentage.val.toFixed(2),
                             oninput: (v) => {
-                                if (v.target.value !== "")
-                                    current_time.val = Math.max(
-                                        0,
-                                        Math.min(chart_duration.val, (v.target.value / 100) * chart_duration.val)
-                                    );
+                                if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, (v.target.value / 100) * chart_duration.val));
                             },
                         }),
                         "%)"
@@ -299,9 +278,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                     ),
                     div(
                         "Level: ",
-                        span({ class: () => `${difficulty_names[difficulty.val]}-text` }, () =>
-                            song.difficulties[difficulty.val].toFixed(1)
-                        )
+                        span({ class: () => `${difficulty_names[difficulty.val]}-text` }, () => song.difficulties[difficulty.val].toFixed(1))
                     ),
                     div(
                         "Score ",
@@ -341,12 +318,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                         ),
                         div(
                             { class: "row" },
-                            () =>
-                                `${ratingFromScore(
-                                    song.difficulties[difficulty.val],
-                                    score_rating_score.val,
-                                    score_rating_selection.val
-                                ).toFixed(2)} rating`
+                            () => `${ratingFromScore(song.difficulties[difficulty.val], score_rating_score.val, score_rating_selection.val).toFixed(2)} rating`
                         )
                     ),
                     div(
@@ -369,10 +341,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             div(
                                 {
                                     class: "row",
-                                    style: () =>
-                                        scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i) === undefined
-                                            ? "display: none"
-                                            : "",
+                                    style: () => (scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i) === undefined ? "display: none" : ""),
                                 },
                                 () => `${v}: ${scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i)} score`
                             )
@@ -381,12 +350,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 ),
                 div(
                     { class: "top-right column" },
-                    div(
-                        a(
-                            { href: "https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214" },
-                            "This tool was permitted by Cheryl."
-                        )
-                    )
+                    div(a({ href: "https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214" }, "This tool was permitted by Cheryl."))
                 )
             );
 
