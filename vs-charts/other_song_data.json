@@ -103,5 +103,12 @@
         "bpm": 200.0,
         "duration": 836.527,
         "difficulty": "shatter"
+    },
+    {
+        "name": "Angelstar",
+        "file_name": "angelstar",
+        "bpm": 186.0,
+        "duration": 245.441,
+        "difficulty": "shatter"
     }
 ]

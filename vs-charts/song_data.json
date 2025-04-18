@@ -3934,6 +3934,24 @@
         ]
     },
     {
+        "name": "Solomon's Seal",
+        "file_name": "solomon",
+        "bpm": 132.0,
+        "duration": 143.636,
+        "difficulties": [
+            1.0,
+            6.0,
+            9.0,
+            11.0
+        ],
+        "bpm_changes": [
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
         "name": "\u03c7\u03a9",
         "file_name": "ua",
         "bpm": 200.0,
