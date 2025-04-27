@@ -84,6 +84,13 @@
         "difficulty": "shatter"
     },
     {
+        "name": "\u2200",
+        "file_name": "avalon",
+        "bpm": 245.0,
+        "duration": 159.625,
+        "difficulty": "shatter"
+    },
+    {
         "name": "_",
         "file_name": "dual",
         "bpm": 200.0,
