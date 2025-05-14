@@ -48,7 +48,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             div(
                                 {
                                     class: "chart-image",
-                                    style: `width: ${91 * scale.val}px; height: ${split_height}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
+                                    style: `width: ${93 * scale.val}px; height: ${split_height}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
                                         scale.val
                                     }px; border-right-width: ${scale.val}px; overflow: vs-charts;`,
                                 },
@@ -103,7 +103,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             div(
                                 {
                                     class: "chart-image",
-                                    style: `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
+                                    style: `width: ${93 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
                                         scale.val
                                     }px; border-right-width: ${scale.val}px`,
                                 },

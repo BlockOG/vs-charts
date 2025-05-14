@@ -93,7 +93,12 @@ fetch("/vs-charts/song_data.json").then((data) => {
             () => {
                 const levels = {};
                 for (const [i, song] of song_data.entries()) {
-                    if (!song.name.toLowerCase().includes(level_search.val.toLowerCase()) && !song.file_name.includes(level_search.val.toLowerCase())) continue;
+                    if (
+                        !song.name.toLowerCase().includes(level_search.val.toLowerCase()) &&
+                        !(song.backstage && song.backstage.name.toLowerCase().includes(level_search.val.toLowerCase())) &&
+                        !song.file_name.includes(level_search.val.toLowerCase())
+                    )
+                        continue;
 
                     const song_difficulties = song.difficulties;
                     for (const [j, level] of song_difficulties.entries()) {
@@ -102,7 +107,12 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         const level_string = level.toFixed(1);
                         if (!levels[level_string]) levels[level_string] = [];
-                        levels[level_string].push([song.file_name, j, i, song.name]);
+                        levels[level_string].push([
+                            song.file_name,
+                            j + (j === 3 && song.backstage !== undefined),
+                            i,
+                            (j === 3 && song.backstage && song.backstage.name) || song.name,
+                        ]);
                     }
                 }
 
@@ -138,10 +148,10 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                 a(
                                     {
                                         class: `${difficulty_names[chart[1]]}-link`,
-                                        href: `/vs-charts/chart?chart=${chart[0]}&diff=${chart[1]}`,
+                                        href: `/vs-charts/chart?chart=${chart[0]}&diff=${Math.min(chart[1], 3)}`,
                                     },
                                     img({
-                                        src: `/vs-charts/jackets/${chart[0]}.png`,
+                                        src: `/vs-charts/jackets/${chart[0]}${chart[1] === 4 ? "_backstage" : ""}.png`,
                                         style: "width: 100px",
                                         title: `${chart[3]} ${difficulty_names[chart[1]]} ${level}`,
                                     })

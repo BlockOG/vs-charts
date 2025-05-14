@@ -48,7 +48,12 @@
         "file_name": "there",
         "bpm": 127.0,
         "duration": 120.945,
-        "encore_duration": 186.435,
+        "backstage": {
+            "name": "00",
+            "jacket": "there_backstage",
+            "duration": 186.435,
+            "bpm": 127.0
+        },
         "difficulties": [
             3.0,
             8.0,
@@ -108,7 +113,12 @@
         "file_name": "terabyte",
         "bpm": 230.0,
         "duration": 188.87,
-        "encore_duration": 170.087,
+        "backstage": {
+            "name": "+ERABY+E CONNEC+10N",
+            "jacket": "terabyte_backstage",
+            "duration": 170.087,
+            "bpm": 230.0
+        },
         "difficulties": [
             9.0,
             11.4,
@@ -309,7 +319,12 @@
         "file_name": "credits",
         "bpm": 179.0,
         "duration": 142.123,
-        "encore_duration": 139.441,
+        "backstage": {
+            "name": "Credits",
+            "jacket": "credits_backstage",
+            "duration": 139.441,
+            "bpm": 179.0
+        },
         "difficulties": [
             2.0,
             9.6,
@@ -3464,7 +3479,7 @@
         "name": "It Go (Cheryl Stelli remix)",
         "file_name": "collab_gormx",
         "bpm": 160.0,
-        "duration": 156.0,
+        "duration": 159.0,
         "difficulties": [
             7.0,
             10.6,
@@ -3481,15 +3496,28 @@
         "file_name": "execution",
         "bpm": 205.0,
         "duration": 174.439,
+        "backstage": {
+            "name": "DeSPAROLA",
+            "jacket": "execution_backstage",
+            "duration": 199.214,
+            "bpm": 224.0
+        },
         "difficulties": [
             7.0,
             11.1,
-            16.7
+            16.7,
+            16.9
         ],
         "bpm_changes": [
             [],
             [],
-            []
+            [],
+            [
+                [
+                    0.0,
+                    224.0
+                ]
+            ]
         ]
     },
     {
@@ -11564,7 +11592,7 @@
             7.0,
             12.0,
             15.8,
-            16.9
+            16.8
         ],
         "bpm_changes": [
             [

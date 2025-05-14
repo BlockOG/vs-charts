@@ -20,7 +20,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
             const scale = van.savedState("scale", 1, parseFloat);
             if (scale.val <= 0) scale.val = 1;
 
-            const chart_duration = van.derive(() => (difficulty.val === 3 && song.encore_duration) || song.duration);
+            const chart_duration = van.derive(() => (difficulty.val === 3 && song.backstage && song.backstage.duration) || song.duration);
             const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
             const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
@@ -41,8 +41,13 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
             van.add(
                 document.head,
-                title(() => `${song.name} ${difficulty_names[difficulty.val]} ${song.difficulties[difficulty.val].toFixed(1)}`),
-                link({ rel: "icon", type: "image/png", href: `/vs-charts/jackets/${chart}.png` })
+                title(
+                    () =>
+                        `${(difficulty.val === 3 && song.backstage && song.backstage.name) || song.name} ${
+                            difficulty_names[difficulty.val + (difficulty.val === 3 && song.backstage !== undefined)]
+                        } ${song.difficulties[difficulty.val].toFixed(1)}`
+                ),
+                link({ rel: "icon", type: "image/png", href: () => `/vs-charts/jackets/${chart}${difficulty.val === 3 && song.backstage ? "_backstage" : ""}.png` })
             );
             van.add(
                 document.body,
@@ -69,7 +74,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                     images.push(
                                         img({
                                             class: "chart-image",
-                                            style: `width: ${91 * scale.val}px; height: ${
+                                            style: `width: ${93 * scale.val}px; height: ${
                                                 Math.floor(
                                                     Math.min(
                                                         curr_height,
@@ -77,9 +82,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                                         (song.bpm_changes[difficulty.val][bpm_index][0] - time_in) * pixels_per_second.val
                                                     )
                                                 ) * scale.val
-                                            }px; rotate: ${upscroll.val * 180}deg; border-left-width: ${scale.val}px; border-right-width: ${
-                                                scale.val
-                                            }px; object-fit: cover; object-position: left 0px bottom ${-Math.floor(time_in * pixels_per_second.val) * scale.val}px`,
+                                            }px; rotate: ${upscroll.val * 180}deg; object-fit: cover; object-position: left 0px bottom ${
+                                                -Math.floor(time_in * pixels_per_second.val) * scale.val
+                                            }px`,
                                             src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                                         })
                                     );
@@ -99,11 +104,11 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                 images.push(
                                     img({
                                         class: "chart-image",
-                                        style: `width: ${91 * scale.val}px; height: ${
+                                        style: `width: ${93 * scale.val}px; height: ${
                                             Math.floor(Math.min(curr_height, chart_height.val / scale.val - time_in * pixels_per_second.val)) * scale.val
-                                        }px; rotate: ${upscroll.val * 180}deg; border-left-width: ${scale.val}px; border-right-width: ${
-                                            scale.val
-                                        }px; object-fit: cover; object-position: left 0px bottom ${-Math.floor(time_in * pixels_per_second.val) * scale.val}px`,
+                                        }px; rotate: ${upscroll.val * 180}deg; object-fit: cover; object-position: left 0px bottom ${
+                                            -Math.floor(time_in * pixels_per_second.val) * scale.val
+                                        }px`,
                                         src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                                     })
                                 );
@@ -117,7 +122,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         image_times.push(Math.min(time_in, chart_duration.val));
 
-                        const image_width = 91 * scale.val + 2 * Math.max(1, scale.val);
+                        const image_width = 93 * scale.val + 2 * Math.max(1, scale.val);
                         const width = (image_width + 50) * (images.length - 1);
 
                         if (column_split_reverse.val) images.reverse();
@@ -171,9 +176,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             },
                             img({
                                 class: "chart-image",
-                                style: `width: ${91 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
-                                    scale.val
-                                }px; border-right-width: ${scale.val}px`,
+                                style: `width: ${93 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg`,
                                 src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                             })
                         );
@@ -192,9 +195,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 div(
                     { class: "top-left column" },
                     div(a({ href: "/vs-charts" }, "All charts")),
-                    div(`Name: ${song.name}`),
+                    div(() => `Name: ${(difficulty.val === 3 && song.backstage && song.backstage.name) || song.name}`),
                     div(
-                        `BPM: ${song.bpm} `,
+                        () => `BPM: ${(difficulty.val === 3 && song.backstage && song.backstage.bpm) || song.bpm} `,
                         input({
                             type: "checkbox",
                             checked: show_bpm,
@@ -272,7 +275,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                     },
                                     disabled: () => difficulty.val === i,
                                 },
-                                ["OP", "MD", "FN", "EN"][i]
+                                ["OP", "MD", "FN", song.backstage ? "BS" : "EN"][i]
                             )
                         )
                     ),
