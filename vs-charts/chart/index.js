@@ -281,7 +281,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
                     ),
                     div(
                         "Level: ",
-                        span({ class: () => `${difficulty_names[difficulty.val]}-text` }, () => song.difficulties[difficulty.val].toFixed(1))
+                        span({ class: () => `${difficulty_names[difficulty.val + (difficulty.val === 3 && song.backstage !== undefined)]}-text` }, () =>
+                            song.difficulties[difficulty.val].toFixed(1)
+                        )
                     ),
                     div(
                         "Score ",
