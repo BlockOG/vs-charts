@@ -168,9 +168,9 @@ fetch("/vs-charts/song_data.json").then((data) => {
         van.derive(() => {
             const url = new URL(window.location);
             url.search = "";
-            if (level_range.val != "-") url.searchParams.set("level-range", level_range.val);
-            if (level_search.val != "") url.searchParams.set("level-search", level_search.val);
-            if (disabled.val != "0000") url.searchParams.set("disabled", disabled.val);
+            if (level_range.val !== "-") url.searchParams.set("level-range", level_range.val);
+            if (level_search.val !== "") url.searchParams.set("level-search", level_search.val);
+            if (disabled.val !== "0000") url.searchParams.set("disabled", disabled.val);
             window.history.replaceState(null, null, url);
         });
     });
