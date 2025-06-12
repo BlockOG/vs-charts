@@ -20,9 +20,12 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             if (scale.val <= 0) scale.val = 1;
 
             const chart_duration = van.derive(() => song.duration);
-            const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
+            const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val));
+            const scaled_chart_height = van.derive(() => Math.floor(chart_height.val * scale.val));
             const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
+
+            const show_bpm = van.savedState("show-bpm", false, (v) => v === "true");
 
             const upscroll = van.savedState("upscroll", false, (v) => v === "true");
 
@@ -48,14 +51,12 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             div(
                                 {
                                     class: "chart-image",
-                                    style: `width: ${93 * scale.val}px; height: ${split_height}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
-                                        scale.val
-                                    }px; border-right-width: ${scale.val}px; overflow: vs-charts;`,
+                                    style: `width: ${93 * scale.val}px; height: ${split_height}px; rotate: ${upscroll.val * 180}deg; overflow: vs-charts;`,
                                 },
                                 Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, j) =>
                                     img({
                                         style: `transform: translate(0px, ${split_height * (i + 1) - chart_height.val}px)`,
-                                        src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${j}.png`,
+                                        src: `/vs-charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${j}.png`,
                                     })
                                 )
                             )
@@ -91,7 +92,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
 
                         return scroll_div;
                     } else {
-                        const height = chart_height.val * scale.val - html.clientHeight;
+                        const height = scaled_chart_height.val - html.clientHeight;
 
                         const scroll_div = div(
                             {
@@ -103,12 +104,10 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             div(
                                 {
                                     class: "chart-image",
-                                    style: `width: ${93 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg; border-left-width: ${
-                                        scale.val
-                                    }px; border-right-width: ${scale.val}px`,
+                                    style: `width: ${93 * scale.val}px; height: ${scaled_chart_height.val}px; rotate: ${upscroll.val * 180}deg`,
                                 },
                                 Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
-                                    img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}-${i}.png` })
+                                    img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${i}.png` })
                                 )
                             )
                         );
@@ -128,7 +127,14 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                     { class: "top-left column" },
                     div(a({ href: "/vs-charts/others" }, "Boundary Shatter charts")),
                     div(`Name: ${song.name}`),
-                    div(`BPM: ${song.bpm}`),
+                    div(
+                        `BPM: ${song.bpm}`,
+                        input({
+                            type: "checkbox",
+                            checked: show_bpm,
+                            oninput: (v) => (show_bpm.val = v.target.checked),
+                        })
+                    ),
                     div("Scroll speed: ", input({ type: "number", class: "right-aligned", style: "width: 26px", value: scroll_speed, disabled: true })),
                     div(
                         "Scale: ",

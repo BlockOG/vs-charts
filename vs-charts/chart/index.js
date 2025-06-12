@@ -21,7 +21,8 @@ fetch("/vs-charts/song_data.json").then((data) => {
             if (scale.val <= 0) scale.val = 1;
 
             const chart_duration = van.derive(() => (difficulty.val === 3 && song.backstage && song.backstage.duration) || song.duration);
-            const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val * scale.val));
+            const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val));
+            const scaled_chart_height = van.derive(() => Math.floor(chart_height.val * scale.val));
             const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
 
@@ -78,7 +79,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                                 Math.floor(
                                                     Math.min(
                                                         curr_height,
-                                                        chart_height.val / scale.val - time_in * pixels_per_second.val,
+                                                        chart_height.val - time_in * pixels_per_second.val,
                                                         (song.bpm_changes[difficulty.val][bpm_index][0] - time_in) * pixels_per_second.val
                                                     )
                                                 ) * scale.val
@@ -105,7 +106,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                     img({
                                         class: "chart-image",
                                         style: `width: ${93 * scale.val}px; height: ${
-                                            Math.floor(Math.min(curr_height, chart_height.val / scale.val - time_in * pixels_per_second.val)) * scale.val
+                                            Math.floor(Math.min(curr_height, chart_height.val - time_in * pixels_per_second.val)) * scale.val
                                         }px; rotate: ${upscroll.val * 180}deg; object-fit: cover; object-position: left 0px bottom ${
                                             -Math.floor(time_in * pixels_per_second.val) * scale.val
                                         }px`,
@@ -165,7 +166,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
 
                         return scroll_div;
                     } else {
-                        const height = chart_height.val * scale.val - html.clientHeight;
+                        const height = scaled_chart_height.val - html.clientHeight;
 
                         const scroll_div = div(
                             {
@@ -176,7 +177,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             },
                             img({
                                 class: "chart-image",
-                                style: `width: ${93 * scale.val}px; height: ${chart_height.val}px; rotate: ${upscroll.val * 180}deg`,
+                                style: `width: ${93 * scale.val}px; height: ${scaled_chart_height.val}px; rotate: ${upscroll.val * 180}deg`,
                                 src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                             })
                         );
