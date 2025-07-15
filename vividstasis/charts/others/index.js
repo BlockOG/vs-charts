@@ -1,6 +1,6 @@
 const { a, button, div, img, input, span } = van.tags;
 
-fetch("/vs-charts/other_song_data.json").then((data) => {
+fetch("/vividstasis/charts/other_song_data.json").then((data) => {
     data.json().then((song_data) => {
         van.add(
             document.body,
@@ -16,8 +16,8 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                         "This tool was permitted by Cheryl."
                     )
                 ),
-                div({ class: "row" }, a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vs-charts/issues" }, "Any feedback is appreciated")),
-                div({ class: "row" }, a({ style: "margin-left: auto", href: "/vs-charts" }, "All charts"))
+                div({ class: "row" }, a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vividstasis/charts/issues" }, "Any feedback is appreciated")),
+                div({ class: "row" }, a({ style: "margin-left: auto", href: "/vividstasis/charts" }, "All charts"))
             ),
             () => {
                 const diff_to_charts = {};
@@ -39,8 +39,13 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                             { class: "jacket-row" },
                             diff_to_charts[i].map((chart) =>
                                 a(
-                                    { class: `${i_fall}-link`, href: `/vs-charts/others/chart?chart=${chart.file_name}&diff=${i}` },
-                                    img({ style: `width: 100px`, src: `/vs-charts/jackets/${chart.file_name}.png`, style: "width: 100px", title: `${chart.name} ${i}` })
+                                    { class: `${i_fall}-link`, href: `/vividstasis/charts/others/chart?chart=${chart.file_name}&diff=${i}` },
+                                    img({
+                                        style: `width: 100px`,
+                                        src: `/vividstasis/charts/jackets/${chart.file_name}.png`,
+                                        style: "width: 100px",
+                                        title: `${chart.name} ${i}`,
+                                    })
                                 )
                             )
                         )

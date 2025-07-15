@@ -1,11 +1,11 @@
 const { a, div, img, input, link, title } = van.tags;
 
 const url = new URL(window.location);
-if (!url.searchParams.has("chart") || !url.searchParams.has("diff")) window.location.href = "/vs-charts/others";
+if (!url.searchParams.has("chart") || !url.searchParams.has("diff")) window.location.href = "/vividstasis/charts/others";
 
 const chart = url.searchParams.get("chart");
 const difficulty = van.state(url.searchParams.get("diff"));
-fetch("/vs-charts/other_song_data.json").then((data) => {
+fetch("/vividstasis/charts/other_song_data.json").then((data) => {
     data.json().then((data) => {
         for (const song of data) {
             if (song.file_name !== chart || song.difficulty !== difficulty.val) continue;
@@ -35,7 +35,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             van.add(
                 document.head,
                 title(() => `${song.name} ${difficulty.val}`),
-                link({ rel: "icon", type: "image/png", href: `/vs-charts/jackets/${chart}.png` })
+                link({ rel: "icon", type: "image/png", href: `/vividstasis/charts/jackets/${chart}.png` })
             );
             van.add(
                 document.body,
@@ -56,7 +56,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                                 Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, j) =>
                                     img({
                                         style: `transform: translate(0px, ${split_height * (i + 1) - chart_height.val}px)`,
-                                        src: `/vs-charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${j}.png`,
+                                        src: `/vividstasis/charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${j}.png`,
                                     })
                                 )
                             )
@@ -107,7 +107,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                                     style: `width: ${93 * scale.val}px; height: ${scaled_chart_height.val}px; rotate: ${upscroll.val * 180}deg`,
                                 },
                                 Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, i) =>
-                                    img({ src: `/vs-charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${i}.png` })
+                                    img({ src: `/vividstasis/charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${i}.png` })
                                 )
                             )
                         );
@@ -125,7 +125,7 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
                 },
                 div(
                     { class: "top-left column" },
-                    div(a({ href: "/vs-charts/others" }, "Boundary Shatter charts")),
+                    div(a({ href: "/vividstasis/charts/others" }, "Boundary Shatter charts")),
                     div(`Name: ${song.name}`),
                     div(
                         `BPM: ${song.bpm}`,
@@ -223,6 +223,6 @@ fetch("/vs-charts/other_song_data.json").then((data) => {
             return;
         }
 
-        window.location.href = "/vs-charts/others";
+        window.location.href = "/vividstasis/charts/others";
     });
 });

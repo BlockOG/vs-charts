@@ -1,10 +1,10 @@
 const { a, button, div, img, input, link, span, title } = van.tags;
 
 const url = new URL(window.location);
-if (!url.searchParams.has("chart")) window.location.href = "/vs-charts";
+if (!url.searchParams.has("chart")) window.location.href = "/vividstasis/charts";
 
 const chart = url.searchParams.get("chart");
-fetch("/vs-charts/song_data.json").then((data) => {
+fetch("/vividstasis/charts/song_data.json").then((data) => {
     data.json().then((data) => {
         for (const song of data) {
             if (song.file_name !== chart) continue;
@@ -48,7 +48,11 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             difficulty_names[difficulty.val + (difficulty.val === 3 && song.backstage !== undefined)]
                         } ${song.difficulties[difficulty.val].toFixed(1)}`
                 ),
-                link({ rel: "icon", type: "image/png", href: () => `/vs-charts/jackets/${chart}${difficulty.val === 3 && song.backstage ? "_backstage" : ""}.png` })
+                link({
+                    rel: "icon",
+                    type: "image/png",
+                    href: () => `/vividstasis/charts/jackets/${chart}${difficulty.val === 3 && song.backstage ? "_backstage" : ""}.png`,
+                })
             );
             van.add(
                 document.body,
@@ -86,7 +90,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                             }px; rotate: ${upscroll.val * 180}deg; object-fit: cover; object-position: left 0px bottom ${
                                                 -Math.floor(time_in * pixels_per_second.val) * scale.val
                                             }px`,
-                                            src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
+                                            src: `/vividstasis/charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                                         })
                                     );
 
@@ -110,7 +114,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                         }px; rotate: ${upscroll.val * 180}deg; object-fit: cover; object-position: left 0px bottom ${
                                             -Math.floor(time_in * pixels_per_second.val) * scale.val
                                         }px`,
-                                        src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
+                                        src: `/vividstasis/charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                                     })
                                 );
 
@@ -178,7 +182,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             img({
                                 class: "chart-image",
                                 style: `width: ${93 * scale.val}px; height: ${scaled_chart_height.val}px; rotate: ${upscroll.val * 180}deg`,
-                                src: `/vs-charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
+                                src: `/vividstasis/charts/charts/${chart}/${difficulty_names[difficulty.val]}${show_bpm.val ? "-bpm" : ""}.png`,
                             })
                         );
 
@@ -195,7 +199,7 @@ fetch("/vs-charts/song_data.json").then((data) => {
                 },
                 div(
                     { class: "top-left column" },
-                    div(a({ href: "/vs-charts" }, "All charts")),
+                    div(a({ href: "/vividstasis/charts" }, "All charts")),
                     div(() => `Name: ${(difficulty.val === 3 && song.backstage && song.backstage.name) || song.name}`),
                     div(
                         () => `BPM: ${(difficulty.val === 3 && song.backstage && song.backstage.bpm) || song.bpm} `,
@@ -380,6 +384,6 @@ fetch("/vs-charts/song_data.json").then((data) => {
             return;
         }
 
-        window.location.href = "/vs-charts";
+        window.location.href = "/vividstasis/charts";
     });
 });

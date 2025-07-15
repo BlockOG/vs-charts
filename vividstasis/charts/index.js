@@ -1,6 +1,6 @@
 const { a, button, div, img, input, span } = van.tags;
 
-fetch("/vs-charts/song_data.json").then((data) => {
+fetch("/vividstasis/charts/song_data.json").then((data) => {
     data.json().then((song_data) => {
         const url = new URL(window.location);
 
@@ -82,12 +82,12 @@ fetch("/vs-charts/song_data.json").then((data) => {
                             oninput: (v) => (difficulties[i].val = v.target.checked),
                         }),
                     ]),
-                    a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vs-charts/issues" }, "Any feedback is appreciated")
+                    a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vividstasis/charts/issues" }, "Any feedback is appreciated")
                 ),
                 div(
                     { class: "row" },
                     button({ onclick: () => navigator.clipboard.writeText(window.location.href) }, "Copy link"),
-                    a({ style: "margin-left: auto; color: #000 !important", href: "/vs-charts/others" }, "ooo scawwy")
+                    a({ style: "margin-left: auto; color: #000 !important", href: "/vividstasis/charts/others" }, "ooo scawwy")
                 )
             ),
             () => {
@@ -148,10 +148,10 @@ fetch("/vs-charts/song_data.json").then((data) => {
                                 a(
                                     {
                                         class: `${difficulty_names[chart[1]]}-link`,
-                                        href: `/vs-charts/chart?chart=${chart[0]}&diff=${Math.min(chart[1], 3)}`,
+                                        href: `/vividstasis/charts/chart?chart=${chart[0]}&diff=${Math.min(chart[1], 3)}`,
                                     },
                                     img({
-                                        src: `/vs-charts/jackets/${chart[0]}${chart[1] === 4 ? "_backstage" : ""}.png`,
+                                        src: `/vividstasis/charts/jackets/${chart[0]}${chart[1] === 4 ? "_backstage" : ""}.png`,
                                         style: "width: 100px",
                                         title: `${chart[3]} ${difficulty_names[chart[1]]} ${level}`,
                                     })
