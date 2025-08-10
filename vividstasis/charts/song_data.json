@@ -12976,15 +12976,32 @@
         "file_name": "crimson",
         "bpm": 195.0,
         "duration": 189.538,
+        "backstage": {
+            "name": "Scarlet Death",
+            "jacket": "crimson_backstage",
+            "duration": 230.571,
+            "bpm": 210.0
+        },
         "difficulties": [
             8.0,
             11.9,
-            14.9
+            14.9,
+            18.0
         ],
         "bpm_changes": [
             [],
             [],
-            []
+            [],
+            [
+                [
+                    0.0,
+                    420.0
+                ],
+                [
+                    18.2857109375,
+                    210.0
+                ]
+            ]
         ]
     },
     {
