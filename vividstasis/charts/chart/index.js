@@ -40,15 +40,15 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
 
             const rating_score_rating = van.state(0);
 
-            function changeURL(save_time) {
+            const getURL = (save_time) => {
                 const url = new URL(window.location);
                 url.search = "";
                 url.searchParams.set("chart", chart);
                 url.searchParams.set("diff", difficulty.val);
                 if (save_time) url.searchParams.set("time", current_time.val.toFixed(2));
 
-                window.history.replaceState(null, null, url);
-            }
+                return url;
+            };
 
             van.add(
                 document.head,
@@ -307,10 +307,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                     div(
                         button(
                             {
-                                onclick: () => {
-                                    changeURL(true);
-                                    navigator.clipboard.writeText(window.location.href);
-                                },
+                                onclick: () => navigator.clipboard.writeText(getURL(true).href),
                             },
                             "Copy link at time"
                         )
@@ -322,7 +319,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                 {
                                     onclick: () => {
                                         difficulty.val = i;
-                                        changeURL();
+                                        window.history.replaceState(null, null, getURL());
                                     },
                                     disabled: () => difficulty.val === i,
                                 },
@@ -410,7 +407,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                 )
             );
 
-            changeURL();
+            window.history.replaceState(null, null, getURL());
 
             window.addEventListener("resize", () => {
                 window_height.val = html.clientHeight;
