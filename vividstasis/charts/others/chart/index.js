@@ -10,7 +10,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
         for (const song of data) {
             if (song.file_name !== chart || song.difficulty !== difficulty.val) continue;
 
-            const scroll_speed = van.state(10.0);
+            const scroll_speed = van.savedState("scroll-speed", 10.0, parseFloat);
             const pixels_per_second = van.derive(() => 100 + 20 * scroll_speed.val);
 
             const html = document.getElementById("html");
@@ -21,6 +21,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
             const chart_duration = van.derive(() => song.duration);
             const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val));
+            const segments = van.derive(() => Math.ceil(chart_height.val / 65535));
             const scaled_chart_height = van.derive(() => Math.floor(chart_height.val * scale.val));
             const current_time = van.state(parseFloat(url.searchParams.get("time")) || 0);
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
@@ -50,11 +51,36 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
             van.add(
                 document.body,
                 () => {
-                    const get_chart_segments = () =>
-                        Array.from({ length: Math.ceil(chart_height.val / 65535) }, (_, j) =>
-                            img({
-                                src: `/vividstasis/charts/charts/${song.file_name}/${difficulty.val}${show_bpm.val ? "-bpm" : ""}-${j}.png`,
-                            })
+                    const get_chart = (height, offset) =>
+                        div(
+                            {
+                                style: `display: flex; flex-direction: column; gap: 0px; margin-left: auto; margin-right: auto; width: ${93 * scale.val}px; height: ${
+                                    height || scaled_chart_height.val
+                                }px; rotate: ${upscroll.val * 180}deg; overflow: hidden; background: url(/vividstasis/charts/background.png); background-size: ${
+                                    93 * scale.val
+                                }px`,
+                            },
+                            Array.from({ length: segments.val }, (_, j) =>
+                                div(
+                                    {
+                                        style: () => `transform: translate(${j * -93 * scale.val}px, ${offset || 0}px)`,
+                                    },
+                                    div(
+                                        { style: () => `position: relative; height: ${65535 * scale.val}px` },
+                                        img({
+                                            style: () => `width: ${93 * segments.val * scale.val}px; position: absolute`,
+                                            src: `https://vividstasis-charts.blockog.net/${song.file_name}/${difficulty.val}-${scroll_speed.val.toFixed(1)}.png`,
+                                        }),
+                                        img({
+                                            style: () =>
+                                                `${show_bpm.val ? "" : "display: none; "}vertical-align: top; transform-origin: 0px 0px; transform: scaleX(-93) scale(${
+                                                    scale.val
+                                                }) rotate(90deg); position: absolute`,
+                                            src: `https://vividstasis-charts.blockog.net/${song.file_name}/${difficulty.val}-${scroll_speed.val.toFixed(1)}-bpm.png`,
+                                        })
+                                    )
+                                )
+                            )
                         );
 
                     window_height.val;
@@ -70,10 +96,10 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                         while (time_in < chart_duration.val) {
                             while (bpm_index < song.bpm_changes.length && time_in + curr_height / pixels_per_second.val + 0.0001 >= song.bpm_changes[bpm_index][0]) {
                                 if (curr_height > 0) {
-                                    if (curr_height > max_height) max_height = Math.floor(curr_height);
+                                    if (curr_height > max_height) max_height = Math.round(curr_height);
 
                                     const split_height =
-                                        Math.floor(
+                                        Math.round(
                                             Math.min(
                                                 curr_height,
                                                 chart_height.val - time_in * pixels_per_second.val,
@@ -83,21 +109,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                                     image_times.push(time_in);
                                     images.push(
-                                        div(
-                                            {
-                                                style: `margin-left: auto; margin-right: auto; width: ${93 * scale.val}px; height: ${split_height}px; rotate: ${
-                                                    upscroll.val * 180
-                                                }deg; overflow: hidden;`,
-                                            },
-                                            div(
-                                                {
-                                                    style: `display: flex; flex-direction: column; gap: 0px; transform: translateY(${
-                                                        Math.floor(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height
-                                                    }px)`,
-                                                },
-                                                get_chart_segments()
-                                            )
-                                        )
+                                        div(get_chart(split_height, Math.round(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height))
                                     );
 
                                     curr_height = 0;
@@ -109,27 +121,13 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                             const ppb = (pixels_per_second.val / bpm) * 60;
                             if (curr_height + ppb >= html.clientHeight / scale.val) {
-                                if (curr_height > max_height) max_height = Math.floor(curr_height);
+                                if (curr_height > max_height) max_height = Math.round(curr_height);
 
-                                const split_height = Math.floor(Math.min(curr_height, chart_height.val - time_in * pixels_per_second.val)) * scale.val;
+                                const split_height = Math.round(Math.min(curr_height, chart_height.val - time_in * pixels_per_second.val)) * scale.val;
 
                                 image_times.push(time_in);
                                 images.push(
-                                    div(
-                                        {
-                                            style: `margin-left: auto; margin-right: auto; width: ${93 * scale.val}px; height: ${split_height}px; rotate: ${
-                                                upscroll.val * 180
-                                            }deg; overflow: hidden;`,
-                                        },
-                                        div(
-                                            {
-                                                style: `display: flex; flex-direction: column; gap: 0px; transform: translateY(${
-                                                    Math.floor(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height
-                                                }px)`,
-                                            },
-                                            get_chart_segments()
-                                        )
-                                    )
+                                    div(get_chart(split_height, Math.round(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height))
                                 );
 
                                 time_in += curr_height / pixels_per_second.val;
@@ -141,7 +139,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                         image_times.push(Math.min(time_in, chart_duration.val));
 
-                        const image_width = 93 * scale.val + 2 * Math.max(1, scale.val);
+                        const image_width = 93 * scale.val;
                         const width = (image_width + 50) * (images.length - 1);
 
                         if (column_split_reverse.val) images.reverse();
@@ -188,19 +186,12 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                         const scroll_div = div(
                             {
-                                style: `height: 100dvh; overflow-y: auto`,
+                                style: () => `height: 100dvh; overflow-y: auto`,
                                 onscroll: (v) => {
                                     current_time.val = (upscroll.val ? v.target.scrollTop : height - v.target.scrollTop) / scale.val / pixels_per_second.val;
                                 },
                             },
-                            div(
-                                {
-                                    style: `display: flex; flex-direction: column; gap: 0px; margin-left: auto; margin-right: auto; width: ${93 * scale.val}px; height: ${
-                                        scaled_chart_height.val
-                                    }px; rotate: ${upscroll.val * 180}deg`,
-                                },
-                                get_chart_segments()
-                            )
+                            get_chart()
                         );
 
                         van.derive(() => {
@@ -215,7 +206,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                     }
                 },
                 div(
-                    { class: "column", style: "position: fixed; left: 8px; top: 8px;" },
+                    { class: "column", style: "position: fixed; left: 8px; top: 8px" },
                     div(a({ href: "/vividstasis/charts/others" }, "Boundary Shatter charts")),
                     div(`Name: ${song.name}`),
                     div(
@@ -226,7 +217,18 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                             oninput: (v) => (show_bpm.val = v.target.checked),
                         })
                     ),
-                    div("Scroll speed: ", input({ type: "number", style: "text-align: right; width: 26px", value: scroll_speed, disabled: true })),
+                    div(
+                        "Scroll speed: ",
+                        nonInterferingInput({
+                            type: "number",
+                            style: "text-align: right; width: 26px",
+                            value: () => scroll_speed.val.toFixed(1),
+                            oninput: (v) => {
+                                v = Math.round(parseFloat(v.target.value) * 10) / 10;
+                                if (1 <= v && v <= 20) scroll_speed.val = v;
+                            },
+                        })
+                    ),
                     div(
                         "Scale: ",
                         nonInterferingInput({
@@ -234,7 +236,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                             style: "text-align: right; width: 26px",
                             value: scale,
                             oninput: (v) => {
-                                if (v.target.value > 0) scale.val = v.target.value;
+                                if (parseFloat(v.target.value) > 0) scale.val = parseFloat(v.target.value);
                             },
                         })
                     ),
@@ -270,7 +272,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                             style: "text-align: right; width: 40px",
                             value: () => current_time.val.toFixed(2),
                             oninput: (v) => {
-                                if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, v.target.value));
+                                if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, parseFloat(v.target.value)));
                             },
                         }),
                         () => `/${chart_duration.val.toFixed(2)} (`,
@@ -279,7 +281,8 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                             style: "text-align: right; width: 40px",
                             value: () => current_percentage.val.toFixed(2),
                             oninput: (v) => {
-                                if (v.target.value !== "") current_time.val = Math.max(0, Math.min(chart_duration.val, (v.target.value / 100) * chart_duration.val));
+                                if (v.target.value !== "")
+                                    current_time.val = Math.max(0, Math.min(chart_duration.val, (parseFloat(v.target.value) / 100) * chart_duration.val));
                             },
                         }),
                         "%)"
@@ -294,7 +297,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                     )
                 ),
                 div(
-                    { class: "column", style: "position: fixed; right: 8px; top: 8px;" },
+                    { class: "column", style: "position: fixed; right: 8px; top: 8px" },
                     div(a({ href: "https://discord.com/channels/828252123154219028/954952378132611114/1272585937183965214" }, "This tool was permitted by Cheryl."))
                 )
             );
