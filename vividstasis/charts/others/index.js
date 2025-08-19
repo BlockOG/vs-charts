@@ -16,7 +16,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                         "This tool was permitted by Cheryl."
                     )
                 ),
-                div({ class: "row" }, a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vividstasis/charts/issues" }, "Any feedback is appreciated")),
+                div({ class: "row" }, a({ style: "margin-left: auto", href: "https://github.com/BlockOG/vs-charts/issues" }, "Any feedback is appreciated")),
                 div({ class: "row" }, a({ style: "margin-left: auto", href: "/vividstasis/charts" }, "All charts"))
             ),
             () => {
