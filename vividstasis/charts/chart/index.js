@@ -28,6 +28,41 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             const current_percentage = van.derive(() => (current_time.val / chart_duration.val) * 100);
 
             const show_bpm = van.savedState("show-bpm", false, (v) => v === "true");
+            const bpm_splits = van.savedState("bpm-splits", 1, parseInt);
+            const bpm_colors = van.savedState(
+                "bpm-colors",
+                ["7F7F7F7F", "FEFEFE7F", "E00B017F", "9A51DF7F", "0586E47F", , "BA6BD87F", , "E8B6367F", , , , "D24B8B7F", , , , "FEE66B7F"],
+                JSON.parse,
+                JSON.stringify
+            );
+            const bpm_image_url = van.state("");
+            van.derive(() => {
+                let flat_pixels = Array(chart_height.val).fill("00000000");
+
+                for (let bpm_index = -1; bpm_index < song.bpm_changes[difficulty.val].length; bpm_index++) {
+                    let seconds_per_beat = 60 / (bpm_index < 0 ? song.bpm : song.bpm_changes[difficulty.val][bpm_index][1]);
+                    let start = bpm_index < 0 ? 0 : song.bpm_changes[difficulty.val][bpm_index][0];
+                    let end = bpm_index + 1 < song.bpm_changes[difficulty.val].length ? song.bpm_changes[difficulty.val][bpm_index + 1][0] : chart_duration.val;
+
+                    for (let bpm_split = bpm_splits.val; bpm_split >= 1; bpm_split--) {
+                        if (bpm_splits.val % bpm_split !== 0) continue;
+
+                        let color = bpm_colors.val[bpm_split] ?? bpm_colors.val[0];
+                        for (let time = start; time - 0.0001 <= end; time += seconds_per_beat / bpm_split) {
+                            let pixel = Math.round(time * pixels_per_second.val);
+                            if (pixel < 0 || pixel >= flat_pixels.length) continue;
+                            flat_pixels[pixel] = color;
+                        }
+                    }
+                }
+
+                let pixels = Array.from({ length: 65535 }, () => []);
+                for (let i = 0; i < flat_pixels.length; i++) {
+                    pixels[i % 65535].push(flat_pixels[flat_pixels.length - 1 - i]);
+                }
+
+                fetch(createBMPDataUrl(pixels)).then((res) => res.blob().then((blob) => (bpm_image_url.val = URL.createObjectURL(blob))));
+            });
 
             const upscroll = van.savedState("upscroll", false, (v) => v === "true");
 
@@ -85,19 +120,17 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                     div(
                                         { style: () => `position: relative; height: ${65535 * scale.val}px` },
                                         img({
-                                            style: () => `width: ${93 * segments.val * scale.val}px; position: absolute`,
+                                            style: () => `transform: scale(${scale.val}); position: absolute`,
                                             src: `https://vividstasis-charts.blockog.net/${song.file_name}/${difficulty_names[difficulty.val]}-${scroll_speed.val.toFixed(
                                                 1
                                             )}.png`,
                                         }),
                                         img({
                                             style: () =>
-                                                `${show_bpm.val ? "" : "display: none; "}vertical-align: top; transform-origin: 0px 0px; transform: scaleX(-93) scale(${
+                                                `${show_bpm.val ? "" : "display: none; "}transform-origin: 0px 0px; transform: scaleX(93) scale(${
                                                     scale.val
-                                                }) rotate(90deg); position: absolute`,
-                                            src: `https://vividstasis-charts.blockog.net/${song.file_name}/${difficulty_names[difficulty.val]}-${scroll_speed.val.toFixed(
-                                                1
-                                            )}-bpm.png`,
+                                                }); position: absolute`,
+                                            src: bpm_image_url.val,
                                         })
                                     )
                                 )
@@ -233,14 +266,27 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                     { class: "column", style: "position: fixed; left: 8px; top: 8px" },
                     div(a({ href: "/vividstasis/charts" }, "All charts")),
                     div(() => `Name: ${(difficulty.val === 3 && song.backstage && song.backstage.name) || song.name}`),
-                    div(
-                        () => `BPM: ${(difficulty.val === 3 && song.backstage && song.backstage.bpm) || song.bpm} `,
-                        input({
-                            type: "checkbox",
-                            checked: show_bpm,
-                            oninput: (v) => (show_bpm.val = v.target.checked),
-                        })
-                    ),
+                    () =>
+                        div(
+                            `BPM: ${(difficulty.val === 3 && song.backstage && song.backstage.bpm) || song.bpm} `,
+                            input({
+                                type: "checkbox",
+                                checked: show_bpm,
+                                oninput: (v) => (show_bpm.val = v.target.checked),
+                            }),
+                            show_bpm.val ? " Splits: " : undefined,
+                            show_bpm.val
+                                ? nonInterferingInput({
+                                      type: "number",
+                                      style: "text-align: right; width: 26px",
+                                      value: () => bpm_splits.val,
+                                      oninput: (v) => {
+                                          v = parseInt(v.target.value);
+                                          if (1 <= v) bpm_splits.val = v;
+                                      },
+                                  })
+                                : undefined
+                        ),
                     div(
                         "Scroll speed: ",
                         nonInterferingInput({

@@ -42,9 +42,9 @@ function val(v) {
     return v;
 }
 
-van.savedState = function (id, default_value, func = (v) => v) {
-    const s = van.state(func(localStorage.getItem(id) ?? default_value));
-    van.derive(() => localStorage.setItem(id, s.val));
+van.savedState = function (id, default_value, loadFunc = (v) => v, saveFunc = (v) => v) {
+    const s = van.state(loadFunc(localStorage.getItem(id) ?? saveFunc(default_value)));
+    van.derive(() => localStorage.setItem(id, saveFunc(s.val)));
     return s;
 };
 
@@ -64,4 +64,34 @@ function nonInterferingInput(...args) {
 
     elem = input(...args);
     return elem;
+}
+
+function createBMPDataUrl(pixels) {
+    // integer to little endian hex
+    function itleh(int) {
+        const hex = int.toString(16).padStart(8, "0");
+        return hex.slice(6, 8) + hex.slice(4, 6) + hex.slice(2, 4) + hex.slice(0, 2);
+    }
+
+    const width = pixels[0].length;
+    const height = pixels.length;
+
+    let hex = "424D";
+    hex += itleh(70 + 4 * width * height);
+    hex += "000000007A0000006C000000";
+    hex += itleh(width);
+    hex += itleh(0x100000000 - height);
+    hex += "0100200003000000";
+    hex += itleh(4 * width * height);
+    hex +=
+        "130B0000130B00000000000000000000FF00000000FF00000000FF00000000FF206E6957000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+
+    for (const row of pixels) {
+        for (const pixel of row) {
+            hex += pixel.padEnd(8, "FF");
+        }
+        for (let i = row.length; i < width; i++) hex += "00000000";
+    }
+
+    return `data:image/bmp;base64,${Uint8Array.fromHex(hex).toBase64()}`;
 }
