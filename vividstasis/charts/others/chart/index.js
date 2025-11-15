@@ -103,7 +103,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                                     div(
                                         { style: () => `position: relative; height: ${65535 * scale.val}px` },
                                         img({
-                                            style: () => `transform: scale(${scale.val}); position: absolute`,
+                                            style: () => `transform-origin: 0px 0px; transform: scale(${scale.val}); position: absolute`,
                                             src: `https://vividstasis-charts.blockog.net/${song.file_name}/${difficulty.val}-${scroll_speed.val.toFixed(1)}.png`,
                                         }),
                                         img({
