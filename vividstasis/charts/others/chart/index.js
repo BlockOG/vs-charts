@@ -244,6 +244,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                     { class: "column", style: "position: fixed; left: 8px; top: 8px" },
                     div(a({ href: "/vividstasis/charts/others" }, "Boundary Shatter charts")),
                     div(`Name: ${song.name}`),
+                    div(`Notes: ${song.notes}`),
                     () =>
                         div(
                             `BPM: ${(difficulty.val === 3 && song.backstage && song.backstage.bpm) || song.bpm} `,

@@ -2,30 +2,48 @@ const difficulty_colors = [0x1aff55, 0x1ab9ff, 0xff1a4a, 0xc342ff, 0xff006e];
 const fallback_color = 0x808080;
 const difficulty_names = ["opening", "middle", "finale", "encore", "backstage"];
 
+const score_rating_pw = [[600000, -6.5], [950000, 0.5], [980000, 1], [1000000, 2], [1008000, 2.8], [1010000, 2.8]];
+const exscore_rating_pw = [[0.8, 0.25], [0.9, 0.5], [0.93, 0.7], [0.96, 0.85], [0.98, 0.95], [0.99, 0.98], [1, 1]];
+
 function ratingFromScore(cc, score, bonus) {
     let res = -Infinity;
-    if (1008000 <= score) res = 1800;
-    else if (1000000 <= score) res = 1000 + (800 * (score - 1000000)) / 8000;
-    else if (980000 <= score) res = (1000 * (score - 980000)) / 20000;
-    else if (950000 <= score) res = -1000 + (1000 * (score - 950000)) / 30000;
-    else if (600000 <= score) res = -8000 + (7000 * (score - 600000)) / 350000;
+    for (let i = 0; i < score_rating_pw.length - 1; i++) {
+        if (score_rating_pw[i][0] <= score) res = score_rating_pw[i][1] + (score - score_rating_pw[i][0]) / (score_rating_pw[i + 1][0] - score_rating_pw[i][0]) * (score_rating_pw[i + 1][1] - score_rating_pw[i][1]);
+    }
 
-    return Math.max(0, cc * 1000 + res) + bonus * 100;
+    return Math.max(0, cc + res) * 1000 + bonus * 100;
 }
 
 function scoreFromRating(cc, rating, bonus) {
-    if (rating < 0) return;
-    else if (rating === 0) return 0;
-
-    rating -= Math.max(0, cc * 1000) + bonus * 100;
+    if (rating === 0) return 0;
+    
+    rating = (rating - bonus * 100) / 1000 - cc;
+    if (score_rating_pw[score_rating_pw.length - 1][1] < rating || rating < score_rating_pw[0][1]) return;
 
     let res = 0;
-    if (1800 < rating) return;
-    else if (1000 <= rating) res = 1000000 + (8000 * (rating - 1000)) / 800;
-    else if (0 <= rating) res = 980000 + (20000 * rating) / 1000;
-    else if (-1000 <= rating) res = 950000 + (30000 * (rating - -1000)) / 1000;
-    else if (-8000 <= rating) res = 600000 + (350000 * (rating - -8000)) / 7000;
-    else return;
+    for (let i = 0; i < score_rating_pw.length - 1; i++) {
+        if (score_rating_pw[i][1] <= rating) res = score_rating_pw[i][0] + (rating - score_rating_pw[i][1]) / (score_rating_pw[i + 1][1] - score_rating_pw[i][1]) * (score_rating_pw[i + 1][0] - score_rating_pw[i][0]);
+    }
+
+    return res;
+}
+
+function ratingFromEXScore(cc, exscore) {
+    let res = 0;
+    for (let i = 0; i < exscore_rating_pw.length - 1; i++) {
+        if (exscore_rating_pw[i][0] <= exscore) res = exscore_rating_pw[i][1] + (exscore - exscore_rating_pw[i][0]) / (exscore_rating_pw[i + 1][0] - exscore_rating_pw[i][0]) * (exscore_rating_pw[i + 1][1] - exscore_rating_pw[i][1]);
+    }
+
+    return res * cc * 100;
+}
+
+function exScoreFromRating(cc, rating) {
+    rating /= cc * 100;
+    
+    let res = 0;
+    for (let i = 0; i < exscore_rating_pw.length - 1; i++) {
+        if (exscore_rating_pw[i][1] <= rating) res = exscore_rating_pw[i][0] + (rating - exscore_rating_pw[i][1]) / (exscore_rating_pw[i + 1][1] - exscore_rating_pw[i][1]) * (exscore_rating_pw[i + 1][0] - exscore_rating_pw[i][0]);
+    }
 
     return res;
 }

@@ -10,6 +10,13 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             if (song.file_name !== chart) continue;
 
             const difficulty = van.state(parseInt(url.searchParams.get("diff")) || 0);
+            const backstage_selected = van.derive(() => difficulty.val === 3 && song.backstage !== undefined);
+            const song_name = van.derive(() => backstage_selected.val ? song.backstage.name : song.name);
+            const bpm = van.derive(() => backstage_selected.val ? song.backstage.bpm : song.bpm);
+            const chart_constant = van.derive(() => song.difficulties[difficulty.val]);
+            const note_count = van.derive(() => song.notes[difficulty.val]);
+            const max_exscore = van.derive(() => 3 * note_count.val);
+            const bpm_changes = van.derive(() => song.bpm_changes[difficulty.val]);
 
             const scroll_speed = van.savedState("scroll-speed", 10.0, parseFloat);
             const pixels_per_second = van.derive(() => 100 + 20 * scroll_speed.val);
@@ -20,7 +27,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             const scale = van.savedState("scale", 1, parseFloat);
             if (scale.val <= 0) scale.val = 1;
 
-            const chart_duration = van.derive(() => (difficulty.val === 3 && song.backstage && song.backstage.duration) || song.duration);
+            const chart_duration = van.derive(() => backstage_selected.val ? song.backstage.duration : song.duration);
             const chart_height = van.derive(() => Math.floor(chart_duration.val * pixels_per_second.val));
             const segments = van.derive(() => Math.ceil(chart_height.val / 65535));
             const scaled_chart_height = van.derive(() => Math.floor(chart_height.val * scale.val));
@@ -39,10 +46,10 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             van.derive(() => {
                 let flat_pixels = Array(chart_height.val).fill("00000000");
 
-                for (let bpm_index = -1; bpm_index < song.bpm_changes[difficulty.val].length; bpm_index++) {
-                    let seconds_per_beat = 60 / (bpm_index < 0 ? song.bpm : song.bpm_changes[difficulty.val][bpm_index][1]);
-                    let start = bpm_index < 0 ? 0 : song.bpm_changes[difficulty.val][bpm_index][0];
-                    let end = bpm_index + 1 < song.bpm_changes[difficulty.val].length ? song.bpm_changes[difficulty.val][bpm_index + 1][0] : chart_duration.val;
+                for (let bpm_index = -1; bpm_index < bpm_changes.val.length; bpm_index++) {
+                    let seconds_per_beat = 60 / (bpm_index < 0 ? song.bpm : bpm_changes.val[bpm_index][1]);
+                    let start = bpm_index < 0 ? 0 : bpm_changes.val[bpm_index][0];
+                    let end = bpm_index + 1 < bpm_changes.val.length ? bpm_changes.val[bpm_index + 1][0] : chart_duration.val;
 
                     for (let bpm_split = bpm_splits.val; bpm_split >= 1; bpm_split--) {
                         if (bpm_splits.val % bpm_split !== 0) continue;
@@ -70,11 +77,13 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             const column_split_reverse = van.savedState("column-split-reverse", false, (v) => v === "true");
 
             const score_rating_switch_selection = van.state(true);
-
             const score_rating_score = van.state(0);
             const score_rating_selection = van.state(0);
-
             const rating_score_rating = van.state(0);
+
+            const exscore_rating_switch_selection = van.state(true);
+            const exscore_rating_exscore = van.state(0);
+            const rating_exscore_rating = van.state(0);
 
             const getURL = (save_time) => {
                 const url = new URL(window.location);
@@ -90,14 +99,12 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                 document.head,
                 title(
                     () =>
-                        `${(difficulty.val === 3 && song.backstage && song.backstage.name) || song.name} ${
-                            difficulty_names[difficulty.val + (difficulty.val === 3 && song.backstage !== undefined)]
-                        } ${song.difficulties[difficulty.val].toFixed(1)}`
+                        `${song_name.val} ${difficulty_names[difficulty.val + backstage_selected.val]} ${chart_constant.val.toFixed(1)}`
                 ),
                 link({
                     rel: "icon",
                     type: "image/png",
-                    href: () => `/vividstasis/charts/jackets/${chart}${difficulty.val === 3 && song.backstage ? "_backstage" : ""}.png`,
+                    href: () => `/vividstasis/charts/jackets/${chart}${backstage_selected.val ? "_backstage" : ""}.png`,
                 })
             );
             van.add(
@@ -149,8 +156,8 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
 
                         while (time_in < chart_duration.val) {
                             while (
-                                bpm_index < song.bpm_changes[difficulty.val].length &&
-                                time_in + curr_height / pixels_per_second.val + 0.0001 >= song.bpm_changes[difficulty.val][bpm_index][0]
+                                bpm_index < bpm_changes.val.length &&
+                                time_in + curr_height / pixels_per_second.val + 0.0001 >= bpm_changes.val[bpm_index][0]
                             ) {
                                 if (curr_height > 0) {
                                     if (curr_height > max_height) max_height = Math.round(curr_height);
@@ -160,7 +167,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                             Math.min(
                                                 curr_height,
                                                 chart_height.val - time_in * pixels_per_second.val,
-                                                (song.bpm_changes[difficulty.val][bpm_index][0] - time_in) * pixels_per_second.val
+                                                (bpm_changes.val[bpm_index][0] - time_in) * pixels_per_second.val
                                             )
                                         ) * scale.val;
 
@@ -172,8 +179,8 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                     curr_height = 0;
                                 }
 
-                                time_in = song.bpm_changes[difficulty.val][bpm_index][0];
-                                bpm = song.bpm_changes[difficulty.val][bpm_index++][1];
+                                time_in = bpm_changes.val[bpm_index][0];
+                                bpm = bpm_changes.val[bpm_index++][1];
                             }
 
                             const ppb = (pixels_per_second.val / bpm) * 60;
@@ -265,10 +272,11 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                 div(
                     { class: "column", style: "position: fixed; left: 8px; top: 8px" },
                     div(a({ href: "/vividstasis/charts" }, "All charts")),
-                    div(() => `Name: ${(difficulty.val === 3 && song.backstage && song.backstage.name) || song.name}`),
+                    div(() => `Name: ${song_name.val}`),
+                    div(() => `Notes: ${note_count.val}`),
                     () =>
                         div(
-                            `BPM: ${(difficulty.val === 3 && song.backstage && song.backstage.bpm) || song.bpm} `,
+                            `BPM: ${bpm.val} `,
                             input({
                                 type: "checkbox",
                                 checked: show_bpm,
@@ -382,15 +390,14 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                     ),
                     div(
                         "Level: ",
-                        span({ class: () => `${difficulty_names[difficulty.val + (difficulty.val === 3 && song.backstage !== undefined)]}-text` }, () =>
-                            song.difficulties[difficulty.val].toFixed(1)
+                        span({ class: () => `${difficulty_names[difficulty.val + backstage_selected.val]}-text` }, () =>
+                            chart_constant.val.toFixed(1)
                         )
                     ),
                     div(
                         "Score ",
                         button(
                             {
-                                id: "score-rating-switch",
                                 onclick: () => (score_rating_switch_selection.val = !score_rating_switch_selection.val),
                             },
                             () => (score_rating_switch_selection.val ? "->" : "<-")
@@ -399,18 +406,17 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                     ),
                     div(
                         {
-                            id: "score-rating",
                             class: "column",
-                            style: () => (score_rating_switch_selection.val ? "" : "display: none"),
+                            style: () => `height: auto${(score_rating_switch_selection.val ? "" : "; display: none")}`,
                         },
                         div(
                             { class: "row" },
-                            input({
+                            nonInterferingInput({
                                 type: "number",
                                 class: "right-aligned",
                                 style: "width: 51px",
                                 value: score_rating_score,
-                                oninput: (v) => (score_rating_score.val = parseFloat(v.target.value)),
+                                oninput: (v) => (score_rating_score.val = Math.max(0, Math.min(parseFloat(v.target.value), 1010000))),
                             }),
                             ["NA", "FC", "AC"].map((v, i) =>
                                 button(
@@ -424,35 +430,86 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                         ),
                         div(
                             { class: "row" },
-                            () => `${ratingFromScore(song.difficulties[difficulty.val], score_rating_score.val, score_rating_selection.val).toFixed(2)} rating`
+                            () => `${ratingFromScore(chart_constant.val, score_rating_score.val, score_rating_selection.val).toFixed(2)} rating`
                         )
                     ),
                     div(
                         {
-                            id: "rating-score",
                             class: "column",
-                            style: () => (score_rating_switch_selection.val ? "display: none" : ""),
+                            style: () => `height: auto${(score_rating_switch_selection.val ? "; display: none" : "")}`,
                         },
                         div(
                             { class: "row" },
-                            input({
+                            nonInterferingInput({
                                 type: "number",
                                 class: "right-aligned",
                                 style: "width: 37px",
-                                value: rating_score_rating,
-                                oninput: (v) => (rating_score_rating.val = parseFloat(v.target.value)),
+                                value: () => Math.min(rating_score_rating.val, ratingFromScore(chart_constant.val, 1010000, 2)),
+                                oninput: (v) => (rating_score_rating.val = Math.max(0, parseFloat(v.target.value))),
                             })
                         ),
                         ["NA", "FC", "AC"].map((v, i) =>
                             div(
                                 {
                                     class: "row",
-                                    style: () => (scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i) === undefined ? "display: none" : ""),
+                                    style: () => (scoreFromRating(chart_constant.val, rating_score_rating.val, i) === undefined ? "display: none" : ""),
                                 },
-                                () => `${v}: ${scoreFromRating(song.difficulties[difficulty.val], rating_score_rating.val, i)} score`
+                                () => `${v}: ${scoreFromRating(chart_constant.val, rating_score_rating.val, i)} score`
                             )
                         )
-                    )
+                    ),
+                    div(
+                        "EX Score ",
+                        button(
+                            {
+                                onclick: () => (exscore_rating_switch_selection.val = !exscore_rating_switch_selection.val),
+                            },
+                            () => (exscore_rating_switch_selection.val ? "->" : "<-")
+                        ),
+                        " Rating"
+                    ),
+                    div(
+                        {
+                            class: "column",
+                            style: () => `height: auto${(exscore_rating_switch_selection.val ? "" : "; display: none")}`,
+                        },
+                        div(
+                            { class: "row" },
+                            nonInterferingInput({
+                                type: "number",
+                                class: "right-aligned",
+                                style: "width: 51px",
+                                value: () => Math.min(exscore_rating_exscore.val, max_exscore.val),
+                                oninput: (v) => (exscore_rating_exscore.val = Math.max(0, parseFloat(v.target.value))),
+                            }),
+                            div(
+                                { class: "row" },
+                                () => ` ${ratingFromEXScore(chart_constant.val, Math.min(1, exscore_rating_exscore.val / max_exscore.val)).toFixed(2)} rating`
+                            )
+                        ),
+                    ),
+                    div(
+                        {
+                            class: "column",
+                            style: () => `height: auto${(exscore_rating_switch_selection.val ? "; display: none" : "")}`,
+                        },
+                        div(
+                            { class: "row" },
+                            nonInterferingInput({
+                                type: "number",
+                                class: "right-aligned",
+                                style: "width: 37px",
+                                value: () => Math.min(rating_exscore_rating.val, ratingFromEXScore(chart_constant.val, 1)),
+                                oninput: (v) => (rating_exscore_rating.val = Math.max(0, parseFloat(v.target.value))),
+                            }),
+                            div(
+                                {
+                                    class: "row",
+                                },
+                                () => ` ${exScoreFromRating(chart_constant.val, rating_exscore_rating.val) * max_exscore.val} EX score`
+                            )
+                        ),
+                    ),
                 ),
                 div(
                     { class: "column", style: "position: fixed; right: 8px; top: 8px" },
