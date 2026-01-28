@@ -80,10 +80,13 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             const score_rating_score = van.state(0);
             const score_rating_selection = van.state(0);
             const rating_score_rating = van.state(0);
+            const rating_score_rating_clamped = van.derive(() => Math.min(rating_score_rating.val, ratingFromScore(chart_constant.val, 1010000, 2)));
 
             const exscore_rating_switch_selection = van.state(true);
             const exscore_rating_exscore = van.state(0);
+            const exscore_rating_exscore_clamped = van.derive(() => Math.min(exscore_rating_exscore.val, max_exscore.val));
             const rating_exscore_rating = van.state(0);
+            const rating_exscore_rating_clamped = van.derive(() => Math.min(rating_exscore_rating.val, ratingFromEXScore(chart_constant.val, 1)));
 
             const getURL = (save_time) => {
                 const url = new URL(window.location);
@@ -444,7 +447,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                 type: "number",
                                 class: "right-aligned",
                                 style: "width: 37px",
-                                value: () => Math.min(rating_score_rating.val, ratingFromScore(chart_constant.val, 1010000, 2)),
+                                value: rating_score_rating_clamped,
                                 oninput: (v) => (rating_score_rating.val = Math.max(0, parseFloat(v.target.value))),
                             })
                         ),
@@ -452,9 +455,9 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                             div(
                                 {
                                     class: "row",
-                                    style: () => (scoreFromRating(chart_constant.val, rating_score_rating.val, i) === undefined ? "display: none" : ""),
+                                    style: () => (scoreFromRating(chart_constant.val, rating_score_rating_clamped.val, i) === undefined ? "display: none" : ""),
                                 },
-                                () => `${v}: ${scoreFromRating(chart_constant.val, rating_score_rating.val, i)} score`
+                                () => `${v}: ${scoreFromRating(chart_constant.val, rating_score_rating_clamped.val, i)} score`
                             )
                         )
                     ),
@@ -479,12 +482,12 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                 type: "number",
                                 class: "right-aligned",
                                 style: "width: 51px",
-                                value: () => Math.min(exscore_rating_exscore.val, max_exscore.val),
+                                value: exscore_rating_exscore_clamped,
                                 oninput: (v) => (exscore_rating_exscore.val = Math.max(0, parseFloat(v.target.value))),
                             }),
                             div(
                                 { class: "row" },
-                                () => ` ${ratingFromEXScore(chart_constant.val, Math.min(1, exscore_rating_exscore.val / max_exscore.val)).toFixed(2)} rating`
+                                () => ` ${ratingFromEXScore(chart_constant.val, Math.min(1, exscore_rating_exscore_clamped.val / max_exscore.val)).toFixed(2)} rating`
                             )
                         ),
                     ),
@@ -499,14 +502,14 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                 type: "number",
                                 class: "right-aligned",
                                 style: "width: 37px",
-                                value: () => Math.min(rating_exscore_rating.val, ratingFromEXScore(chart_constant.val, 1)),
+                                value: rating_exscore_rating_clamped,
                                 oninput: (v) => (rating_exscore_rating.val = Math.max(0, parseFloat(v.target.value))),
                             }),
                             div(
                                 {
                                     class: "row",
                                 },
-                                () => ` ${Math.ceil(exScoreFromRating(chart_constant.val, rating_exscore_rating.val) * max_exscore.val)} EX score`
+                                () => ` ${Math.ceil(exScoreFromRating(chart_constant.val, rating_exscore_rating_clamped.val) * max_exscore.val)} EX score`
                             )
                         ),
                     ),
