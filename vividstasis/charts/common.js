@@ -34,11 +34,11 @@ function ratingFromEXScore(cc, exscore) {
         if (exscore_rating_pw[i][0] <= exscore) res = exscore_rating_pw[i][1] + (exscore - exscore_rating_pw[i][0]) / (exscore_rating_pw[i + 1][0] - exscore_rating_pw[i][0]) * (exscore_rating_pw[i + 1][1] - exscore_rating_pw[i][1]);
     }
 
-    return res * cc * 100;
+    return res * Math.round(cc / 9 * 100) * 10;
 }
 
 function exScoreFromRating(cc, rating) {
-    rating /= cc * 100;
+    rating /= Math.round(cc / 9 * 100) * 10;
     
     let res = 0;
     for (let i = 0; i < exscore_rating_pw.length - 1; i++) {
@@ -72,12 +72,10 @@ function nonInterferingInput(...args) {
         const v = args[0].value;
         args[0].value = (cv) => {
             const nv = val(v);
-            if (document.activeElement === elem && document.hasFocus()) {
-                return cv;
-            } else {
-                return nv;
-            }
+            return document.activeElement === elem && document.hasFocus() ? cv : nv;
         };
+
+        args[0].onblur = () => elem.value = val(v);
     }
 
     elem = input(...args);

@@ -506,7 +506,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                                 {
                                     class: "row",
                                 },
-                                () => ` ${exScoreFromRating(chart_constant.val, rating_exscore_rating.val) * max_exscore.val} EX score`
+                                () => ` ${Math.ceil(exScoreFromRating(chart_constant.val, rating_exscore_rating.val) * max_exscore.val)} EX score`
                             )
                         ),
                     ),
