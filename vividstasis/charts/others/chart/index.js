@@ -186,7 +186,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                                     const scroll = column_split_reverse.val ? width - v.target.scrollLeft : v.target.scrollLeft;
                                     const i = Math.floor(scroll / (image_width + 50));
                                     const t = (scroll % (image_width + 50)) / (image_width + 50);
-                                    current_time.val = image_times[i] + t * (image_times[i + 1] - image_times[i]);
+                                    current_time.val = Math.max(0, image_times[i] + t * (image_times[i + 1] - image_times[i]));
                                 },
                             },
                             div(
@@ -223,7 +223,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                             {
                                 style: () => `height: 100dvh; overflow-y: auto`,
                                 onscroll: (v) => {
-                                    current_time.val = (upscroll.val ? v.target.scrollTop : height - v.target.scrollTop) / scale.val / pixels_per_second.val;
+                                    current_time.val = Math.max(0, (upscroll.val ? v.target.scrollTop : height - v.target.scrollTop) / scale.val / pixels_per_second.val);
                                 },
                             },
                             get_chart()
