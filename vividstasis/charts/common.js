@@ -18,11 +18,11 @@ function scoreFromRating(cc, rating, bonus) {
     if (rating === 0) return 0;
     
     rating = (rating - bonus * 100) / 1000 - cc;
-    if (score_rating_pw[score_rating_pw.length - 1][1] < rating || rating < score_rating_pw[0][1]) return;
+    if (score_rating_pw[score_rating_pw.length - 1][1] + 0.0000000000001 < rating || rating < score_rating_pw[0][1] - 0.0000000000001) return;
 
     let res = 0;
     for (let i = 0; i < score_rating_pw.length - 1; i++) {
-        if (score_rating_pw[i][1] <= rating) res = score_rating_pw[i][0] + (rating - score_rating_pw[i][1]) / (score_rating_pw[i + 1][1] - score_rating_pw[i][1]) * (score_rating_pw[i + 1][0] - score_rating_pw[i][0]);
+        if (score_rating_pw[i][1] <= rating) res = score_rating_pw[i][0] + (score_rating_pw[i + 1][1] !== score_rating_pw[i][1] ? (rating - score_rating_pw[i][1]) / (score_rating_pw[i + 1][1] - score_rating_pw[i][1]) * (score_rating_pw[i + 1][0] - score_rating_pw[i][0]) : 0);
     }
 
     return res;
