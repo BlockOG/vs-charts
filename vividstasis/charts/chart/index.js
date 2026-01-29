@@ -85,6 +85,7 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
             const exscore_rating_switch_selection = van.state(true);
             const exscore_rating_exscore = van.state(0);
             const exscore_rating_exscore_clamped = van.derive(() => Math.min(exscore_rating_exscore.val, max_exscore.val));
+            const exscore_rating_percentage = van.derive(() => (exscore_rating_exscore_clamped.val / max_exscore.val) * 100);
             const rating_exscore_rating = van.state(0);
             const rating_exscore_rating_clamped = van.derive(() => Math.min(rating_exscore_rating.val, ratingFromEXScore(chart_constant.val, 1)));
 
@@ -416,11 +417,11 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                             { class: "row" },
                             nonInterferingInput({
                                 type: "number",
-                                class: "right-aligned",
-                                style: "width: 51px",
+                                style: "text-align: right; width: 51px",
                                 value: score_rating_score,
                                 oninput: (v) => (score_rating_score.val = Math.max(0, Math.min(parseFloat(v.target.value), 1010000))),
                             }),
+                            "score",
                             ["NA", "FC", "AC"].map((v, i) =>
                                 button(
                                     {
@@ -432,7 +433,6 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                             )
                         ),
                         div(
-                            { class: "row" },
                             () => `${ratingFromScore(chart_constant.val, score_rating_score.val, score_rating_selection.val).toFixed(2)} rating`
                         )
                     ),
@@ -442,19 +442,17 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                             style: () => `height: auto${(score_rating_switch_selection.val ? "; display: none" : "")}`,
                         },
                         div(
-                            { class: "row" },
                             nonInterferingInput({
                                 type: "number",
-                                class: "right-aligned",
-                                style: "width: 37px",
+                                style: "text-align: right; width: 37px",
                                 value: rating_score_rating_clamped,
                                 oninput: (v) => (rating_score_rating.val = Math.max(0, parseFloat(v.target.value))),
-                            })
+                            }),
+                            " rating"
                         ),
                         ["NA", "FC", "AC"].map((v, i) =>
                             div(
                                 {
-                                    class: "row",
                                     style: () => (scoreFromRating(chart_constant.val, rating_score_rating_clamped.val, i) === undefined ? "display: none" : ""),
                                 },
                                 () => `${v}: ${scoreFromRating(chart_constant.val, rating_score_rating_clamped.val, i)} score`
@@ -477,19 +475,24 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                             style: () => `height: auto${(exscore_rating_switch_selection.val ? "" : "; display: none")}`,
                         },
                         div(
-                            { class: "row" },
                             nonInterferingInput({
                                 type: "number",
-                                class: "right-aligned",
-                                style: "width: 51px",
+                                style: "text-align: right; width: 51px",
                                 value: exscore_rating_exscore_clamped,
-                                oninput: (v) => (exscore_rating_exscore.val = Math.max(0, parseFloat(v.target.value))),
+                                oninput: (v) => (exscore_rating_exscore.val = Math.max(0, Math.round(parseFloat(v.target.value)))),
                             }),
-                            div(
-                                { class: "row" },
-                                () => ` ${ratingFromEXScore(chart_constant.val, Math.min(1, exscore_rating_exscore_clamped.val / max_exscore.val)).toFixed(2)} rating`
-                            )
+                            () => `/${max_exscore.val} (`,
+                            nonInterferingInput({
+                                type: "number",
+                                style: "text-align: right; width: 40px",
+                                value: () => ((exscore_rating_exscore.val / max_exscore.val) * 100).toFixed(2),
+                                oninput: (v) => (exscore_rating_exscore.val = Math.max(0, Math.round(max_exscore.val * parseFloat(v.target.value) / 100))),
+                            }),
+                            "%) EX score"
                         ),
+                        div(
+                            () => `${ratingFromEXScore(chart_constant.val, Math.min(1, exscore_rating_exscore_clamped.val / max_exscore.val)).toFixed(2)} rating`
+                        )
                     ),
                     div(
                         {
@@ -497,21 +500,20 @@ fetch("/vividstasis/charts/song_data.json").then((data) => {
                             style: () => `height: auto${(exscore_rating_switch_selection.val ? "; display: none" : "")}`,
                         },
                         div(
-                            { class: "row" },
                             nonInterferingInput({
                                 type: "number",
-                                class: "right-aligned",
-                                style: "width: 37px",
+                                style: "text-align: right; width: 37px",
                                 value: rating_exscore_rating_clamped,
                                 oninput: (v) => (rating_exscore_rating.val = Math.max(0, parseFloat(v.target.value))),
                             }),
-                            div(
-                                {
-                                    class: "row",
-                                },
-                                () => ` ${Math.ceil(exScoreFromRating(chart_constant.val, rating_exscore_rating_clamped.val) * max_exscore.val)} EX score`
-                            )
+                            " rating"
                         ),
+                        div(
+                            () => {
+                                let percentage = exScoreFromRating(chart_constant.val, rating_exscore_rating_clamped.val);
+                                return `${Math.ceil(percentage * max_exscore.val)}/${max_exscore.val} EX score (${(percentage * 100).toFixed(2)}%)`;
+                            }
+                        )
                     ),
                 ),
                 div(
