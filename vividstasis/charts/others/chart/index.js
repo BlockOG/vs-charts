@@ -40,6 +40,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                 for (let bpm_index = -1; bpm_index < song.bpm_changes.length; bpm_index++) {
                     let seconds_per_beat = 60 / (bpm_index < 0 ? song.bpm : song.bpm_changes[bpm_index][1]);
+                    if (seconds_per_beat < 0) continue;
                     let start = bpm_index < 0 ? 0 : song.bpm_changes[bpm_index][0];
                     let end = bpm_index + 1 < song.bpm_changes.length ? song.bpm_changes[bpm_index + 1][0] : chart_duration.val;
 
