@@ -131,7 +131,7 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                         while (time_in < chart_duration.val) {
                             while (bpm_index < song.bpm_changes.length && time_in + curr_height / pixels_per_second.val + 0.0001 >= song.bpm_changes[bpm_index][0]) {
-                                if (curr_height > 0) {
+                                if (curr_height > 0.0001) {
                                     if (curr_height > max_height) max_height = Math.round(curr_height);
 
                                     const split_height =
@@ -143,10 +143,12 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
                                             )
                                         ) * scale.val;
 
-                                    image_times.push(time_in);
-                                    images.push(
-                                        div(get_chart(split_height, Math.round(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height))
-                                    );
+                                    if (split_height > 0.0001) {
+                                        image_times.push(time_in);
+                                        images.push(
+                                            div(get_chart(split_height, Math.round(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height))
+                                        );
+                                    }
 
                                     curr_height = 0;
                                 }
@@ -161,10 +163,12 @@ fetch("/vividstasis/charts/other_song_data.json").then((data) => {
 
                                 const split_height = Math.round(Math.min(curr_height, chart_height.val - time_in * pixels_per_second.val)) * scale.val;
 
-                                image_times.push(time_in);
-                                images.push(
-                                    div(get_chart(split_height, Math.round(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height))
-                                );
+                                if (split_height > 0.0001) {
+                                    image_times.push(time_in);
+                                    images.push(
+                                        div(get_chart(split_height, Math.round(time_in * pixels_per_second.val) * scale.val - scaled_chart_height.val + split_height))
+                                    );
+                                }
 
                                 time_in += curr_height / pixels_per_second.val;
                                 curr_height = 0;
